@@ -94,6 +94,7 @@
   <body>
     <div class="container-fluid">
       <div class="all-tag-holder">
+
         {% for tag in tags%}
         <div class="tag">
           <p class="tag-name">{{tag.tag_name}}</p>
@@ -111,8 +112,8 @@
             <div class="places"><span>Place:</span>{{tag.t_place}}</div>
           </div>
         </div>
-
         {%endfor%}
+
       </div>
     </div>
   </body>

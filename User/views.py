@@ -1,6 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-
+from .models import UserModel
 # Create your views here.
-def posts(request):
-    return render(request,"User/AddPost.html",{})
+
+
+def user(request):
+
+    users=UserModel.objects.all()
+    return render(request,"User/Profile.html",{'users':users})
