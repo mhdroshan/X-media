@@ -6,4 +6,4 @@ from .models import PostModel
 def allpost(request):
 
     posts=PostModel.objects.all()
-    return render (request,"Home.html",{'posts':posts})
+    return render (request,"index.html",{'posts':posts})

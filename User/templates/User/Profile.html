@@ -1,3 +1,4 @@
+{% extends 'base.html' %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -5,125 +6,40 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Profile page</title>
-    <!-- font awsome -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
-
-    <!-- bootstrap -->
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-      crossorigin="anonymous"
-    />
-
-    <style>
-      .profile-holder {
-        border: 1.5px solid #b9b1b161;
-        height: 100%;
-        min-height: 100vh;
-        margin: 20px auto;
-        overflow: auto;
-        padding: 20px;
-        position: relative;
-      }
-
-      .user-image {
-        margin-right: -100px;
-        position: absolute;
-        height: 200px;
-        width: 200px;
-        padding: 5px;
-        right: 50%;
-        border: 3px solid #3f51b5;
-        margin-top: -40px;
-        border-width: 2px;
-        border-radius: 50%;
-        top: 30%;
-      }
-      .user-name {
-        font-weight: 600;
-        margin: 40px auto 10px auto;
-        position: relative;
-        text-align: center;
-        font-size: 40px;
-      }
-
-      .user-name:after {
-        content: "";
-        display: block;
-        width: 200px;
-        height: 2px;
-        background: #000;
-        right: 50%;
-        margin-top: 15px;
-        position: absolute;
-        margin-right: -100px;
-      }
-
-      .address-holder {
-        min-width: 300px;
-
-        margin: 10px auto;
-        background-color: white;
-        box-shadow: -8px 12px 18px 0 rgb(25 42 70 / 13%);
-        border-radius: 10px;
-        border: 1px solid #b9b1b161;
-        padding: 10px;
-        position: absolute;
-        bottom: 15px;
-      }
-      .address-holder i {
-        font-size: 60px;
-        text-align: center;
-        margin: 15px auto;
-      }
-      .address-holder .places {
-        display: flex;
-        justify-content: space-between;
-        padding: 20px 1px;
-        border-top: 1px solid #b9b1b161;
-      }
-      .address-holder .places p {
-        margin: 0;
-      }
-    </style>
   </head>
   <body>
-    <div class="container-fluid">
-      <div class="profile-holder">
-        {% for user in users %}
+    {% block content %}
+    <div class="profile-holder">
+      {% for user in users %}
 
-        <img
-          class="user-image"
-          src="{{user.u_pic.url}}"
-          alt="profile-pic"
-          srcset=""
-        />
-        <h2 class="user-name">{{user.u_name}}</h2>
+      <img
+        class="user-image"
+        src="{{user.u_pic.url}}"
+        alt="profile-pic"
+        srcset=""
+      />
+      <h2 class="user-name">{{user.u_name}}</h2>
 
-        <div class="address-holder">
-          <center><i class="fa fa-map-marker" aria-hidden="true"></i></center>
-          <div class="places">
-            <p>Country:</p>
-            <p>{{user.u_country}}</p>
-          </div>
-
-          <div class="places">
-            <p>State:</p>
-            <p>{{user.u_state}}</p>
-          </div>
-
-          <div class="places">
-            <p>Place:</p>
-            <p>{{user.u_place}}</p>
-          </div>
+      <div class="address-holder">
+        <center><i class="fa fa-map-marker" aria-hidden="true"></i></center>
+        <div class="places">
+          <p>Country:</p>
+          <p>{{user.u_country}}</p>
         </div>
 
-        {%endfor%}
+        <div class="places">
+          <p>State:</p>
+          <p>{{user.u_state}}</p>
+        </div>
+
+        <div class="places">
+          <p>Place:</p>
+          <p>{{user.u_place}}</p>
+        </div>
       </div>
+
+      {%endfor%}
     </div>
   </body>
+  {% endblock content %}
 </html>

@@ -1,0 +1,232 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}X-Media{% endblock %}</title>
+
+    <!-- CSS CUSTOM -->
+    <style>
+        body {
+          scroll-behavior: smooth;
+          box-sizing: border-box;
+        }
+        .navbar-nav {
+          width: 100% !important;
+          flex-direction: row !important;
+          height: 10% !important;
+      }
+        }
+        .navbar {
+          position: fixed;
+          width: 100%;
+          bottom: 0;
+          height: 10%;
+          right: 0;
+          left: 0;
+        }
+        .nav-item {
+          width: 30% !important;
+          text-align: center;
+          font-weight: 600;
+          font-size: 25px;
+          margin: auto !important;
+        }
+        .post-holder {
+          border: 1.5px solid #b9b1b161;
+          height: 100%;
+          margin: 20px auto;
+          padding: 20px;
+          overflow: auto;
+          position: relative;
+        }
+        .post {
+          min-height: 200px;
+          border: 1.5px solid #b9b1b161;
+          margin: 15px auto;
+          background-color: white;
+          box-shadow: -8px 12px 18px 0 rgb(25 42 70 / 13%);
+          border-radius: 10px;
+          position: relative;
+        }
+        .date-time {
+          position: absolute;
+          bottom: 0;
+          padding: 10px 15px;
+          right: 0;
+        }
+
+        .profile-holder {
+          border: 1.5px solid #b9b1b161;
+          height: 100%;
+
+          overflow: auto;
+          padding: 20px;
+          position: relative;
+        }
+
+        .user-image {
+          margin-right: -100px;
+          position: absolute;
+          height: 200px;
+          width: 200px;
+          padding: 5px;
+          right: 50%;
+          border: 3px solid #3f51b5;
+          margin-top: -40px;
+          border-width: 2px;
+          border-radius: 50%;
+          top: 30%;
+        }
+        .user-name {
+          font-weight: 600;
+          margin: 40px auto 10px auto;
+          position: relative;
+          text-align: center;
+          font-size: 40px;
+        }
+
+        .user-name:after {
+          content: "";
+          display: block;
+          width: 200px;
+          height: 2px;
+          background: #000;
+          right: 50%;
+          margin-top: 15px;
+          position: absolute;
+          margin-right: -100px;
+        }
+
+        .address-holder {
+          min-width: 300px;
+
+          margin: 10px auto;
+          background-color: white;
+          box-shadow: -8px 12px 18px 0 rgb(25 42 70 / 13%);
+          border-radius: 10px;
+          border: 1px solid #b9b1b161;
+          padding: 10px;
+          position: absolute;
+          bottom: 15px;
+        }
+        .address-holder i {
+          font-size: 60px;
+          text-align: center;
+          margin: 15px auto;
+        }
+        .address-holder .places {
+          display: flex;
+          justify-content: space-between;
+          padding: 20px 1px;
+          border-top: 1px solid #b9b1b161;
+        }
+        .address-holder .places p {
+          margin: 0;
+        }
+
+        .all-tag-holder {
+          width: 100%;
+          height: 100%;
+          padding: 20px 0px;
+
+          overflow-x: auto;
+        }
+        .tag {
+          max-width: 700px;
+          width: 100%;
+          height: 130px;
+          max-height: 300px;
+          box-shadow: -8px 12px 18px 0 rgb(25 42 70 / 13%);
+          margin: 20px auto;
+          border-radius: 10px;
+          border: 1px solid #b9b1b161;
+          padding: 5px;
+          position: relative;
+        }
+        .tag-image {
+          position: absolute;
+          height: 80px;
+          width: 80px;
+          margin: 10px;
+          right: 5px;
+          margin-top: -40px;
+          border-radius: 50%;
+          top: 60%;
+        }
+        .tag-name {
+          position: absolute;
+          top: 0px;
+          text-transform: uppercase;
+          background: #0b0b52;
+          color: white;
+          width: 100%;
+          border-radius: 10px 10px 0 0;
+          left: 0px;
+          text-align: left;
+          padding: 3px 10px;
+        }
+        .tag-title {
+          position: absolute;
+          left: 20px;
+          top: 33px;
+          font-size: 20px;
+          font-weight: 600;
+          text-align: left;
+        }
+        .tag-desc {
+          font-size: 14px;
+          position: absolute;
+          top: 65px;
+          left: 20px;
+        }
+        .tag-desc span {
+          color: grey;
+          margin-right: 5px;
+        }
+        .place-holder {
+          position: absolute;
+          bottom: 0;
+          margin: 5px auto 0 auto;
+          width: 100%;
+          display: inline-flex;
+          font-size: 15px;
+        }
+        .places {
+          width: 30%;
+        }
+        .places span {
+          color: grey;
+          margin-right: 5px;
+        }
+    </style>
+
+    <!-- Bootstrap -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+
+    <!-- font awsome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+  </head>
+  <body>
+    <div class="container-fluid" style="height: 90%">
+      {% block content %} {% endblock %}
+    </div>
+    <nav class="navbar-dark bg-dark">
+      <div class="navbar-nav">
+        <a class="nav-item nav-link active" href="{% url 'index' %}"
+          >Home <span class="sr-only">(current)</span></a
+        >
+        <a class="nav-item nav-link" href="/profile">Profile</a>
+        <a class="nav-item nav-link" href="/tags">Tags</a>
+      </div>
+    </nav>
+  </body>
+</html>
