@@ -1,25 +1,19 @@
-{% extends 'base.html' %}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Profile page</title>
-  </head>
-  <body>
-    {% block content %}
-    <div class="profile-holder">
-      {% for user in users %}
+{% extends 'base.html' %} 
+{% block title %}Profile{% endblock %}
+ {% block content %}
 
-      <img
-        class="user-image"
-        src="{{user.u_pic.url}}"
-        alt="profile-pic"
-        srcset=""
-      />
-      <h2 class="user-name">{{user.u_name}}</h2>
+<div class="profile-holder">
+  {% if user %}
 
+  <h2 class="user-name">{{user.u_name}}</h2>
+  <img
+    class="user-image"
+    src="{{user.u_pic.url}}"
+    alt="profile-pic"
+    srcset=""
+  />
+  <div class="row">
+    <div class="col-md-4">
       <div class="address-holder">
         <center><i class="fa fa-map-marker" aria-hidden="true"></i></center>
         <div class="places">
@@ -37,9 +31,43 @@
           <p>{{user.u_place}}</p>
         </div>
       </div>
-
-      {%endfor%}
     </div>
-  </body>
-  {% endblock content %}
-</html>
+    <div class="col-md-8">
+      <div class="my-posts-holder">
+        <h2>My Posts</h2>
+        <div class="eachpost">
+          {% if mypost %} 
+          {% for post in mypost %}
+          <div class="mypost">
+            <p class="mypost-tag">{{post.tag_id.tag_name}}</p>
+            <p class="post-title">{{post.p_title}}</p>
+            <div class="score-holder">
+              <div class="one-score">{{post.pos_votes}}</div>
+              <div class="one-score">{{post.neg_votes}}</div>
+            </div>
+            <a
+              href="{% url 'Posts:post-images' post.id  %}"
+              class="add-img-butt"
+            >
+              <i class="fa fa-plus" aria-hidden="true"></i>
+              More images
+            </a>
+            <p class="mypost-date">{{post.p_dateTime}}</p>
+          </div>
+
+          {% endfor %} 
+          {% else %}
+
+          <div class="tag-error">No Posts</div>
+
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% endif %}
+</div>
+
+
+{% endblock content %}

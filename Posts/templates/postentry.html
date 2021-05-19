@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block title %}Add post{% endblock %}
+
+    {% block content %}
+    <a class="back-butt" href="/tags/allTags"><i class="fa fa-arrow-left" aria-hidden="true"></i>
+        <span>Back</span>
+              </a>
+  {%if flag%}
+    <script>
+        alert("Post added sucessfully..!")
+    </script>
+{%endif%}
+
+{%if tag and request.session.userid%}
+{% if tag.t_place == "0" %}
+
+<style>
+#tplace{
+    display: none;
+}
+</style>
+{% endif %}
+
+
+{% if tag.t_state == "0"%}
+<style>
+    #tstate{
+        display: none;
+    }
+</style>
+{% endif %}
+
+
+{%if tag.t_country == "0"%}
+<style>
+    #tcountry{
+        display: none;
+    }
+</style>
+{% endif %}
+
+<div class="PE-title">
+    <p>Write a post based on: </p> <h1 class="PE-tagname"> #{{tag.tag_name}} </h1> <h1 class="PE-location"> <i class="fa fa-map-marker" aria-hidden="true"></i> <span id="tcountry">{{tag.t_country}} </span> <span id="tstate">{{tag.t_state}} </span> <span id="tplace">{{tag.t_place}}</span></h1>
+</div>
+<div class="PE-form">
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="PE-input-holder">
+            <p>Give a title to your post:</p>
+            <input class="PE-input" type="text" name="posttitle" id="" required placeholder="post title">
+        </div>
+        <div class="PE-input-holder">
+            <p>Write your post content:</p>
+            <textarea class="PE-input" name="postdesc" id=""   required placeholder="description"></textarea>
+        </div>
+        <div class="PE-input-holder">
+            <p>Add images to your post:</p>
+            <input type="file" class="PE-input" name="postimages" id=""  placeholder="description">
+        </div>
+
+<input class="PE-submit" type="submit" value="Save">
+    </form>
+</div>
+{% endif %}
+      {% endblock content %}

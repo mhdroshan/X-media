@@ -1,0 +1,126 @@
+{% extends 'base.html' %} {% block title %}Tag Request{% endblock %} 
+{% block content %} {%if flag%}
+<script>
+  alert("Tag requested sucessfully..!");
+</script>
+{%endif%}
+<a class="back-butt" href="/tags"
+  ><i class="fa fa-arrow-left" aria-hidden="true"></i>
+  <span>Back</span>
+</a>
+
+<div class="PE-form">
+  <form action="" method="post">
+    {% csrf_token %}
+    <div class="PE-input-holder">
+      <p>Enter an event name:</p>
+      <input
+        class="PE-input"
+        type="text"
+        name="tagtitle"
+        id=""
+        required
+        placeholder="tag title"
+      />
+    </div>
+    <div class="PE-input-holder">
+      <p>Give the event a discription:</p>
+      <textarea
+        class="PE-input"
+        name="tagdesc"
+        id=""
+        required
+        placeholder="description"
+      ></textarea>
+    </div>
+    <div class="PE-input-holder">
+      <p>Select type of location:</p>
+      <select class="PE-input" name="" id="">
+        <option value="c">Country</option>
+        <option value="s">State</option>
+        <option value="p">Place</option>
+      </select>
+    </div>
+    <!-- places -->
+    <div id="tc" class="PE-input-holder">
+      <p>Enter tags country:</p>
+      <input
+        class="PE-input"
+        type="text"
+        name="tagcountry"
+        value="0"
+        
+        placeholder="tag country"
+      />
+    </div>
+    <div id="ts" class="PE-input-holder">
+      <p>Enter tags state:</p>
+      <input
+        class="PE-input"
+        type="text"
+        name="tagstate"
+        value="0"
+        
+        
+        placeholder="tag state"
+      />
+    </div>
+    <div id="tp" class="PE-input-holder">
+      <p>Enter tags place:</p>
+      <input
+        class="PE-input"
+        type="text"
+        name="tagplace"
+        value="0"
+        
+        placeholder="tag place"
+      />
+    </div>
+
+    <input class="PE-submit" type="submit" value="Request" />
+  </form>
+</div>
+<script>
+    $(document).ready(function(){
+        $("#ts input, #tc input, #tp input").on("focus ", function () {
+          if (this.value=="0"){
+           
+          this.value=" ";
+        }}
+        );
+        $("#ts input, #tc input, #tp input").on("blur ", function () {
+          if (this.value==" "){
+this.value="0";
+          }
+
+          });
+    });
+</script>    
+<script>
+    $(document).ready(function(){
+        $("#ts").hide();
+        $("#tp").hide();
+  $("select").on("change ", function () {
+    if (this.value == "c") {
+        
+        $("#tc").show();
+        $("#ts").hide();
+        $("#tp").hide();
+    }
+    else if(this.value == "s") {
+        
+        $("#tc").hide();
+        $("#ts").show();
+        $("#tp").hide();
+    }
+    else {
+        
+        $("#tc").hide();
+        $("#ts").hide();
+        $("#tp").show();
+    }
+
+  });
+});
+</script>
+{% endblock content %}

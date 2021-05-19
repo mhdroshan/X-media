@@ -1,38 +1,116 @@
 {% extends 'base.html' %}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tags</title>
+{% block title %}Tags{% endblock %}
 
-
-
-   
-  </head>
-  <body>
     {% block content %}
+    <a class="tag-request" href="/user/tag-req">
+      Tag <br> request
+    </a>
     <div class="all-tag-holder">
-      {% for tag in tags%}
+    {% comment %} country {% endcomment %}
+      
+      <div class="dtag-holder">
+        <p class="dtag-title">Tags related to your country <span>{{user.u_country}}:</span></p>
+        {% if ctags %}
+        {% for ctag in ctags%}
+        
+        <a href="{% url 'Posts:post-entry' ctag.id %}">
+          <div class="tag">
+            <p class="tag-name">{{ctag.tag_name}}</p>
+            <p class="tag-title">{{ctag.tag_title}}</p>
+            <p class="tag-desc"><span>Description:</span>{{ctag.tag_disc}}</p>
+            <img
+              class="tag-image"
+              src="{{ctag.tag_image.url}}"
+              alt="tagimage"
+              srcset=""
+            />
+            <div class="place-holder">
+              <div class="places"><span>Country:</span>{{ctag.t_country}}</div>
+              <div class="places"><span>State:</span>{{ctag.t_state}}</div>
+              <div class="places"><span>Place:</span>{{ctag.t_place}}</div>
+            </div>
+          </div>
+          </a>
+          {%endfor%}
+          {% else %}
+      <h3 class="tag-error">No tags</h3>
+      {% endif %}
+        
+        
+      </div>
+      
+      
+      
+
+
+    {% comment %} state {% endcomment %}
+
+    <div class="dtag-holder">
+      <p class="dtag-title">Tags related to your state <span>{{user.u_state}}:</span></p>
+      {% if stags %}
+
+      {% for stag in stags%}
+      
+
+      <a href="{% url 'Posts:post-entry' stag.id %}">
       <div class="tag">
-        <p class="tag-name">{{tag.tag_name}}</p>
-        <p class="tag-title">{{tag.tag_title}}</p>
-        <p class="tag-desc"><span>Description:</span>{{tag.tag_disc}}</p>
+        <p class="tag-name">{{stag.tag_name}}</p>
+        <p class="tag-title">{{stag.tag_title}}</p>
+        <p class="tag-desc"><span>Description:</span>{{stag.tag_disc}}</p>
         <img
           class="tag-image"
-          src="{{tag.tag_image.url}}"
+          src="{{stag.tag_image.url}}"
           alt="tagimage"
           srcset=""
         />
         <div class="place-holder">
-          <div class="places"><span>Country:</span>{{tag.t_country}}</div>
-          <div class="places"><span>State:</span>{{tag.t_state}}</div>
-          <div class="places"><span>Place:</span>{{tag.t_place}}</div>
+          <div class="places"><span>Country:</span>{{stag.t_country}}</div>
+          <div class="places"><span>State:</span>{{stag.t_state}}</div>
+          <div class="places"><span>Place:</span>{{stag.t_place}}</div>
         </div>
       </div>
+      </a>
       {%endfor%}
+
+      {% else %}
+      <h3 class="tag-error">No tags</h3>
+      {% endif %}
+</div>
+
+
+
+    {% comment %} place {% endcomment %}
+    <div class="dtag-holder">
+      <p class="dtag-title">Tags related to your place <span>{{user.u_place}}:</span></p>
+      {% if ptags  %}
+       {% for stag in ptags%}
+      <a href="{% url 'Posts:post-entry' stag.id %}">
+      <div class="tag">
+        <p class="tag-name">{{stag.tag_name}}</p>
+        <p class="tag-title">{{stag.tag_title}}</p>
+        <p class="tag-desc"><span>Description:</span>{{stag.tag_disc}}</p>
+        <img
+          class="tag-image"
+          src="{{stag.tag_image.url}}"
+          alt="tagimage"
+          srcset=""
+        />
+        <div class="place-holder">
+          <div class="places"><span>Country:</span>{{stag.t_country}}</div>
+          <div class="places"><span>State:</span>{{stag.t_state}}</div>
+          <div class="places"><span>Place:</span>{{stag.t_place}}</div>
+        </div>
+      </div>
+      </a>
+      {%endfor%}
+      
+      {% else %}
+      <h3 class="tag-error">No tags</h3>
+      {% endif %}
+     
+</div>
+
     </div>
-  </body>
+    </div>
+
   {% endblock content %}
-</html>

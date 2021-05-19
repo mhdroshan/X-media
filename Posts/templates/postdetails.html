@@ -1,0 +1,35 @@
+
+{% extends 'base.html' %}
+{% block title %}Read More{% endblock %}
+    {% block content %}
+    <div class="post-holder">
+      {% if post %}
+      
+          <div class="post">
+        <div class="votes-holder">
+          <div class="votes">{{post.pos_votes}}</div>
+          <div class="votes">{{post.neg_votes}}</div>
+        </div>
+
+        <h4 class="post-title">{{post.p_title}}</h4>
+        <p class="post_desc">{{post.p_content}}</p>
+        <p class="date-time">{{post.p_dateTime}}</p>
+        
+        <div class="row post-image-holder">
+       {% for data in imageRecords %}
+        <div class="col-sm-3 post-image ">
+          <p class="image-title">{{ data.img_title }}</p>
+            <img src="{{ data.post_image.url }}" width="120" height="120">
+            <p></p>
+            <p class="image-date">{{ data.p_dateTime }}</p>
+          </div>
+          {%endfor%}
+            {% endif %}
+          </div>
+      </div>
+      
+      
+    </div>
+ 
+  {% endblock content %}
+

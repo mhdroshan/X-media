@@ -1,28 +1,28 @@
 {% extends 'base.html' %}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Home</title>
-   
+{% block title %}X-Media{% endblock %}
+    {% block content %}
+    <div class="post-holder">
+      {% for post in posts %}
 
-    
-  </head>
-  <body>
-    
-      {% block content %}
-      <h1>POSTS</h1>
-      <div class="post-holder">
-        {% for post in posts %}
-        <div class="post">
-          <p>{{post.p_title}}</p>
-          <p class="date-time">{{post.p_dateTime}}</p>
+        <a href="{% url 'Posts:post-details' post.id %}">
+          <div class="post">
+            <p class="all-user-name">{{post.user_id.u_name}}</p>
+            <p class="all-tag-name">{{post.tag_id.tag_name}}</p>
+        <div class="votes-holder">
+          <div class="votes">{{post.pos_votes}}</div>
+          <div class="votes">{{post.neg_votes}}</div>
         </div>
-        {%endfor%}
+
+        <h4 class="post-title">{{post.p_title}}</h4>
+        <p class="post_desc">{{post.p_content}}</p>
+        <p class="date-time">{{post.p_dateTime}}</p>
+        
+        
       </div>
-    
-  </body>
+      </a>
+      
+      {%endfor%}
+    </div>
+ 
   {% endblock content %}
-</html>
+
