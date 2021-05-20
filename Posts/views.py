@@ -15,6 +15,12 @@ def postdetails(request,id):
     postdetails=PostModel.objects.get(id=id)
     return render(request,"postdetails.html",{"imageRecords":PostImageRecords ,"post":postdetails})
 
+
+def relatedpost(request,id):
+    posts=PostModel.objects.filter(tag_id = id)
+    return render (request,"relatedpost.html",{'posts':posts})
+    
+
 def addpost(request,id):
     if request.session.has_key('userid'):
         tag=Tagmodel.objects.get(id=id)

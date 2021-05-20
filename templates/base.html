@@ -78,52 +78,117 @@
                         position: relative;
                       }
                       .post {
-                        min-height: 200px;
+                        min-height: 170px;
                         border: 1.5px solid #b9b1b161;
-                        margin: 15px auto;
+                        margin: 30px auto;
                         background-color: white;
                         box-shadow: -8px 12px 18px 0 rgb(25 42 70 / 13%);
                         border-radius: 10px;
                         position: relative;
+                        width: 100%;
+                        display: inline-flex;
+                      }
+                      .post-fir-half{
+                        width: 65%;
+                        position: relative;
+                        height: 100%;
+                      }
+                      .post-sec-half{
+                        width: 35%;
+                        height: 100%;
+                        position: relative;
+                        min-height: 170px;
+                        background-size: cover;
+                        background-position: center;
+                        background-repeat: no-repeat;
+                      }
+                      .post-sec-half::after{
+                        content: "";
+                        position: absolute;
+                        top: 0;
+                        bottom: 0;
+                        right: 0;
+                        left: 0;
+                        border-radius: 0 10px 10px 0;
+                        background-color: #0c0c0c8f;
                       }
                       .post .all-user-name{
-                        position: absolute;
-                        bottom: 0;
-                        margin: 5px 10px;
-                        padding: 10px;
-                        left: 0;
+                        font-size: 14px;
+                        margin: auto 8px auto 8px;
                       }
                       .post .all-tag-name{
                         padding: 8px 18px;
                         color: white;
+                        word-spacing: -4px;
                         font-size: 18px;
                         position: relative;
                         font-weight: 500;
                         background-color: #0b0b52;
-                        border-radius: 10px 10px 0 0;
+                        border-radius: 10px 0 0 0;
+                        text-transform: uppercase;
                       }
                       .date-time {
                         position: absolute;
-                  bottom: 0;
-                  margin: 5px 10px;
-                  padding: 10px;
-                  right: 0;
+                        bottom: 0;
+                        margin: 5px 10px;
+                        z-index: 1;
+                        font-size: 13px;
+                        color: white;
+                        border-radius: 40px;
+                        padding: 5px 10px;
+                        right: 0;
+                        backdrop-filter: blur(10px);
                       }
             .votes-holder{
               position: absolute;
-              top: 0;
+              top: 10px;
               right: 0;
-              margin: 5px 15px;
-
+              padding-top: 12px;
+              z-index: 1;
+              backdrop-filter: blur(5px);
+              margin: 0 15px 5px 15px;
+              border-radius: 10px;
               display: inline-flex;
             }
-            .votes{
-              padding: 5px;
-              font-size: 20px;
-              font-weight: 500;
-              /* border: 1px solid #b9b1b161; */
+            .just-votes{
+              position: absolute;
+              top: 10px;
+              right: 40px;
               color: white;
+              font-size: 14px;
+              z-index: 2;
+              margin: 0;
+            }
+            .post-user-det{
+              display: inline-flex;
+              justify-content: space-between;
+              position: absolute;
+                        bottom: 0;
+                        z-index: 1;
+                        margin: 5px;
+                        text-transform: capitalize;
+                        backdrop-filter: blur(10px);
+                        color: white;
+                        border-radius: 30px;
+                        padding: 5px;
+                        left: 0;
+            }
+            .post-dp{
+              height: 30px;
+              width: 30px;
+              border-radius: 50px;
+            }
+            .votes{
+              padding: 0 5px;
+              font-size: 40px;
+              font-weight: 800;
               margin: 0 5px;
+            }
+             .pos{
+color: #2196F3;
+            }
+             .neg{
+              color: #F44336;
             }
                       .profile-holder {
                         border: 1.5px solid #b9b1b161;
@@ -168,13 +233,13 @@
 
                       .address-holder {
                            
-    margin: 10px ;
-    background-color: white;
-    box-shadow: -8px 12px 18px 0 rgb(25 42 70 / 13%);
-    border-radius: 10px;
-    border: 1px solid #b9b1b161;
-    padding: 10px;
-    position: relative;
+                            margin: 10px auto ;
+                            background-color: white;
+                            box-shadow: -8px 12px 18px 0 rgb(25 42 70 / 13%);
+                            border-radius: 10px;
+                            border: 1px solid #b9b1b161;
+                            padding: 10px;
+                            position: relative;
    
                       }
                       .address-holder i {
@@ -193,7 +258,7 @@
                         margin: 0;
                       }
 .my-posts-holder{
-      margin: 10px;
+      margin: 10px auto;
     background-color: white;
     box-shadow: -8px 12px 18px 0 rgb(25 42 70 / 13%);
     border-radius: 10px;
@@ -276,6 +341,28 @@
 .add-img-butt i{
   padding: 0 6px 0 0;
 }
+.add-tag-butt{
+  margin: 10px auto 0 auto;
+  padding: 8px 18px;
+  text-align: center;
+  border-radius: 7px;
+  background-color: #1e7e34;
+  border: 1px solid #1e7e34;
+  color: white;
+  transition: .3s ease-in-out;
+  display: block;
+  width: 100%;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.add-tag-butt:hover{
+  color: #1e7e34;
+  background-color: white;
+}
+.add-tag-butt i{
+  padding: 0 6px 0 0;
+}
 .mypost-date{
   margin: 5px auto 0 auto;
   text-align: center;
@@ -284,8 +371,6 @@
 
                       .all-tag-holder {
                         width: 100%;
-                        
-                        height: 100%;
                         padding: 20px 0px;
 
                         
@@ -302,6 +387,7 @@
                         border: 1px solid #b1afaf73;
                         padding: 20px;
                         border-radius: 5px;
+                        overflow-x: auto;
                       }
                       .dtag-holder .dtag-title{
                         margin: 0px auto 20px 6px;
@@ -392,11 +478,30 @@
                         color:black;
                       }
                       .post_desc {
+                        box-sizing: border-box;
                         margin: 20px;
-                        color: rgb(177, 12, 12);
+                        color: rgb(0 0 0);
+                        display: flex;
+                        height: 23px;
+                        overflow-y: hidden;
                         word-break: break-word;
+                        justify-content: end;
                       }
-                      
+                      .post_desc p{
+                        margin: auto 5px auto 5px;
+                        
+                      }
+                      .read-more{
+                        margin: auto 5px auto 20px;
+                        min-width: 90px;
+                        color: #2196f3;
+                        text-align: center;
+                        text-decoration: none;
+                        transition: .3s ease-in-out;
+                      }
+                      .read-more:hover{
+                        color: F44336;
+                      }
                       .post-image-holder{
                         width: 100%;
                         margin: 30px 30px 20px 30px !important;
@@ -409,6 +514,17 @@
                         max-width: 200px;
                         border: 1px solid darkgrey;
                       }
+.post-tag-place{
+  display: block;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  color: white;
+}
+.post-tag-place i{
+margin: auto 10px;
+}
+
                       .post-image img{
                         margin: 10px auto;
                         border: 2px solid black;

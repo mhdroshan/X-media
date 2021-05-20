@@ -13,7 +13,7 @@
         {% if ctags %}
         {% for ctag in ctags%}
         
-        <a href="{% url 'Posts:post-entry' ctag.id %}">
+        <a href="{% url 'Posts:related-post' ctag.id %}">
           <div class="tag">
             <p class="tag-name">{{ctag.tag_name}}</p>
             <p class="tag-title">{{ctag.tag_title}}</p>
@@ -29,7 +29,12 @@
               <div class="places"><span>State:</span>{{ctag.t_state}}</div>
               <div class="places"><span>Place:</span>{{ctag.t_place}}</div>
             </div>
+            
           </div>
+          <a href="{% url 'Posts:post-entry' ctag.id %}" class="add-tag-butt">
+            <i class="fa fa-plus" aria-hidden="true"></i><span> ADD POST</span>
+          </a>
+          <hr>
           </a>
           {%endfor%}
           {% else %}
@@ -52,7 +57,7 @@
       {% for stag in stags%}
       
 
-      <a href="{% url 'Posts:post-entry' stag.id %}">
+      <a href="{% url 'Posts:related-post' stag.id %}">
       <div class="tag">
         <p class="tag-name">{{stag.tag_name}}</p>
         <p class="tag-title">{{stag.tag_title}}</p>
@@ -69,6 +74,10 @@
           <div class="places"><span>Place:</span>{{stag.t_place}}</div>
         </div>
       </div>
+      <a href="{% url 'Posts:post-entry' stag.id %}" class="add-tag-butt">
+        <i class="fa fa-plus" aria-hidden="true"></i><span> ADD POST</span>
+      </a>
+      <hr>
       </a>
       {%endfor%}
 
@@ -84,7 +93,7 @@
       <p class="dtag-title">Tags related to your place <span>{{user.u_place}}:</span></p>
       {% if ptags  %}
        {% for stag in ptags%}
-      <a href="{% url 'Posts:post-entry' stag.id %}">
+      <a href="{% url 'Posts:related-post' stag.id %}">
       <div class="tag">
         <p class="tag-name">{{stag.tag_name}}</p>
         <p class="tag-title">{{stag.tag_title}}</p>
@@ -101,6 +110,10 @@
           <div class="places"><span>Place:</span>{{stag.t_place}}</div>
         </div>
       </div>
+      <a href="{% url 'Posts:post-entry' stag.id %}" class="add-tag-butt">
+        <i class="fa fa-plus" aria-hidden="true"></i><span> ADD POST</span>
+      </a>
+      <hr>
       </a>
       {%endfor%}
       
