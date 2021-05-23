@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}Tags{% endblock %}
+{% block title %}Related posts{% endblock %}
 
     {% block content %}
  <a class="back-butt" href="/tags/allTags"><i class="fa fa-arrow-left" aria-hidden="true"></i>
@@ -9,22 +9,53 @@
     <div class="post-holder">
       {% for post in posts %}
 
-        <a href="{% url 'Posts:post-details' post.id %}">
-          <div class="post">
-            <p class="all-user-name">{{post.user_id.u_name}}</p>
-            <p class="all-tag-name">{{post.tag_id.tag_name}}</p>
-        <div class="votes-holder">
-          <div class="votes">{{post.pos_votes}}</div>
-          <div class="votes">{{post.neg_votes}}</div>
+      <div class="post">
+        <div class="post-fir-half">
+          <a href="{% url 'Posts:related-post' post.tag_id.id %}">
+          <p class="all-tag-name">#{{post.tag_id.tag_name}}</p>
+          {%  if post.tag_id.t_country != "0" %}
+          
+          <p class="post-tag-place"><i class="fa fa-map-marker" aria-hidden="true"></i>{{post.tag_id.t_country}}</p>
+          {% endif %}
+          {%  if post.tag_id.t_state != "0" %}
+          
+          <p class="post-tag-place"><i class="fa fa-map-marker" aria-hidden="true"></i>{{post.tag_id.t_state}}</p>
+          {% endif %}
+          {%  if post.tag_id.t_place != "0" %}
+          
+          <p class="post-tag-place"><i class="fa fa-map-marker" aria-hidden="true"></i>{{post.tag_id.t_place}}</p>
+          {% endif %}
+          
+        </a>
+          <h4 class="post-title">{{post.p_title}}</h4>
+    <div class="post_desc"><p>{{post.p_content}}</p><a href="{% url 'Posts:post-details' post.id %}" class="read-more">read more</a></div>
         </div>
+        <div style="background-image: url('{{post.p_coverimage.url }}');" class="post-sec-half">
+          <div class="post-user-det">
+          
+          <img
+      class="post-dp"
+      src="{{post.user_id.u_pic.url}}"
+      alt="profile"
+      srcset=""
+    />
+    <p class="all-user-name">{{post.user_id.u_name}}</p>
+  </div>
+        <p class="just-votes">Votes</p>
+          <div class="votes-holder">
 
-        <h4 class="post-title">{{post.p_title}}</h4>
-        <p class="post_desc">{{post.p_content}}</p>
-        <p class="date-time">{{post.p_dateTime}}</p>
-        
-        
-      </div>
-      </a>
+            <div class="votes pos">{{post.pos_votes}}</div>
+            <div class="votes neg">{{post.neg_votes}}</div>
+          </div>
+  
+          
+          <p class="date-time">{{post.p_dateTime}}</p>
+        </div>
+     
+      
+  </div>
+
+  <hr>
       
       {%endfor%}
     </div>

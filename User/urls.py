@@ -8,6 +8,7 @@ urlpatterns = [
     path('login/',views.login,name="user-login"),
     path('logout/', views.logout, name='logout'),
     path('tag-req',views.tagreq,name="tagreq"),
+    path('moreimage/<int:id>',views.moreimage,name="moreimage"),
     
    
 

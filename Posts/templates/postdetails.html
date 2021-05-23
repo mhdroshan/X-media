@@ -5,29 +5,70 @@
     <div class="post-holder">
       {% if post %}
       
-          <div class="post">
+          <div class="post-det">
         <div class="votes-holder">
           <div class="votes">{{post.pos_votes}}</div>
           <div class="votes">{{post.neg_votes}}</div>
         </div>
 
-        <h4 class="post-title">{{post.p_title}}</h4>
-        <p class="post_desc">{{post.p_content}}</p>
-        <p class="date-time">{{post.p_dateTime}}</p>
+        <h4 class="post-title-det">{{post.p_title}}</h4>
+        <p class="post_desc-det">{{post.p_content}}</p>
+        <p class="date-time-det">Added on: &nbsp;{{post.p_dateTime}}</p>
+        <div class="post-user-det">
+              
+          <img
+      class="post-dp"
+      src="{{post.user_id.u_pic.url}}"
+      alt="profile"
+      srcset=""
+    />
+    <p class="all-user-name" style="color: black;">{{post.user_id.u_name}}</p>
+  </div>
         
-        <div class="row post-image-holder">
-       {% for data in imageRecords %}
-        <div class="col-sm-3 post-image ">
-          <p class="image-title">{{ data.img_title }}</p>
-            <img src="{{ data.post_image.url }}" width="120" height="120">
-            <p></p>
-            <p class="image-date">{{ data.p_dateTime }}</p>
-          </div>
-          {%endfor%}
+          <div class="container">
+{% if imageRecords %}
+
+   {% for data in imageRecords %}
+            <div class="mySlides">
+              <p class="post-det-imag-date">{{data.p_dateTime}}</p>
+              <img src="{{ data.post_image.url }}" style="width:100%">
+            </div>
+            {%endfor%}
+            
+            <a class="prev" onclick="plusSlides(-1)">❮</a>
+            <a class="next" onclick="plusSlides(1)">❯</a>
+          
+            <div class="caption-container">
+              <p id="caption"></p>
+            </div>
+          
+            <div style="justify-content: center;" class="row">
+              {% for data in imageRecords %}
+          
+              <div class="column">
+                <img class="demo cursor" src="{{ data.post_image.url }}" style="width:100%" alt="{{ data.img_title }}" onclick="currentSlide({{forloop.counter}})">
+             
+              </div>
+              {%endfor%}
+      
+            </div>
             {% endif %}
           </div>
+
+            {% endif %}
+          
       </div>
       
+
+
+
+  
+      
+      
+
+
+
+
       
     </div>
  

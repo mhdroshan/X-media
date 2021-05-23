@@ -12,6 +12,7 @@
       integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
       crossorigin="anonymous"
     />
+    
 
     <!-- font awsome -->
     <link
@@ -19,8 +20,11 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
 
+
+
     <!-- jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <!-- CSS CUSTOM -->
     <style>
                       body {
@@ -88,6 +92,24 @@
                         width: 100%;
                         display: inline-flex;
                       }
+                      .post-det {
+                        min-height: 170px;
+                        border: 1.5px solid #b9b1b161;
+                        margin: 30px auto;
+                        background-color: white;
+                        box-shadow: -8px 12px 18px 0 rgb(25 42 70 / 13%);
+                        border-radius: 10px;
+                        position: relative;
+                        width: 100%;
+                        
+                      }
+                      .post-title-det{
+                        margin: 10px;
+                        text-align: center;
+                        color: black;
+                        border-bottom: 1px solid #8080808c;
+                        padding-bottom: 15px;
+                      }
                       .post-fir-half{
                         width: 65%;
                         position: relative;
@@ -112,7 +134,7 @@
                         border-radius: 0 10px 10px 0;
                         background-color: #0c0c0c8f;
                       }
-                      .post .all-user-name{
+                       .all-user-name{
                         font-size: 14px;
                         margin: auto 8px auto 8px;
                       }
@@ -138,6 +160,15 @@
                         padding: 5px 10px;
                         right: 0;
                         backdrop-filter: blur(10px);
+                      }
+                      .date-time-det {
+                        position: absolute;
+                        bottom: 0;
+                        margin: 5px 10px;
+                        z-index: 1;
+                        font-size: 13px;
+                        padding: 5px 10px;
+                        right: 0;
                       }
             .votes-holder{
               position: absolute;
@@ -280,6 +311,7 @@ color: #2196F3;
   justify-content: left;
   overflow-y: auto;
 }
+
 .mypost{
   min-width: 250px;
   height: auto;
@@ -289,6 +321,7 @@ color: #2196F3;
   border: 1px solid #80808085;
 
 }
+
 .mypost-tag{
   background-color: #0b4b90;
   color: white;
@@ -337,6 +370,9 @@ color: #2196F3;
 .add-img-butt:hover{
   color: #1e7e34;
   background-color: white;
+}
+.add-img-butt:focus{
+  outline: none;
 }
 .add-img-butt i{
   padding: 0 6px 0 0;
@@ -491,6 +527,13 @@ color: #2196F3;
                         margin: auto 5px auto 5px;
                         
                       }
+                      .post_desc-det {
+                        box-sizing: border-box;
+                        margin: 30px;
+                        color: rgb(0 0 0);
+                     
+                      }
+                     
                       .read-more{
                         margin: auto 5px auto 20px;
                         min-width: 90px;
@@ -514,16 +557,16 @@ color: #2196F3;
                         max-width: 200px;
                         border: 1px solid darkgrey;
                       }
-.post-tag-place{
-  display: block;
-  position: absolute;
-  right: 10px;
-  top: 10px;
-  color: white;
-}
-.post-tag-place i{
-margin: auto 10px;
-}
+                        .post-tag-place{
+                          display: block;
+                          position: absolute;
+                          right: 10px;
+                          top: 10px;
+                          color: white;
+                        }
+                        .post-tag-place i{
+                        margin: auto 10px;
+                        }
 
                       .post-image img{
                         margin: 10px auto;
@@ -702,6 +745,134 @@ color: #1e7e34;
 background-color: white;
 }
 
+.container {
+  position: relative;
+}
+
+.mySlides {
+  display: none;
+  max-width: 500px;
+  position: relative;
+  margin: 30px auto 10px auto;
+}
+
+.cursor {
+  cursor: pointer;
+  max-height: 200px;
+}
+
+.prev,
+.next {
+  cursor: pointer;
+  position: absolute;
+  height: 60px;
+  top: 36%;
+  text-align: center;
+  line-height: 30px;
+  width: 60px;
+  padding: 15px;
+  margin-top: -50px;
+  color: white !important;
+  font-weight: bold;
+  font-size: 35px;
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  border-radius: 50px;
+  background-color: rgba(0, 0, 0, 0.8);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.next {
+  right: 0;
+}
+
+.prev:hover,
+.next:hover {
+  background-color: white;
+  color: rgba(0, 0, 0, 0.8) !important;
+}
+#caption{
+  margin: 5px auto;
+  font-size: 18px;
+  text-align: left;
+  margin-left: 10px;
+}
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+
+.caption-container {
+  text-align: center;
+  background-color: #0000008c;
+  padding: 2px;
+  position: absolute;
+  color: white;
+  border-radius: 0px;
+  font-weight: 500;
+  width: 500px;
+  margin: 0px auto;
+  top: 0;
+  left: 50%;
+  margin-left: -250px;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.post-det-imag-date{
+  position: absolute;
+  top: 20px;
+  right: 5px;
+
+  color: white;
+  font-size: 12px;
+  text-align: center;
+  z-index: 2;
+}
+
+.column {
+  float: left;
+  width: 16.66%;
+  margin: 10px 15px;
+}
+
+.demo {
+  opacity: 0.6;
+}
+
+.active,
+.demo:hover {
+  opacity: 1;
+}
+
+.fade-scale {
+  transform: scale(.5);
+  opacity: 0;
+  -webkit-transition: all .4s ease;
+  -o-transition: all .4s ease;
+  transition: all .4s ease;
+}
+
+.fade-scale.in {
+  opacity: 1;
+  transform: scale(1);
+}
+.modal-backdrop{
+  background-color: #0000009e !important;
+  backdrop-filter: blur(4px) !important;
+}
+.modal-header{
+  justify-content: center;
+}
+
+
     </style>
   </head>
 
@@ -722,12 +893,47 @@ background-color: white;
 
       </div>
     </nav>
+
     <!-- navlink selected -->
+    
     <script>
       $(".navbar-nav a").on("click", function () {
         $(".nav-link").removeClass("active");
         $(this).addClass("active");
       });
     </script>
+
+    <script>
+      var slideIndex = 1;
+      showSlides(slideIndex);
+      
+      function plusSlides(n) {
+        showSlides(slideIndex += n);
+      }
+      
+      function currentSlide(n) {
+        showSlides(slideIndex = n);
+      }
+      
+      function showSlides(n) {
+        var i;
+        var slides = document.getElementsByClassName("mySlides");
+        var dots = document.getElementsByClassName("demo");
+        var captionText = document.getElementById("caption");
+        if (n > slides.length) {slideIndex = 1}
+        if (n < 1) {slideIndex = slides.length}
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex-1].style.display = "block";
+        dots[slideIndex-1].className += " active";
+        captionText.innerHTML = dots[slideIndex-1].alt;
+      }
+      </script>
+          
+    
   </body>
 </html>

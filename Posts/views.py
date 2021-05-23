@@ -47,21 +47,21 @@ def addpost(request,id):
 
 
 
-def postimages(request,id):
-    allPostImages=PostImageModel.objects.filter(post=id)
-    if request.session.has_key('userid'):
-        if request.method == 'POST' and request.FILES:
-            postImagesObj=PostImageModel()
-            postImagesObj.img_title= request.POST.get("txtCaption")
-            postImagesObj.post_image= request.FILES.get("postImage")
+# def postimages(request,id):
+#     allPostImages=PostImageModel.objects.filter(post=id)
+#     if request.session.has_key('userid'):
+#         if request.method == 'POST' and request.FILES:
+#             postImagesObj=PostImageModel()
+#             postImagesObj.img_title= request.POST.get("txtCaption")
+#             postImagesObj.post_image= request.FILES.get("postImage")
 
-            postObj=PostModel.objects.get(id=id)
-            postImagesObj.post=postObj
+#             postObj=PostModel.objects.get(id=id)
+#             postImagesObj.post=postObj
 
-            postImagesObj.save()
-            return redirect("/my-posts/")
-            # return HttpResponse("Saved")
-        else:
-            return render(request,"postimages.html",{"allPostImages":allPostImages})
+#             # return HttpResponse("Saved")
+#             postImagesObj.save()
+#             return redirect("/my-posts/")
+#         else:
+#             return render(request,"postimages.html",{"allPostImages":allPostImages})
         
 

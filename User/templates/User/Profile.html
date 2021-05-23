@@ -2,6 +2,14 @@
 {% block title %}Profile{% endblock %}
  {% block content %}
 
+ {%if flag%}
+    <script>
+        alert("Image added sucessfully..!")
+    </script>
+{%endif%}
+
+
+
 <div class="profile-holder">
   {% if user %}
 
@@ -38,6 +46,8 @@
         <div class="eachpost">
           {% if mypost %} 
           {% for post in mypost %}
+
+
           <div class="mypost">
             <p class="mypost-tag">{{post.tag_id.tag_name}}</p>
             <p class="post-title">{{post.p_title}}</p>
@@ -45,16 +55,44 @@
               <div class="one-score">{{post.pos_votes}}</div>
               <div class="one-score">{{post.neg_votes}}</div>
             </div>
-            <a
-              href="{% url 'Posts:post-images' post.id  %}"
-              class="add-img-butt"
-            >
-              <i class="fa fa-plus" aria-hidden="true"></i>
-              More images
-            </a>
+            
+            
+              
+              <button type="button" class="add-img-butt" data-toggle="modal" data-target="#my{{forloop.counter}}modal"><i class="fa fa-plus" aria-hidden="true"></i>More images</button>
+               <!-- modal -->
+          <div class="modal fade-scale" id="my{{forloop.counter}}modal" role="dialog">
+            <div class="modal-dialog">
+            
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title">{{post.p_title}}</h4>
+                </div>
+                <div class="modal-body">
+                  <form action="{% url 'User:moreimage' post.id %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                  <div class="PE-input-holder">
+                    <p>Give a title to the image:</p>
+                    <input class="PE-input"  type="text" name="imagetitle" id="" required placeholder="image title">
+                </div>
+                <div class="PE-input-holder">
+                  <p>Add an image:</p>
+                  <input required type="file" class="PE-input" name="postImage" id="">
+              </div>
+              <input class="PE-submit" type="submit" value="Add">
+                 
+                  </form>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+          <!-- modal end -->
+            
             <p class="mypost-date">{{post.p_dateTime}}</p>
           </div>
 
+         
           {% endfor %} 
           {% else %}
 
@@ -65,7 +103,7 @@
       </div>
     </div>
   </div>
-
+  
   {% endif %}
 </div>
 
