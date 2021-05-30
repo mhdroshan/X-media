@@ -13,7 +13,7 @@
         {% if ctags %}
         {% for ctag in ctags%}
         
-        <a href="{% url 'Posts:related-post' ctag.id %}">
+        <a href="{% url 'Posts:post-vote' ctag.id %}">
           <div class="tag">
             <p class="tag-name">{{ctag.tag_name}}</p>
             <p class="tag-title">{{ctag.tag_title}}</p>
@@ -25,9 +25,9 @@
               srcset=""
             />
             <div class="place-holder">
-              <div class="places"><span>Country:</span>{{ctag.t_country}}</div>
-              <div class="places"><span>State:</span>{{ctag.t_state}}</div>
-              <div class="places"><span>Place:</span>{{ctag.t_place}}</div>
+            <div class="places"><span>Country:</span>{{ctag.t_country}}</div>
+              
+  
             </div>
             
           </div>
@@ -57,7 +57,7 @@
       {% for stag in stags%}
       
 
-      <a href="{% url 'Posts:related-post' stag.id %}">
+      <a href="{% url 'Posts:post-vote' stag.id %}">
       <div class="tag">
         <p class="tag-name">{{stag.tag_name}}</p>
         <p class="tag-title">{{stag.tag_title}}</p>
@@ -69,9 +69,9 @@
           srcset=""
         />
         <div class="place-holder">
-          <div class="places"><span>Country:</span>{{stag.t_country}}</div>
+          {% comment %} <div class="places"><span>Country:</span>{{stag.t_country}}</div> {% endcomment %}
           <div class="places"><span>State:</span>{{stag.t_state}}</div>
-          <div class="places"><span>Place:</span>{{stag.t_place}}</div>
+          {% comment %} <div class="places"><span>Place:</span>{{stag.t_place}}</div> {% endcomment %}
         </div>
       </div>
       <a href="{% url 'Posts:post-entry' stag.id %}" class="add-tag-butt">
@@ -93,7 +93,7 @@
       <p class="dtag-title">Tags related to your place <span>{{user.u_place}}:</span></p>
       {% if ptags  %}
        {% for stag in ptags%}
-      <a href="{% url 'Posts:related-post' stag.id %}">
+      <a href="{% url 'Posts:post-vote' stag.id %}">
       <div class="tag">
         <p class="tag-name">{{stag.tag_name}}</p>
         <p class="tag-title">{{stag.tag_title}}</p>
@@ -105,8 +105,8 @@
           srcset=""
         />
         <div class="place-holder">
-          <div class="places"><span>Country:</span>{{stag.t_country}}</div>
-          <div class="places"><span>State:</span>{{stag.t_state}}</div>
+ 
+          
           <div class="places"><span>Place:</span>{{stag.t_place}}</div>
         </div>
       </div>

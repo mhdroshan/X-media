@@ -16,6 +16,24 @@ def userprofile(request):
     else:
         return redirect("/user/login")
 
+def changePrivacy(request,id):
+    user  = UserModel.objects.get(id=id)
+    radio = request.POST.get("anontype")
+    if request.method == 'POST':
+        if radio == '0':
+            
+            user.u_security ='0'
+            user.save()
+            return redirect('User:profile')
+            
+        elif radio =='1':
+            user.u_security = '1'
+            user.save()
+            return redirect('User:profile')
+
+
+
+
 
 def moreimage(request,id):
     userid = request.session['userid']
@@ -45,7 +63,7 @@ def login(request):
             if userLoged>0:
                 user=get_object_or_404(UserModel, u_username=request.POST.get("username"),u_pass=request.POST.get("password"))
                 request.session["userid"]=user.id
-                return redirect("/home")
+                return redirect("/")
             else:
                 return render(request,"user/login.html",{'fail':1})
         return render(request,"user/login.html",{})
@@ -67,6 +85,10 @@ def tagreq(request):
             t.tr_c=request.POST.get("tagcountry")
             t.tr_s=request.POST.get("tagstate")
             t.tr_p=request.POST.get("tagplace")
+            t.tr_type=request.POST.get("loctype")
+
+            userObject=UserModel.objects.get(id=request.session["userid"])
+            t.user_id=userObject
             
             
 

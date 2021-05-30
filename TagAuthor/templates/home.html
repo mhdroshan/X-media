@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tag author | Home</title>
+ <!-- Bootstrap -->
+ <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+ integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+
+
+<!-- font awsome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <!-- jquery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        body {
+            scroll-behavior: smooth;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+          }
+      
+        .welcom-note{
+            text-align: center;
+            font-weight: 600;
+            margin: 15px auto;
+          }
+          
+    .logout-butt {
+        color: #d62b0c;
+        position: fixed;
+        top: 20px;
+        background-color: white;
+        right: 30px;
+        box-shadow: 0px 0px 10px 0px #5a5a5a82;
+        z-index: 20;
+        border-radius: 50px;
+        font-size: 12px;
+        transition: .3s ease-in-out;
+        text-decoration: none;
+        /* border: 1px solid #d62b0c; */
+        padding: 10px 15px;
+      }
+  
+      .logout-butt i {
+        font-size: 30px;
+        display: block;
+        text-align: center;
+        padding: 0 5px;
+      }
+  
+      .logout-butt span {
+        display: block !important;
+        margin: 3px auto 0 auto;
+        text-align: center;
+      }
+  
+      .logout-butt:hover {
+        color: white;
+        text-decoration: none !important;
+        background-color: #d62b0c;
+      }
+      .complaits-holder{
+          max-width: 700px;
+          border-radius: 5px;
+          border: 1px solid grey;
+          margin: 50px auto;
+         
+          overflow-y: auto;
+      }
+  
+.complaint-card{
+    padding: 10px;
+    position: relative;
+    box-shadow: 0 3px 6px rgb(0 0 0 / 16%), 0 3px 6px rgb(0 0 0 / 23%);
+    width: 90%;
+    margin: 25px auto;
+    min-height: 125px;
+    background-color: white;
+}
+.complaint-card p{
+    margin-bottom: 0;
+}
+.complaint-card .title{
+    
+    font-weight: 500;
+    padding: 0px 10px 10px 5px;
+    font-size: 20px;
+}
+.complaint-card .tagtype{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 10px 10px 5px 10px;
+}
+.places{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 10px 10px 5px 10px;
+}
+.tag-dp {
+    height: 30px;
+    width: 30px;
+    border-radius: 50px;
+  }
+  .profileuser{
+    display: inline-flex;
+    justify-content: space-between;
+    position: absolute;
+    top: 0;
+    text-transform: capitalize;
+    padding: 8px 10px;
+    right: 0;
+
+  }
+  .profileuser p{
+      padding: 3px 10px;
+  }
+  .dis-holder{
+    max-height: 50px;
+    font-size: 15px;
+    overflow-y: auto;
+    padding-left: 20px;
+  }
+    </style>
+</head>
+<body>
+  
+    <a class="logout-butt" href="{% url 'TagAuthor:logout' %}"><i class="fa fa-power-off" aria-hidden="true"></i>
+      <span>Logout</span>
+    </a>
+
+
+
+{% if author %}
+<h1 class="welcom-note">Welcome {{author.a_name}}</h1>
+<div class="complaits-holder">
+{% for req in request %}
+<div class="complaint-card">
+    <p class="title">{{req.tr_title}}</p>
+    <div class="dis-holder">
+        <p>{{req.tr_content}}</p>
+    </div>
+    <p class="tagtype">
+    <strong>Location type: </strong>
+        {% if req.tr_type == 'c' %}
+        Country
+        {% elif req.tr_type == 's' %}
+        State
+        {% else %}
+        Place
+        {% endif %}
+    </p>
+    {% if  req.tr_type == 'c' %}
+    <p class="places"><strong>Country: </strong>{{req.tr_c}}</p>
+    {% endif %}
+
+    {% if  req.tr_type == 's' %}
+    <p class="places"><strong>State: </strong>{{req.tr_s}}</p>
+    {% endif %}
+
+    {% if  req.tr_type == 'p' %}
+    <p class="places"><strong>Place: </strong>{{req.tr_p}}</p>
+    {% endif %}
+<div class="profileuser">
+    <p>{{req.user_id.u_name}}</p>
+    <img
+                class="tag-dp"
+                src="{{req.user_id.u_pic.url}}"
+                alt="profile"
+                srcset=""
+              />
+</div>
+   
+</div>
+{% endfor %}
+</div>
+
+
+{% endif %}
+</body>
+</html>

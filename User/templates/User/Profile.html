@@ -12,14 +12,44 @@
 
 <div class="profile-holder">
   {% if user %}
+  <form action="{% url 'User:change' user.id %}"  method="post">
+    {% csrf_token %}
+  	<div class="switch-wrapper">
+      <p>Show profile</p>
+      <div class="switch">
+        <input type="radio" class="switch-radio left" id="radio-left" name="anontype" value="1" />
+        <input type="radio" class="switch-radio right" id="radio-right" name="anontype" value="0" />
+  
+          <div class="slider">
+            <label class="switch-radio-label left active" for="radio-left">Yes</label>
+            <label class="switch-radio-label right inactive" for="radio-right">No</label>
+          </div>
+      </div>
+    </div>
+  
 
-  <h2 class="user-name">{{user.u_name}}</h2>
-  <img
+</form>
+
+  <h2 class="user-name">
+  {% if user.u_security %}
+  Anonymous
+{% else %}
+ {{user.u_name}}
+{% endif %}
+  </h2>
+  
+  {%if user.u_security%}
+  
+  <img class="user-image" style="border-color: black;" alt="anonymous" src="https://img.icons8.com/ios-filled/256/000000/anonymous-mask.png"/>
+    {% else %}
+    <img
     class="user-image"
     src="{{user.u_pic.url}}"
     alt="profile-pic"
     srcset=""
   />
+    {%endif %}
+  
   <div class="row">
     <div class="col-md-4">
       <div class="address-holder">
@@ -50,15 +80,16 @@
 
           <div class="mypost">
             <p class="mypost-tag">{{post.tag_id.tag_name}}</p>
-            <p class="post-title">{{post.p_title}}</p>
+            <marquee>{{post.p_title}}</marquee>
+            <!-- <p class="post-title">{{post.p_title}}</p> -->
             <div class="score-holder">
-              <div class="one-score">{{post.pos_votes}}</div>
-              <div class="one-score">{{post.neg_votes}}</div>
+              <div class="one-score">{{post.pvoted.all.count}}</div>
+              <div class="one-score">{{post.nvoted.all.count}}</div>
             </div>
             
             
               
-              <button type="button" class="add-img-butt" data-toggle="modal" data-target="#my{{forloop.counter}}modal"><i class="fa fa-plus" aria-hidden="true"></i>More images</button>
+              <button type="button" class="add-img-butt" data-toggle="modal" data-target="#my{{forloop.counter}}modal"><i class="fa fa-plus" aria-hidden="true"></i>Images</button>
                <!-- modal -->
           <div class="modal fade-scale" id="my{{forloop.counter}}modal" role="dialog">
             <div class="modal-dialog">
@@ -103,7 +134,21 @@
       </div>
     </div>
   </div>
-  
+  <script>
+    $( document ).ready(function() {
+      
+      $('input[type=radio]').on('change', function() {
+        
+        $(this).closest("form").submit();
+      });
+      {% if user.u_security %}
+      $("#radio-left").prop("checked", true);
+      {% else %}
+      $("#radio-right").prop("checked", true);
+      {% endif %}
+    });
+
+  </script>
   {% endif %}
 </div>
 

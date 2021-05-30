@@ -1,5 +1,6 @@
 from django.db import models
 
+from User.models import UserModel
 # Create your models here.
 class Tagmodel(models.Model):
     tag_title=models.CharField(max_length=40,default=0)
@@ -17,10 +18,12 @@ class Tagmodel(models.Model):
 
 class TagRequest(models.Model):
     tr_title=models.CharField(max_length=40,default=0)
+    tr_type=models.CharField(max_length=10,default=0)
     tr_content=models.TextField(default=0)
     tr_c=models.CharField(max_length=40,default=0)
     tr_s=models.CharField(max_length=40,default=0)
     tr_p=models.CharField(max_length=40,default=0)
+    user_id=models.ForeignKey(UserModel,on_delete=models.SET_NULL,null=True,verbose_name="user")
 
     def __str__(self):
         return self.tr_title+" - "+self.tr_c+" - "+self.tr_s+" - "+self.tr_p

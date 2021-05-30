@@ -6,23 +6,41 @@
       {% if post %}
       
           <div class="post-det">
-        <div class="votes-holder">
-          <div class="votes">{{post.pos_votes}}</div>
-          <div class="votes">{{post.neg_votes}}</div>
-        </div>
+        <div class="votes-holder" style="left:auto;right:0;top: 70px;backdrop-filter:none">
+<button style="color: black;" class="votebutt-home">
+  <i class="fa fa-thumbs-down" aria-hidden="true"></i>
+          <p>{{post.nvoted.all.count}} votes</p>
+</button>
+<button  style="color: black;" class="votebutt-home">
+  <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+          <p>{{post.pvoted.all.count}} votes</p>
+</button>
+                
+              </div>
 
         <h4 class="post-title-det">{{post.p_title}}</h4>
         <p class="post_desc-det">{{post.p_content}}</p>
         <p class="date-time-det">Added on: &nbsp;{{post.p_dateTime}}</p>
         <div class="post-user-det">
               
-          <img
-      class="post-dp"
-      src="{{post.user_id.u_pic.url}}"
-      alt="profile"
-      srcset=""
-    />
-    <p class="all-user-name" style="color: black;">{{post.user_id.u_name}}</p>
+          {%if post.user_id.u_security == 1%}
+              
+          <img class="post-dp" alt="svgImg" src="https://img.icons8.com/ios/64/000000/anonymous-mask.png"/>
+            {% else %}
+            <img
+            class="post-dp"
+            src="{{post.user_id.u_pic.url}}"
+            alt="profile"
+            srcset=""
+          />
+            {%endif %}
+            <p style="color: black;" class="all-user-name">
+              {%if post.user_id.u_security == 1%}
+              Anonymous
+              {% else %}
+              {{post.user_id.u_name}}
+              {%endif %}
+            </p>
   </div>
         
           <div class="container">

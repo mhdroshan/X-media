@@ -1,7 +1,7 @@
+from django.db.models.query_utils import Q
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
-from django.http import HttpResponse
-from .models import PostModel,PostImageModel
+from .models import PostModel,PostImageModel,PositiveVote,NegativeVote
 from Tags.models import Tagmodel
 from User.models import UserModel
 
@@ -14,6 +14,69 @@ def postdetails(request,id):
     PostImageRecords=PostImageModel.objects.filter(post=id)
     postdetails=PostModel.objects.get(id=id)
     return render(request,"postdetails.html",{"imageRecords":PostImageRecords ,"post":postdetails})
+
+
+def postvote(request,id):
+    if request.session.has_key('userid'):
+        uid= request.session["userid"]
+        user = UserModel.objects.get(id=request.session["userid"])
+        posts=PostModel.objects.filter(~Q(user_id=uid), tag_id = id )
+
+        context = {
+            'posts':posts,
+            'user':user,
+        }
+        
+        return render (request,"postvote.html",context)
+    else:
+        return redirect("/user/login")
+
+
+def posvote(request):
+    user = UserModel.objects.get(id=request.session["userid"])
+    tag_id = request.POST.get('tag_id')
+    if request.method =='POST': 
+        post_id = request.POST.get('pos_id')
+        post_obj = PostModel.objects.get(id=post_id)
+
+        if user in post_obj.pvoted.all():
+            post_obj.pvoted.remove(user)
+        else:
+            post_obj.pvoted.add(user)
+
+        pvote , pcreated = PositiveVote.objects.get_or_create(user=user,post_id=post_id)
+            
+
+        if not pcreated:
+            if pvote.value=='Yes':
+                pvote.value=='No'
+            else:
+                pvote.value = 'Yes'
+        pvote.save()
+    return redirect("Tags:all-Tags-List")
+
+# negative vote
+def negvote(request):
+    user = UserModel.objects.get(id=request.session["userid"])
+    if request.method =='POST': 
+        post_id = request.POST.get('neg_id')
+        post_obj = PostModel.objects.get(id=post_id)
+
+        if user in post_obj.nvoted.all():
+            post_obj.nvoted.remove(user)
+        else:
+            post_obj.nvoted.add(user)
+
+        nvote , ncreated = NegativeVote.objects.get_or_create(user=user,post_id=post_id)
+        if not ncreated:
+            if nvote.value=='Yes':
+                nvote.value=='No'
+            else:
+                nvote.value = 'Yes'
+        nvote.save()
+    return redirect("Tags:all-Tags-List")
+
+
 
 
 def relatedpost(request,id):

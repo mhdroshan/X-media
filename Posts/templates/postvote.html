@@ -1,0 +1,157 @@
+{% extends 'base.html' %} {% block title %}Votes{% endblock %} 
+{% block content %}
+<a class="back-butt" href="/tags/allTags"
+  ><i class="fa fa-arrow-left" aria-hidden="true"></i>
+  <span>Back</span>
+</a>
+
+<div class="post-holder">
+  {% if posts %}
+  {% for post in posts %}
+
+  <div class="post">
+    <div class="post-fir-half">
+      <a href="{% url 'Posts:related-post' post.tag_id.id %}">
+        <p class="all-tag-name">#{{post.tag_id.tag_name}}</p>
+        {% if post.tag_id.t_country != "0" %}
+
+        <p class="post-tag-place">
+          <i class="fa fa-map-marker" aria-hidden="true"></i
+          >{{post.tag_id.t_country}}
+        </p>
+        {% endif %} {% if post.tag_id.t_state != "0" %}
+
+        <p class="post-tag-place">
+          <i class="fa fa-map-marker" aria-hidden="true"></i
+          >{{post.tag_id.t_state}}
+        </p>
+        {% endif %} {% if post.tag_id.t_place != "0" %}
+
+        <p class="post-tag-place">
+          <i class="fa fa-map-marker" aria-hidden="true"></i
+          >{{post.tag_id.t_place}}
+        </p>
+        {% endif %}
+      </a>
+      <h4 class="post-title">{{post.p_title}}</h4>
+      <div class="post_desc">
+        <p>{{post.p_content}}</p>
+        <a href="{% url 'Posts:post-details' post.id %}" class="read-more"
+          >read more</a
+        >
+      </div>
+    </div>
+    <div
+      style="background-image: url('{{post.p_coverimage.url }}');"
+      class="post-sec-half"
+    >
+      <div class="post-user-det">
+        <img
+          class="post-dp"
+          src="{{post.user_id.u_pic.url}}"
+          alt="profile"
+          srcset=""
+        />
+        <p class="all-user-name">{{post.user_id.u_name}}</p>
+      </div>
+
+      <!-- <input type="hidden" name="tag_id" value="{{post.tag_id.id}}" /> -->
+
+     
+      <div class="votes-holder">
+ 
+        
+
+        <!-- negative -->
+        <form action="{% url 'Posts:neg-vote' %}" method="post">
+          {% csrf_token %}
+
+          <input type="hidden" name="neg_id" value="{{post.id}}" />
+          {% if user not in post.nvoted.all %}
+          <button class="votebutt neg{{post.id}} vote-white"  type="submit">
+          <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+          <p>{{post.nvoted.all.count}} votes</p>
+          </button>
+
+          {% else %}
+          <button class="votebutt neg{{post.id}} vote-blue" style="color: #0b7dd8;" type="submit">
+            <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+            <p>{{post.nvoted.all.count}} votes</p>
+          </button>
+
+          {% endif %}
+        </form>
+
+        <!-- positive -->
+        <form action="{% url 'Posts:pos-vote' %}" method="post">
+          {% csrf_token %}
+          <input type="hidden" name="pos_id" value="{{post.id}}" />
+          {% if user not in post.pvoted.all %}
+          <button class="votebutt pos{{post.id}}  vote-white"  type="submit">
+            <i class="fa fa-thumbs-down" aria-hidden="true"></i>
+            <p>{{post.pvoted.all.count}} votes</p>
+          </button>
+
+          {% else %}
+          <button class="votebutt pos{{post.id}} vote-blue"  type="submit">
+            <i class="fa fa-thumbs-down" aria-hidden="true"></i>
+            <p>{{post.pvoted.all.count}} votes</p>
+          </button>
+          {% comment %}
+          <script>
+            $(".neg{{post.id}}").hide();
+          </script>
+          {% endcomment %} {% endif %}
+        </form>
+
+       
+        
+      </div>
+
+      <p class="date-time">{{post.p_dateTime}}</p>
+    </div>
+  </div>
+
+  <hr />
+  <script>
+    $( document ).ready(function() {
+
+  {% if user not in post.nvoted.all or user in post.pvoted.all %}
+     
+          $(".pos{{post.id}}").show();
+        
+        {% else %}
+        
+          $(".pos{{post.id}}").hide();
+       
+        {% endif %}
+
+
+        {% if user not in post.pvoted.all or user in post.nvoted.all %}
+        
+          $(".neg{{post.id}}").show();
+        
+        {% else %}
+        
+          $(".neg{{post.id}}").hide();
+        
+        {% endif %} 
+      
+    });
+  </script>
+  {%endfor%}
+  {% else %}
+  <script>
+    alert("Sorry.no post available..!")
+    window.location.href = "/tags/allTags";
+  </script>
+  {% endif %}
+  
+</div>
+
+{% endblock content %}
+
+
+
+      
+
