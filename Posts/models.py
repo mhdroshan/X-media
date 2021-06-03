@@ -59,3 +59,14 @@ class PostImageModel(models.Model):
 
     def __str__(self):
             return self.img_title
+
+class PostComment(models.Model):
+    com_data = models.TextField()
+    com_time = models.DateTimeField(auto_now=True)
+    user=models.ForeignKey(UserModel,on_delete=models.SET_NULL,null=True,verbose_name="UserModel")
+    post=models.ForeignKey(PostModel,on_delete=models.SET_NULL,null=True,verbose_name="postmodel")
+
+    def __str__(self):
+            return str(self.post)
+
+

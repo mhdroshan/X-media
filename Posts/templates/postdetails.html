@@ -1,94 +1,154 @@
+{% extends 'base.html' %} {% block title %}Read More{% endblock %} 
+{% block content %}
 
-{% extends 'base.html' %}
-{% block title %}Read More{% endblock %}
-    {% block content %}
-    <div class="post-holder">
-      {% if post %}
-      
-          <div class="post-det">
-        <div class="votes-holder" style="left:auto;right:0;top: 70px;backdrop-filter:none">
-<button style="color: black;" class="votebutt-home">
-  <i class="fa fa-thumbs-down" aria-hidden="true"></i>
-          <p>{{post.nvoted.all.count}} votes</p>
-</button>
-<button  style="color: black;" class="votebutt-home">
-  <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-          <p>{{post.pvoted.all.count}} votes</p>
-</button>
-                
-              </div>
-
-        <h4 class="post-title-det">{{post.p_title}}</h4>
-        <p class="post_desc-det">{{post.p_content}}</p>
-        <p class="date-time-det">Added on: &nbsp;{{post.p_dateTime}}</p>
-        <div class="post-user-det">
-              
-          {%if post.user_id.u_security == 1%}
-              
-          <img class="post-dp" alt="svgImg" src="https://img.icons8.com/ios/64/000000/anonymous-mask.png"/>
-            {% else %}
-            <img
-            class="post-dp"
-            src="{{post.user_id.u_pic.url}}"
-            alt="profile"
-            srcset=""
-          />
-            {%endif %}
-            <p style="color: black;" class="all-user-name">
-              {%if post.user_id.u_security == 1%}
-              Anonymous
-              {% else %}
-              {{post.user_id.u_name}}
-              {%endif %}
-            </p>
-  </div>
-        
-          <div class="container">
-{% if imageRecords %}
-
-   {% for data in imageRecords %}
-            <div class="mySlides">
-              <p class="post-det-imag-date">{{data.p_dateTime}}</p>
-              <img src="{{ data.post_image.url }}" style="width:100%">
-            </div>
-            {%endfor%}
-            
-            <a class="prev" onclick="plusSlides(-1)">❮</a>
-            <a class="next" onclick="plusSlides(1)">❯</a>
-          
-            <div class="caption-container">
-              <p id="caption"></p>
-            </div>
-          
-            <div style="justify-content: center;" class="row">
-              {% for data in imageRecords %}
-          
-              <div class="column">
-                <img class="demo cursor" src="{{ data.post_image.url }}" style="width:100%" alt="{{ data.img_title }}" onclick="currentSlide({{forloop.counter}})">
-             
-              </div>
-              {%endfor%}
-      
-            </div>
-            {% endif %}
-          </div>
-
-            {% endif %}
-          
-      </div>
-      
+{% if flag %}
+<script>
+  alert("Commment added..!")
+</script>
+{% endif %}
+<style>
+  .date-time-det,
+  .post-user-det{
+    top: 0;
+    bottom: auto;
+    
+  }
+</style>
 
 
-
-  
-      
-      
-
-
-
-
-      
+<div class="post-holder" style="padding-bottom: 0;">
+  {% if post %}
+{% if request.session.userid == post.user_id.id %}
+<style>
+  .comment-box{
+    display: none;
+  }
+</style>
+{% endif %}
+  <div class="post-det">
+    <div
+      class="votes-holder"
+      style="left: auto; right: 0; top: 55px; backdrop-filter: none"
+    >
+      <button style="color: black" class="votebutt-home">
+        <i class="fa fa-thumbs-down" aria-hidden="true"></i>
+        <p>{{post.nvoted.all.count}} votes</p>
+      </button>
+      <button style="color: black" class="votebutt-home">
+        <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+        <p>{{post.pvoted.all.count}} votes</p>
+      </button>
     </div>
- 
-  {% endblock content %}
 
+    <h4 class="post-title-det">{{post.p_title}}</h4>
+    <p class="post_desc-det">{{post.p_content}}</p>
+    <p class="date-time-det">Added on: &nbsp;{{post.p_dateTime}}</p>
+    <div class="post-user-det">
+      {%if post.user_id.u_security == 1%}
+
+      <img
+        class="post-dp"
+        alt="svgImg"
+        src="https://img.icons8.com/ios/64/000000/anonymous-mask.png"
+      />
+      {% else %}
+      <img
+        class="post-dp"
+        src="{{post.user_id.u_pic.url}}"
+        alt="profile"
+        srcset=""
+      />
+      {%endif %}
+      <p style="color: black" class="all-user-name">
+        {%if post.user_id.u_security == 1%} Anonymous {% else %}
+        {{post.user_id.u_name}} {%endif %}
+      </p>
+    </div>
+
+    <div class="container">
+      {% if imageRecords %} {% for data in imageRecords %}
+      <div class="mySlides">
+        <p class="post-det-imag-date">{{data.p_dateTime}}</p>
+        <img src="{{ data.post_image.url }}" style="width: 100%" />
+      </div>
+      {%endfor%}
+
+      <a class="prev" onclick="plusSlides(-1)">❮</a>
+      <a class="next" onclick="plusSlides(1)">❯</a>
+
+      <div class="caption-container">
+        <p id="caption"></p>
+      </div>
+
+      <div style="justify-content: center" class="row">
+        {% for data in imageRecords %}
+
+        <div class="column">
+          <img
+            class="demo cursor"
+            src="{{ data.post_image.url }}"
+            style="width: 100%"
+            alt="{{ data.img_title }}"
+            onclick="currentSlide({{forloop.counter}})"
+          />
+        </div>
+        {%endfor%}
+      </div>
+      {% endif %}
+    </div>
+{% comment %}{% endcomment %}
+
+{% if comment %}
+  <div class="comment-holder">
+    <h3>Comments</h3>
+    
+{% for com in comment %}
+
+<div class="single-comm">
+<p class="comm-data">{{com.com_data}}</p>
+<div class="user-datas">
+  
+  <p class="comm-name">
+    {%if com.user.u_security == 1%}
+    Anonymous
+  {% else %}
+  {{com.user.u_name}}
+  {%endif %}
+    
+    </p>
+
+{%if com.user.u_security == 1%}
+
+      <img
+        
+        alt="profile"
+        src="https://img.icons8.com/ios/64/000000/anonymous-mask.png"
+      />
+      {% else %}
+      <img src="{{com.user.u_pic.url}}" alt="profile">
+      {%endif %}
+
+
+</div>
+<div class="comm-date">{{com.com_time}}</div>
+</div>
+
+{% endfor %}
+</div>
+{% endif %}
+  <div class="comment-box">
+    <form action="{% url 'Posts:addcomment' post.id  %}" method="post">
+      {% csrf_token %}
+      <div class="dis-flexxed">
+        <input type="text" name="comment" required placeholder="say something on #{{post.tag_id.tag_name}}" id="">
+        <button type="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+      </div>
+    </form>
+
+  </div>
+    {% endif %}
+  </div>
+  
+</div>
+
+{% endblock content %}

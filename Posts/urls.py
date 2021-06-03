@@ -12,6 +12,7 @@ urlpatterns = [
     # path('post-images/<int:id>',views.postimages,name="post-images"),
     path('related-post/<int:id>',views.relatedpost,name="related-post"),
     path('post-vote/<int:id>',views.postvote,name="post-vote"),
+    path('addcomment/<int:id>',views.addcomment,name="addcomment"),
     path('pos-vote/',views.posvote,name="pos-vote"),
     path('neg-vote/',views.negvote,name="neg-vote"),
 

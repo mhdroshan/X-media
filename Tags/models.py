@@ -7,9 +7,9 @@ class Tagmodel(models.Model):
     tag_name=models.CharField(max_length=40,unique=True)
     tag_image=models.ImageField(upload_to='tags')
     tag_disc=models.TextField(default=0)
-    t_country=models.CharField(max_length=20,default=0)
-    t_state=models.CharField(max_length=20,default=0)
-    t_place=models.CharField(max_length=20,default=0)
+    t_country=models.CharField(max_length=20)
+    t_state=models.CharField(max_length=20)
+    t_place=models.CharField(max_length=20)
 
     
 

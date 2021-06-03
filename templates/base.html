@@ -41,6 +41,7 @@
       width: 100% !important;
       flex-direction: row !important;
       height: 10% !important;
+      background: #181818;
     }
 
     .all-holder {
@@ -78,7 +79,7 @@
 
     .post-holder {
 
-      height: 100%;
+      height: 90%;
       margin: auto;
       margin-top: 51px;
       padding: 20px;
@@ -103,7 +104,7 @@
       border: 1.5px solid #b9b1b161;
       margin: 30px auto;
       background-color: white;
-      box-shadow: -8px 12px 18px 0 rgb(25 42 70 / 13%);
+      box-shadow: 0 3px 6px rgb(0 0 0 / 16%), 0 3px 6px rgb(0 0 0 / 23%);
       border-radius: 10px;
       position: relative;
       width: 100%;
@@ -192,7 +193,7 @@
       left: 0;
       padding: 10px;
       z-index: 1;
-      border: 1px solid white;
+      /* border: 1px solid white; */
       backdrop-filter: blur(5px) brightness(0.8);
       margin: 0 15px 5px 15px;
       border-radius: 5px;
@@ -1133,6 +1134,38 @@
       left: -36px;
       z-index: 2;
     }
+    .dis-flexxed{
+      display: flex;
+      width: 100%;
+  margin: auto;
+      justify-content: space-between;
+    }
+    .dis-flexxed input{
+      border: none;
+      background-color: #dfdfdf;
+      width: 95%;
+      padding: 10px 20px;
+      font-size: 15px;
+      border-radius: 20px;
+    }
+    .dis-flexxed input:focus{
+      border: 1px solid #343a40b0;
+      outline: none;
+    }
+.dis-flexxed button{
+  text-align: center;
+  border: 1px solid #4caf50;
+  background: #4caf50;
+  font-size: 22px;
+  color: white;
+  border-radius: 20px;
+  padding: 10px 17px;
+  transition: .3s ease;
+}
+.dis-flexxed button:hover{
+  background: white;
+  color: #4caf50;
+}
     
     input:checked + .slider .switch-radio-label.inactive {
       opacity: 0;
@@ -1141,7 +1174,79 @@
       opacity: 1;
       z-index: 20;
     }
-   
+   .comment-holder{
+     border-radius: 5px ​5px 0 0; 
+     margin: 10px auto;
+     padding: 5px;
+     background-color: #9294b866;
+   }
+   .comment-box{
+    position: sticky;
+    bottom: 0;
+    left: 10px;
+    right: 10px;
+    background-color: white;
+    z-index: 10;
+    padding: 5px;
+   }
+   .comment-box form{
+     margin: 0;
+   }
+   .single-comm{
+    border-radius: 2px;
+    position: relative;
+    box-shadow: 0 3px 6px rgb(0 0 0 / 16%), 0 3px 6px rgb(0 0 0 / 23%);
+    width: 95%;
+    margin: 25px auto;
+    max-height: 100px;
+    background-color: white;
+   }
+   .single-comm .comm-data{
+    margin: 0;
+    padding: 10px 20px;
+    max-width: 80%;
+    font-size: 15px;
+   }
+   .single-comm .user-datas{
+    display: inline-flex;
+    justify-content: space-between;
+    position: absolute;
+    bottom: 0;
+    margin: 5px;
+    text-transform: capitalize;
+    top: 0;
+    border-radius: 30px;
+    padding: 5px;
+    right: 0;
+   }
+   .single-comm .user-datas .comm-name{
+    margin: -9px 12px auto 8px;
+    font-size: 15px;
+   }
+   .single-comm .user-datas img{
+       
+       height: 30px;
+       width: 30px;
+       align-self: center;
+       border-radius: 50px;
+   }
+   .single-comm  .comm-date{
+    font-size: 12px;
+    position: absolute;
+    bottom: 0;
+    right: 46px;
+  }
+.comment-holder h3{
+  font-size: 19px;
+  text-transform: uppercase;
+  /* text-align: center; */
+  background-color: #172d9475;
+  padding: 10px 0;
+  padding-left: 14px;
+  color: white;
+  margin: 0;
+  letter-spacing: 2px;
+}
   </style>
 </head>
 
@@ -1156,14 +1261,14 @@
   </div>
   <nav class="navbar-dark bg-dark">
     <div class="navbar-nav">
-      <a class="nav-item nav-link" href="{% url 'Posts:index' %}"><i class="fa fa-home" aria-hidden="true"></i></i>
+      <a class="nav-item nav-link" id="home" href="{% url 'Posts:index' %}"><i class="fa fa-home" aria-hidden="true"></i></i>
         <p>Home</p>
       </a>
-      <a class="nav-item nav-link" href="{% url 'Tags:all-Tags-List' %}"><i class="fa fa-list-ul"
+      <a class="nav-item nav-link" id="tags" href="{% url 'Tags:all-Tags-List' %}"><i class="fa fa-list-ul"
           aria-hidden="true"></i>
         <p>Tags</p>
       </a>
-      <a class="nav-item nav-link" href="/user/profile"><i class="fa fa-user" aria-hidden="true"></i>
+      <a class="nav-item nav-link" id="profile" href="/user/profile"><i class="fa fa-user" aria-hidden="true"></i>
         <p>Profile</p>
       </a>
 

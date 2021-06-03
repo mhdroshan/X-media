@@ -1,19 +1,20 @@
 from django.db.models.query_utils import Q
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
-from .models import PostModel,PostImageModel,PositiveVote,NegativeVote
+from .models import PostModel,PostImageModel,PositiveVote,NegativeVote,PostComment
 from Tags.models import Tagmodel
 from User.models import UserModel
 
 
 def allpost(request):
-    posts=PostModel.objects.all()
+    posts=PostModel.objects.all().order_by('p_dateTime').reverse()
     return render (request,"index.html",{'posts':posts})
 
 def postdetails(request,id):
     PostImageRecords=PostImageModel.objects.filter(post=id)
+    comments = PostComment.objects.filter(post = id).order_by('com_time').reverse()
     postdetails=PostModel.objects.get(id=id)
-    return render(request,"postdetails.html",{"imageRecords":PostImageRecords ,"post":postdetails})
+    return render(request,"postdetails.html",{"imageRecords":PostImageRecords ,"post":postdetails,"comment":comments})
 
 
 def postvote(request,id):
@@ -44,8 +45,7 @@ def posvote(request):
         else:
             post_obj.pvoted.add(user)
 
-        pvote , pcreated = PositiveVote.objects.get_or_create(user=user,post_id=post_id)
-            
+        pvote , pcreated = PositiveVote.objects.get_or_create(user=user,post_id=post_id)  
 
         if not pcreated:
             if pvote.value=='Yes':
@@ -54,6 +54,8 @@ def posvote(request):
                 pvote.value = 'Yes'
         pvote.save()
     return redirect("Tags:all-Tags-List")
+
+
 
 # negative vote
 def negvote(request):
@@ -108,7 +110,26 @@ def addpost(request,id):
         return redirect("/user/login")
 
 
+def addcomment(request,id):
+    PostImageRecords=PostImageModel.objects.filter(post=id)
+    comments = PostComment.objects.filter(post = id).order_by('com_time').reverse()
+    postdetails=PostModel.objects.get(id=id)
+    if request.session.has_key('userid'):
+        if request.method == 'POST':
+            PC = PostComment()
+            post = PostModel.objects.get(id=id)
+            user = UserModel.objects.get(id=request.session["userid"])
 
+            PC.com_data =  request.POST.get("comment")
+            PC.post = post
+            PC.user = user
+            PC.save()
+
+        return render(request,"postdetails.html",{"imageRecords":PostImageRecords ,"post":postdetails ,"comment":comments, "flag":1})
+
+    else:
+        return redirect("/user/login")
+    
 
 # def postimages(request,id):
 #     allPostImages=PostImageModel.objects.filter(post=id)

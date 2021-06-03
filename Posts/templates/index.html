@@ -1,6 +1,13 @@
 {% extends 'base.html' %}
 {% block title %}X-Media{% endblock %}
     {% block content %}
+    <style>
+      .navbar-nav #home{
+        color: white !important;
+        border-bottom: 5px solid white;
+        padding: 7px;
+      }
+    </style>
     <div class="post-holder">
     {% if posts %}
       {% for post in posts %}
