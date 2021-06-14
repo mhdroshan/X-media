@@ -8,13 +8,26 @@ from User.models import UserModel
 
 def allpost(request):
     posts=PostModel.objects.all().order_by('p_dateTime').reverse()
+    # return HttpResponse(posts)
     return render (request,"index.html",{'posts':posts})
+
 
 def postdetails(request,id):
     PostImageRecords=PostImageModel.objects.filter(post=id)
     comments = PostComment.objects.filter(post = id).order_by('com_time').reverse()
+    com_count = PostComment.objects.filter(post = id).count()
     postdetails=PostModel.objects.get(id=id)
-    return render(request,"postdetails.html",{"imageRecords":PostImageRecords ,"post":postdetails,"comment":comments})
+
+    data = {
+"imageRecords":PostImageRecords ,
+"post":postdetails,
+"comment":comments,
+"count":com_count
+    }
+
+    return render(request,"postdetails.html",data)
+
+
 
 
 def postvote(request,id):
@@ -35,8 +48,11 @@ def postvote(request,id):
 
 def posvote(request):
     user = UserModel.objects.get(id=request.session["userid"])
-    tag_id = request.POST.get('tag_id')
+
+    
     if request.method =='POST': 
+        tag = request.POST.get('tagid')
+        
         post_id = request.POST.get('pos_id')
         post_obj = PostModel.objects.get(id=post_id)
 
@@ -53,16 +69,20 @@ def posvote(request):
             else:
                 pvote.value = 'Yes'
         pvote.save()
-    return redirect("Tags:all-Tags-List")
-
+    return redirect("Posts:post-vote" , id = tag )
 
 
 # negative vote
 def negvote(request):
     user = UserModel.objects.get(id=request.session["userid"])
+    
+
     if request.method =='POST': 
         post_id = request.POST.get('neg_id')
+        tag = request.POST.get('tagid')
         post_obj = PostModel.objects.get(id=post_id)
+
+        
 
         if user in post_obj.nvoted.all():
             post_obj.nvoted.remove(user)
@@ -76,14 +96,20 @@ def negvote(request):
             else:
                 nvote.value = 'Yes'
         nvote.save()
-    return redirect("Tags:all-Tags-List")
+    return redirect("Posts:post-vote" , id = tag )
 
 
 
 
 def relatedpost(request,id):
+    # return HttpResponse("asdasd")
     posts=PostModel.objects.filter(tag_id = id)
     return render (request,"relatedpost.html",{'posts':posts})
+    
+def relatedpostUser(request,id):
+    # return HttpResponse("asdasd")
+    posts=PostModel.objects.filter(user_id = id)
+    return render (request,"relatedpost2.html",{'posts':posts})
     
 
 def addpost(request,id):
@@ -117,7 +143,10 @@ def addcomment(request,id):
     if request.session.has_key('userid'):
         if request.method == 'POST':
             PC = PostComment()
+            
             post = PostModel.objects.get(id=id)
+            post.p_com = post.p_com + 1
+            post.save()
             user = UserModel.objects.get(id=request.session["userid"])
 
             PC.com_data =  request.POST.get("comment")
@@ -125,7 +154,8 @@ def addcomment(request,id):
             PC.user = user
             PC.save()
 
-        return render(request,"postdetails.html",{"imageRecords":PostImageRecords ,"post":postdetails ,"comment":comments, "flag":1})
+        # return render(request,"postdetails.html",{"imageRecords":PostImageRecords ,"post":postdetails ,"comment":comments, "flag":1})
+        return redirect("Posts:post-details" , id=postdetails.id)
 
     else:
         return redirect("/user/login")

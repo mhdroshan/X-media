@@ -5,13 +5,14 @@ from .models import AuthorModel
 from Tags.models import TagRequest,Tagmodel
 
 
+
 # Create your views here.
 
 def home(request):
     if request.session.has_key('authorid'):
         id =  request.session['authorid']
         author=AuthorModel.objects.get(id=id)
-        requests = TagRequest.objects.all()
+        requests = TagRequest.objects.all().order_by('tr_date').reverse()
         # return HttpResponse(author)
         return render(request,"home.html",{'author':author,'request':requests})
 
@@ -48,6 +49,7 @@ def delete(request,id):
 
 
 def insert(request):
+    
     if request.session.has_key('authorid'):
 
         id =  request.session['authorid']
@@ -63,8 +65,11 @@ def insert(request):
             t.t_country=request.POST.get("tagcountry")
             t.t_state=request.POST.get("tagstate")
             t.t_place=request.POST.get("tagplace")
+       
             
             t.save()
+            t.tag_image=request.FILES.get("tagimage")
+           
             
             return render(request,"home.html",{'author':author,'request':requests , 'add':1})
 

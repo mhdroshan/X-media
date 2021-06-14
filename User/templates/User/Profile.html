@@ -5,11 +5,19 @@
 <style>
       .navbar-nav #profile{
         color: white !important;
-        border-bottom: 5px solid white;
-        padding: 7px;
+      
       }
     </style>
-
+{% if user.u_verified == 1 %}
+<style>
+  .user-image{
+    border: 5px solid #045007;
+  }
+  .verified-class{
+    display: block;
+  }
+</style>
+  {% endif %}
  {%if flag%}
     <script>
         alert("Image added sucessfully..!")
@@ -20,6 +28,7 @@
 
 <div class="profile-holder">
   {% if user %}
+  
   <form action="{% url 'User:change' user.id %}"  method="post">
     {% csrf_token %}
   	<div class="switch-wrapper">
@@ -44,18 +53,22 @@
 {% else %}
  {{user.u_name}}
 {% endif %}
+<i class="fa fa-check-circle-o verified-class" aria-hidden="true"></i>
   </h2>
   
   {%if user.u_security%}
-  
-  <img class="user-image" style="border-color: black;" alt="anonymous" src="https://img.icons8.com/ios-filled/256/000000/anonymous-mask.png"/>
+  <img class="user-image"  alt="anonymous" alt="svgImg" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHg9IjBweCIgeT0iMHB4Igp3aWR0aD0iOTYiIGhlaWdodD0iOTYiCnZpZXdCb3g9IjAgMCAxNzIgMTcyIgpzdHlsZT0iIGZpbGw6IzAwMDAwMDsiPjxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0ibm9uemVybyIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIHN0cm9rZS1saW5lY2FwPSJidXR0IiBzdHJva2UtbGluZWpvaW49Im1pdGVyIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHN0cm9rZS1kYXNoYXJyYXk9IiIgc3Ryb2tlLWRhc2hvZmZzZXQ9IjAiIGZvbnQtZmFtaWx5PSJub25lIiBmb250LXdlaWdodD0ibm9uZSIgZm9udC1zaXplPSJub25lIiB0ZXh0LWFuY2hvcj0ibm9uZSIgc3R5bGU9Im1peC1ibGVuZC1tb2RlOiBub3JtYWwiPjxwYXRoIGQ9Ik0wLDE3MnYtMTcyaDE3MnYxNzJ6IiBmaWxsPSJub25lIj48L3BhdGg+PGcgZmlsbD0iI2ZmZmZmZiI+PHBhdGggZD0iTTg2LDYuODhjLTM0LjE5ODQ0LDAgLTYxLjkyLDkuMjQ1IC02MS45MiwyMC42NGMwLDAgMCwyNy44MDIxOSAwLDU4LjQ4YzAsMTcuNDgyMTkgMTguNjM3ODEsNjUuNjQyMTkgNjEuOTIsNzUuNjhjNDMuMjgyMTksLTEwLjAzNzgxIDYxLjkyLC01OC4xOTc4MSA2MS45MiwtNzUuNjhjMCwtMzAuNjc3ODEgMCwtNTguNDggMCwtNTguNDhjMCwtMTEuMzk1IC0yNy43MjE1NiwtMjAuNjQgLTYxLjkyLC0yMC42NHpNNTguNDgsMzcuODRjMTEuODI1LDAgMTcuODcxODgsMTAuNTc1MzEgMTkuMTM1LDExLjgyNWMyLjAxNTYzLDIuMDE1NjMgMi4wMTU2Myw1LjI5NDM4IDAsNy4yOTY1NmMtMi4wMTU2MiwyLjAxNTYyIC01LjI5NDM3LDIuMDE1NjIgLTcuMjk2NTYsMGMtMS40MjQzNywtMS40MTA5NCAtNi4wMzM0NCwtMTIuMjQxNTYgLTE1LjI3ODQ0LC0xMi4yNDE1NmMtNC43NzAzMSwwIC0xMC40ODEyNSwyLjIwMzc1IC0xNy4yLDYuODhjNi4zODI4MSwtMTAuNzM2NTYgMTMuNzczNDQsLTEzLjc2IDIwLjY0LC0xMy43NnpNNjguOCw2My42NGMtMy4xNTc4MSwzLjExNzUgLTguMTE2MjUsNS4xNiAtMTMuNzYsNS4xNmMtNS42NDM3NSwwIC0xMC42MDIxOSwtMi4wNDI1IC0xMy43NiwtNS4xNmMzLjE1NzgxLC0zLjExNzUgOC4xMTYyNSwtNS4xNiAxMy43NiwtNS4xNmM1LjY0Mzc1LDAgMTAuNjAyMTksMi4wNDI1IDEzLjc2LDUuMTZ6TTkyLjg4LDE0Ny45MmwtNi44OCw2Ljg4bC02Ljg4LC02Ljg4di0xNy4yaDEzLjc2ek0xMTYuOTYsMTE2Ljk2aC0yNC4wOGwtNi44OCwtNi44OGwtNi44OCw2Ljg4aC0yNC4wOGwtMTcuMiwtMjcuNTJsMjAuNjQsMTcuMmgxMy43NmwxMC4zMiwtMTAuMzJoNi44OGwxMC4zMiwxMC4zMmgxMy43NmwyMC42NCwtMTcuMnpNMTAzLjIsNjMuNjRjMy4xNTc4MSwtMy4xMTc1IDguMTE2MjUsLTUuMTYgMTMuNzYsLTUuMTZjNS42NDM3NSwwIDEwLjYwMjE5LDIuMDQyNSAxMy43Niw1LjE2Yy0zLjE1NzgxLDMuMTE3NSAtOC4xMTYyNSw1LjE2IC0xMy43Niw1LjE2Yy01LjY0Mzc1LDAgLTEwLjYwMjE5LC0yLjA0MjUgLTEzLjc2LC01LjE2ek0xMTYuOTYsNDQuNzJjLTkuMjQ1LDAgLTEzLjg1NDA2LDEwLjgzMDYzIC0xNS4yNjUsMTIuMjU1Yy0yLjAxNTYyLDIuMDE1NjMgLTUuMjk0MzcsMi4wMTU2MyAtNy4yOTY1NiwwYy0yLjAxNTYyLC0yLjAxNTYyIC0yLjAxNTYyLC01LjI5NDM3IDAsLTcuMjk2NTZjMS4yNDk2OSwtMS4yNjMxMiA3LjI5NjU2LC0xMS44Mzg0NCAxOS4xMjE1NiwtMTEuODM4NDRjNi44NjY1NiwwIDE0LjI1NzE5LDMuMDIzNDQgMjAuNjQsMTMuNzZjLTYuNzE4NzUsLTQuNjc2MjUgLTEyLjQyOTY5LC02Ljg4IC0xNy4yLC02Ljg4eiI+PC9wYXRoPjwvZz48L2c+PC9zdmc+"/>
+
+ 
     {% else %}
+    
     <img
     class="user-image"
     src="{{user.u_pic.url}}"
     alt="profile-pic"
     srcset=""
   />
+  
     {%endif %}
   
   <div class="row">
@@ -87,12 +100,19 @@
 
 
           <div class="mypost">
+            <a style="display: none;" href="{% url 'User:delete' post.id %}">
+              <div class="delete-post">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+              </div>
+            </a>
+            
             <p class="mypost-tag">{{post.tag_id.tag_name}}</p>
             <marquee>{{post.p_title}}</marquee>
             <!-- <p class="post-title">{{post.p_title}}</p> -->
             <div class="score-holder">
-              <div class="one-score">{{post.pvoted.all.count}}</div>
-              <div class="one-score">{{post.nvoted.all.count}}</div>
+              <div class="one-score" >{{post.pvoted.all.count}}<i style="color: #2196f3;" class="fa fa-thumbs-up" aria-hidden="true"></i></div>
+              <div class="one-score">{{post.nvoted.all.count}}<i  style="color: #f44336;" class="fa fa-thumbs-down" aria-hidden="true"></i></div>
+              <div class="one-score" >{{post.p_com}}<i style="color: #ffeb3b;" class="fa fa-comment" aria-hidden="true"></i></div>
             </div>
             
             
@@ -103,9 +123,9 @@
             <div class="modal-dialog">
             
               <!-- Modal content-->
-              <div class="modal-content">
+              <div class="modal-content" style="background-color: #2e2e2e;">
                 <div class="modal-header">
-                  <h4 class="modal-title">{{post.p_title}}</h4>
+                  <h4 class="modal-title" style="font-size: 19px;">{{post.p_title}}</h4>
                 </div>
                 <div class="modal-body">
                   <form action="{% url 'User:moreimage' post.id %}" method="post" enctype="multipart/form-data">
@@ -135,7 +155,7 @@
           {% endfor %} 
           {% else %}
 
-          <div class="tag-error">No Posts</div>
+          <div style="margin:auto;font-size:20px" class="tag-error">No Posts</div>
 
           {% endif %}
         </div>

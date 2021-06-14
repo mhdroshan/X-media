@@ -1,0 +1,129 @@
+{% extends 'base.html' %} {% block title %}Sign up | Profile details {%
+endblock%} {% block content %}
+
+<style>
+  body {
+    background: #212121;
+  }
+
+  nav {
+    display: none;
+  }
+</style>
+<a class="home-butt" href="{% url 'Posts:index' %}"><i class="fa fa-home" aria-hidden="true"></i>
+  <span>Home</span>
+</a>
+
+<div class="pre-lod">
+  <img src="https://steamuserimages-a.akamaihd.net/ugc/928177176930777774/8D315B114D79BC94786DE0F545E40B841D977138/"
+    alt="Please wait" />
+</div>
+<ul class="timeline">
+  <li style="min-width: 30px">
+    <span class="timeline-start-marker"></span>
+    <!-- timeline start -->
+  </li>
+  <li>
+    <span class="timeline-marker compl"></span>
+    <div class="timeline-data">
+      <h5>Name</h5>
+    </div>
+  </li>
+  <li>
+    <span class="timeline-marker compl"></span>
+    <div class="timeline-data">
+      <h5>Personel info</h5>
+    </div>
+  </li>
+  <li>
+    <span class="timeline-marker compl"></span>
+    <div class="timeline-data">
+      <h5>Location</h5>
+    </div>
+  </li>
+  <li>
+    <span class="timeline-marker compl"></span>
+    <div class="timeline-data">
+      <h5>Place details</h5>
+    </div>
+  </li>
+  <li>
+    <span class="timeline-mark"><span class="num-sppan">5</span></span>
+    <div class="timeline-d">
+      <h5>Profile details</h5>
+    </div>
+  </li>
+  <li style="min-width: 30px">
+    <span class="timeline-end-marker"></span>
+    <div class="timeline-data">
+      <!-- timeline end -->
+    </div>
+  </li>
+</ul>
+<div class="us-cret-box">
+  <form action="{% url 'User:ver-dp' %}" class="subformclass" enctype="multipart/form-data" method="post">
+    {% csrf_token %} {% if name %}
+    <input type="hidden" value="{{name}}" name="username" />
+    {% endif %} {% if age %}
+    <input type="hidden" value="{{age}}" name="userage" />
+    {% endif %} {% if email %}
+    <input type="hidden" value="{{email}}" name="useremail" />
+    {% endif %} {% if phone %}
+    <input type="hidden" value="{{phone}}" name="userphone" />
+    {% endif %} {% if country %}
+    <input type="hidden" value="{{country}}" name="usercountry" />
+    {% endif %} {% if state %}
+    <input type="hidden" value="{{state}}" name="userstate" />
+
+    {% endif %} {% if place %}
+    <input type="hidden" value="{{place}}" name="userplace" />
+    {% endif %}
+
+    <div class="cret-inp-form-holder">
+      <p>Pick a username:</p>
+      <input type="text" placeholder="user name" required name="nameuser" id="" />
+    </div>
+    <div class="cret-inp-form-holder">
+      <p>Pick a password:</p>
+      <input type="password" placeholder="password" required name="namepass1" id="pass11" />
+    </div>
+    <div class="cret-inp-form-holder">
+      <p>Enter password again:</p>
+      <input type="password" placeholder="re enter password" required name="namepass" id="paswinp" />
+      <span class="alertp">Both passwords are different.!</span>
+    </div>
+
+    <div class="cret-inp-form-holder">
+      <p>Upload a profile pic:</p>
+      <input type="file" name="userpic" required id="" />
+    </div>
+    <button class="cre-button">SUBMIT</button>
+  </form>
+</div>
+<script>
+  $(document).ready(function () {
+    $("#paswinp").on("input", function () {
+      var pass1 = $("#pass11").val();
+      var pass2 = $("#paswinp").val();
+      if (pass1 != pass2) {
+        $(".alertp").show();
+        $("#paswinp").css("border-color", "#d62b0c");
+      } else {
+        $(".alertp").hide();
+        $("#paswinp").css("border-color", "#0b7dd8");
+      }
+    });
+    $(".cre-button").click(function () {
+      var pass1 = $("#pass11").val();
+      var pass2 = $("#paswinp").val();
+      if (pass1 != pass2) {
+        alert("enter same passwords");
+      } else {
+        $(".subformclass").submit();
+        $(".pre-lod").show();
+      }
+    });
+  });
+</script>
+
+{% endblock content %}

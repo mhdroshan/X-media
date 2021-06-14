@@ -13,6 +13,11 @@
     bottom: auto;
     
   }
+    .navbar-nav #home{
+      color: white !important;
+    
+    }
+  
 </style>
 
 
@@ -30,40 +35,68 @@
       class="votes-holder"
       style="left: auto; right: 0; top: 55px; backdrop-filter: none"
     >
-      <button style="color: black" class="votebutt-home">
+      <button style="font-size :30px;" class="votebutt-home">
         <i class="fa fa-thumbs-down" aria-hidden="true"></i>
         <p>{{post.nvoted.all.count}} votes</p>
       </button>
-      <button style="color: black" class="votebutt-home">
+      <button style="font-size :30px;" class="votebutt-home">
         <i class="fa fa-thumbs-up" aria-hidden="true"></i>
         <p>{{post.pvoted.all.count}} votes</p>
+      </button>
+      <button style="font-size :30px;" class="votebutt-home">
+        <i class="fa fa-comment" aria-hidden="true"></i>
+        <p>{{count}} comments</p>
       </button>
     </div>
 
     <h4 class="post-title-det">{{post.p_title}}</h4>
     <p class="post_desc-det">{{post.p_content}}</p>
     <p class="date-time-det">Added on: &nbsp;{{post.p_dateTime}}</p>
-    <div class="post-user-det">
-      {%if post.user_id.u_security == 1%}
-
-      <img
-        class="post-dp"
-        alt="svgImg"
-        src="https://img.icons8.com/ios/64/000000/anonymous-mask.png"
-      />
-      {% else %}
-      <img
-        class="post-dp"
-        src="{{post.user_id.u_pic.url}}"
-        alt="profile"
-        srcset=""
-      />
-      {%endif %}
-      <p style="color: black" class="all-user-name">
-        {%if post.user_id.u_security == 1%} Anonymous {% else %}
-        {{post.user_id.u_name}} {%endif %}
+    {% if post.user_id.u_verified == 1 %}
+            <div class="post-user-det" style="background: #045007;border:1px solid white">
+              {%if post.user_id.u_security == 1%}
+            <img class="post-dp" alt="anonymous" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHg9IjBweCIgeT0iMHB4Igp3aWR0aD0iNTAiIGhlaWdodD0iNTAiCnZpZXdCb3g9IjAgMCAyMjYgMjI2IgpzdHlsZT0iIGZpbGw6IzAwMDAwMDsiPjxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0ibm9uemVybyIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIHN0cm9rZS1saW5lY2FwPSJidXR0IiBzdHJva2UtbGluZWpvaW49Im1pdGVyIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHN0cm9rZS1kYXNoYXJyYXk9IiIgc3Ryb2tlLWRhc2hvZmZzZXQ9IjAiIGZvbnQtZmFtaWx5PSJub25lIiBmb250LXdlaWdodD0ibm9uZSIgZm9udC1zaXplPSJub25lIiB0ZXh0LWFuY2hvcj0ibm9uZSIgc3R5bGU9Im1peC1ibGVuZC1tb2RlOiBub3JtYWwiPjxwYXRoIGQ9Ik0wLDIyNnYtMjI2aDIyNnYyMjZ6IiBmaWxsPSJub25lIj48L3BhdGg+PGcgZmlsbD0iI2ZmZmZmZiI+PHBhdGggZD0iTTExMyw5LjA0Yy00NC45MzUxNiwwIC04MS4zNiwxMi4xNDc1IC04MS4zNiwyNy4xMnY3Ni44NGMwLDIyLjk3MDc4IDI0LjQ4OTIyLDg2LjI1MDc4IDgxLjM2LDk5LjQ0YzU2Ljg3MDc4LC0xMy4xODkyMiA4MS4zNiwtNzYuNDY5MjIgODEuMzYsLTk5LjQ0di03Ni44NGMwLC0xNC45NzI1IC0zNi40MjQ4NCwtMjcuMTIgLTgxLjM2LC0yNy4xMnpNMTEzLDE4LjA4YzQ3LjQ2LDAgNzIuMzIsMTMuNDM2NDEgNzIuMzIsMTguMDh2NzYuODRjMCwxOC42OTc5NyAtMTkuNTgwNzgsNzAuMTY1OTQgLTYzLjI4LDg3LjIyMTg4di0yOC40NjE4N2gtMTguMDh2MjguNDYxODdjLTQzLjY5OTIyLC0xNy4wNTU5NCAtNjMuMjgsLTY4LjUyMzkxIC02My4yOCwtODcuMjIxODd2LTc2Ljg0YzAsLTQuNjQzNTkgMjQuODYsLTE4LjA4IDcyLjMyLC0xOC4wOHpNNzYuODQsNDkuNzJjLTkuMDIyMzQsMCAtMTguNzMzMjgsMy45NzI2NiAtMjcuMTIsMTguMDhjOC44MjgxMiwtNi4xNDQzOCAxNi4zMzIwMywtOS4wNCAyMi42LC05LjA0YzEyLjE0NzUsMCAxOC4yMDM1OSwxNC4yMzA5NCAyMC4wNTc1LDE2LjEwMjVjMi42NDg0NCwyLjY0ODQ0IDYuOTM4OTEsMi42NDg0NCA5LjYwNSwwYzIuNjQ4NDQsLTIuNjQ4NDQgMi42NDg0NCwtNi45Mzg5MSAwLC05LjYwNWMtMS42NTk2OSwtMS42NDIwMyAtOS42MDUsLTE1LjUzNzUgLTI1LjE0MjUsLTE1LjUzNzV6TTE0OS4xNiw0OS43MmMtMTUuNTM3NSwwIC0yMy40ODI4MSwxMy44OTU0NyAtMjUuMTQyNSwxNS41Mzc1Yy0yLjY0ODQ0LDIuNjY2MDkgLTIuNjQ4NDQsNi45NTY1NiAwLDkuNjA1YzIuNjY2MDksMi42NDg0NCA2Ljk1NjU2LDIuNjQ4NDQgOS42MDUsMGMxLjg1MzkxLC0xLjg3MTU2IDcuOTEsLTE2LjEwMjUgMjAuMDU3NSwtMTYuMTAyNWM2LjI2Nzk3LDAgMTMuNzcxODcsMi44OTU2MyAyMi42LDkuMDRjLTguMzg2NzIsLTE0LjEwNzM0IC0xOC4wOTc2NiwtMTguMDggLTI3LjEyLC0xOC4wOHpNNzIuMzIsNzYuODRjLTcuNDE1NjMsMCAtMTMuOTMwNzgsMi42ODM3NSAtMTguMDgsNi43OGM0LjE0OTIyLDQuMDk2MjUgMTAuNjY0MzcsNi43OCAxOC4wOCw2Ljc4YzcuNDE1NjMsMCAxMy45MzA3OCwtMi42ODM3NSAxOC4wOCwtNi43OGMtNC4xNDkyMiwtNC4wOTYyNSAtMTAuNjY0MzcsLTYuNzggLTE4LjA4LC02Ljc4ek0xNTMuNjgsNzYuODRjLTcuNDE1NjMsMCAtMTMuOTMwNzgsMi42ODM3NSAtMTguMDgsNi43OGM0LjE0OTIyLDQuMDk2MjUgMTAuNjY0MzcsNi43OCAxOC4wOCw2Ljc4YzcuNDE1NjMsMCAxMy45MzA3OCwtMi42ODM3NSAxOC4wOCwtNi43OGMtNC4xNDkyMiwtNC4wOTYyNSAtMTAuNjY0MzgsLTYuNzggLTE4LjA4LC02Ljc4ek00OS43MiwxMTcuNTJsMjIuNiwzNi4xNmgzMS42NGw5LjA0LC05LjA0bDkuMDQsOS4wNGgzMS42NGwyMi42LC0zNi4xNmwtMjcuMTIsMjIuNmgtMTguMDhsLTEzLjU2LC0xMy41NmgtOS4wNGwtMTMuNTYsMTMuNTZoLTE4LjA4eiI+PC9wYXRoPjwvZz48L2c+PC9zdmc+"/>
+            {% comment %} <img  src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHg9IjBweCIgeT0iMHB4Igp3aWR0aD0iNTAiIGhlaWdodD0iNTAiCnZpZXdCb3g9IjAgMCAxNzIgMTcyIgpzdHlsZT0iIGZpbGw6IzAwMDAwMDsiPjxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0ibm9uemVybyIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIHN0cm9rZS1saW5lY2FwPSJidXR0IiBzdHJva2UtbGluZWpvaW49Im1pdGVyIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHN0cm9rZS1kYXNoYXJyYXk9IiIgc3Ryb2tlLWRhc2hvZmZzZXQ9IjAiIGZvbnQtZmFtaWx5PSJub25lIiBmb250LXdlaWdodD0ibm9uZSIgZm9udC1zaXplPSJub25lIiB0ZXh0LWFuY2hvcj0ibm9uZSIgc3R5bGU9Im1peC1ibGVuZC1tb2RlOiBub3JtYWwiPjxwYXRoIGQ9Ik0wLDE3MnYtMTcyaDE3MnYxNzJ6IiBmaWxsPSJub25lIj48L3BhdGg+PGcgZmlsbD0iI2ZmZmZmZiI+PHBhdGggZD0iTTg2LDYuODhjLTM0LjE5ODQ0LDAgLTYxLjkyLDkuMjQ1IC02MS45MiwyMC42NGMwLDAgMCwyNy44MDIxOSAwLDU4LjQ4YzAsMTcuNDgyMTkgMTguNjM3ODEsNjUuNjQyMTkgNjEuOTIsNzUuNjhjNDMuMjgyMTksLTEwLjAzNzgxIDYxLjkyLC01OC4xOTc4MSA2MS45MiwtNzUuNjhjMCwtMzAuNjc3ODEgMCwtNTguNDggMCwtNTguNDhjMCwtMTEuMzk1IC0yNy43MjE1NiwtMjAuNjQgLTYxLjkyLC0yMC42NHpNNTguNDgsMzcuODRjMTEuODI1LDAgMTcuODcxODgsMTAuNTc1MzEgMTkuMTM1LDExLjgyNWMyLjAxNTYzLDIuMDE1NjMgMi4wMTU2Myw1LjI5NDM4IDAsNy4yOTY1NmMtMi4wMTU2MiwyLjAxNTYyIC01LjI5NDM3LDIuMDE1NjIgLTcuMjk2NTYsMGMtMS40MjQzNywtMS40MTA5NCAtNi4wMzM0NCwtMTIuMjQxNTYgLTE1LjI3ODQ0LC0xMi4yNDE1NmMtNC43NzAzMSwwIC0xMC40ODEyNSwyLjIwMzc1IC0xNy4yLDYuODhjNi4zODI4MSwtMTAuNzM2NTYgMTMuNzczNDQsLTEzLjc2IDIwLjY0LC0xMy43NnpNNjguOCw2My42NGMtMy4xNTc4MSwzLjExNzUgLTguMTE2MjUsNS4xNiAtMTMuNzYsNS4xNmMtNS42NDM3NSwwIC0xMC42MDIxOSwtMi4wNDI1IC0xMy43NiwtNS4xNmMzLjE1NzgxLC0zLjExNzUgOC4xMTYyNSwtNS4xNiAxMy43NiwtNS4xNmM1LjY0Mzc1LDAgMTAuNjAyMTksMi4wNDI1IDEzLjc2LDUuMTZ6TTkyLjg4LDE0Ny45MmwtNi44OCw2Ljg4bC02Ljg4LC02Ljg4di0xNy4yaDEzLjc2ek0xMTYuOTYsMTE2Ljk2aC0yNC4wOGwtNi44OCwtNi44OGwtNi44OCw2Ljg4aC0yNC4wOGwtMTcuMiwtMjcuNTJsMjAuNjQsMTcuMmgxMy43NmwxMC4zMiwtMTAuMzJoNi44OGwxMC4zMiwxMC4zMmgxMy43NmwyMC42NCwtMTcuMnpNMTAzLjIsNjMuNjRjMy4xNTc4MSwtMy4xMTc1IDguMTE2MjUsLTUuMTYgMTMuNzYsLTUuMTZjNS42NDM3NSwwIDEwLjYwMjE5LDIuMDQyNSAxMy43Niw1LjE2Yy0zLjE1NzgxLDMuMTE3NSAtOC4xMTYyNSw1LjE2IC0xMy43Niw1LjE2Yy01LjY0Mzc1LDAgLTEwLjYwMjE5LC0yLjA0MjUgLTEzLjc2LC01LjE2ek0xMTYuOTYsNDQuNzJjLTkuMjQ1LDAgLTEzLjg1NDA2LDEwLjgzMDYzIC0xNS4yNjUsMTIuMjU1Yy0yLjAxNTYyLDIuMDE1NjMgLTUuMjk0MzcsMi4wMTU2MyAtNy4yOTY1NiwwYy0yLjAxNTYyLC0yLjAxNTYyIC0yLjAxNTYyLC01LjI5NDM3IDAsLTcuMjk2NTZjMS4yNDk2OSwtMS4yNjMxMiA3LjI5NjU2LC0xMS44Mzg0NCAxOS4xMjE1NiwtMTEuODM4NDRjNi44NjY1NiwwIDE0LjI1NzE5LDMuMDIzNDQgMjAuNjQsMTMuNzZjLTYuNzE4NzUsLTQuNjc2MjUgLTEyLjQyOTY5LC02Ljg4IC0xNy4yLC02Ljg4eiI+PC9wYXRoPjwvZz48L2c+PC9zdmc+"/> {% endcomment %}
+              {% else %}
+              <img
+              class="post-dp"
+              src="{{post.user_id.u_pic.url}}"
+              alt="profile"
+              srcset=""
+            />
+              {%endif %}
+         
+      <p class="all-user-name">
+        {%if post.user_id.u_security == 1%}
+        Anonymous
+        {% else %}
+        {{post.user_id.u_name}}
+        {%endif %}
       </p>
     </div>
+            {% else %}
+            <div class="post-user-det">
+              {%if post.user_id.u_security == 1%}
+            
+            <img class="post-dp" alt="anonymous" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHg9IjBweCIgeT0iMHB4Igp3aWR0aD0iNTAiIGhlaWdodD0iNTAiCnZpZXdCb3g9IjAgMCAxNzIgMTcyIgpzdHlsZT0iIGZpbGw6IzAwMDAwMDsiPjxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0ibm9uemVybyIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIHN0cm9rZS1saW5lY2FwPSJidXR0IiBzdHJva2UtbGluZWpvaW49Im1pdGVyIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHN0cm9rZS1kYXNoYXJyYXk9IiIgc3Ryb2tlLWRhc2hvZmZzZXQ9IjAiIGZvbnQtZmFtaWx5PSJub25lIiBmb250LXdlaWdodD0ibm9uZSIgZm9udC1zaXplPSJub25lIiB0ZXh0LWFuY2hvcj0ibm9uZSIgc3R5bGU9Im1peC1ibGVuZC1tb2RlOiBub3JtYWwiPjxwYXRoIGQ9Ik0wLDE3MnYtMTcyaDE3MnYxNzJ6IiBmaWxsPSJub25lIj48L3BhdGg+PGcgZmlsbD0iI2ZmZmZmZiI+PHBhdGggZD0iTTg2LDYuODhjLTM0LjE5ODQ0LDAgLTYxLjkyLDkuMjQ1IC02MS45MiwyMC42NGMwLDAgMCwyNy44MDIxOSAwLDU4LjQ4YzAsMTcuNDgyMTkgMTguNjM3ODEsNjUuNjQyMTkgNjEuOTIsNzUuNjhjNDMuMjgyMTksLTEwLjAzNzgxIDYxLjkyLC01OC4xOTc4MSA2MS45MiwtNzUuNjhjMCwtMzAuNjc3ODEgMCwtNTguNDggMCwtNTguNDhjMCwtMTEuMzk1IC0yNy43MjE1NiwtMjAuNjQgLTYxLjkyLC0yMC42NHpNNTguNDgsMzcuODRjMTEuODI1LDAgMTcuODcxODgsMTAuNTc1MzEgMTkuMTM1LDExLjgyNWMyLjAxNTYzLDIuMDE1NjMgMi4wMTU2Myw1LjI5NDM4IDAsNy4yOTY1NmMtMi4wMTU2MiwyLjAxNTYyIC01LjI5NDM3LDIuMDE1NjIgLTcuMjk2NTYsMGMtMS40MjQzNywtMS40MTA5NCAtNi4wMzM0NCwtMTIuMjQxNTYgLTE1LjI3ODQ0LC0xMi4yNDE1NmMtNC43NzAzMSwwIC0xMC40ODEyNSwyLjIwMzc1IC0xNy4yLDYuODhjNi4zODI4MSwtMTAuNzM2NTYgMTMuNzczNDQsLTEzLjc2IDIwLjY0LC0xMy43NnpNNjguOCw2My42NGMtMy4xNTc4MSwzLjExNzUgLTguMTE2MjUsNS4xNiAtMTMuNzYsNS4xNmMtNS42NDM3NSwwIC0xMC42MDIxOSwtMi4wNDI1IC0xMy43NiwtNS4xNmMzLjE1NzgxLC0zLjExNzUgOC4xMTYyNSwtNS4xNiAxMy43NiwtNS4xNmM1LjY0Mzc1LDAgMTAuNjAyMTksMi4wNDI1IDEzLjc2LDUuMTZ6TTkyLjg4LDE0Ny45MmwtNi44OCw2Ljg4bC02Ljg4LC02Ljg4di0xNy4yaDEzLjc2ek0xMTYuOTYsMTE2Ljk2aC0yNC4wOGwtNi44OCwtNi44OGwtNi44OCw2Ljg4aC0yNC4wOGwtMTcuMiwtMjcuNTJsMjAuNjQsMTcuMmgxMy43NmwxMC4zMiwtMTAuMzJoNi44OGwxMC4zMiwxMC4zMmgxMy43NmwyMC42NCwtMTcuMnpNMTAzLjIsNjMuNjRjMy4xNTc4MSwtMy4xMTc1IDguMTE2MjUsLTUuMTYgMTMuNzYsLTUuMTZjNS42NDM3NSwwIDEwLjYwMjE5LDIuMDQyNSAxMy43Niw1LjE2Yy0zLjE1NzgxLDMuMTE3NSAtOC4xMTYyNSw1LjE2IC0xMy43Niw1LjE2Yy01LjY0Mzc1LDAgLTEwLjYwMjE5LC0yLjA0MjUgLTEzLjc2LC01LjE2ek0xMTYuOTYsNDQuNzJjLTkuMjQ1LDAgLTEzLjg1NDA2LDEwLjgzMDYzIC0xNS4yNjUsMTIuMjU1Yy0yLjAxNTYyLDIuMDE1NjMgLTUuMjk0MzcsMi4wMTU2MyAtNy4yOTY1NiwwYy0yLjAxNTYyLC0yLjAxNTYyIC0yLjAxNTYyLC01LjI5NDM3IDAsLTcuMjk2NTZjMS4yNDk2OSwtMS4yNjMxMiA3LjI5NjU2LC0xMS44Mzg0NCAxOS4xMjE1NiwtMTEuODM4NDRjNi44NjY1NiwwIDE0LjI1NzE5LDMuMDIzNDQgMjAuNjQsMTMuNzZjLTYuNzE4NzUsLTQuNjc2MjUgLTEyLjQyOTY5LC02Ljg4IC0xNy4yLC02Ljg4eiI+PC9wYXRoPjwvZz48L2c+PC9zdmc+"/>
+              {% else %}
+              <img
+              class="post-dp"
+              src="{{post.user_id.u_pic.url}}"
+              alt="profile"
+              srcset=""
+            />
+              {%endif %}
+         
+      <p class="all-user-name">
+        {%if post.user_id.u_security == 1%}
+        Anonymous
+        {% else %}
+        {{post.user_id.u_name}}
+        {%endif %}
+      </p>
+    </div>
+            {% endif %}
 
     <div class="container">
       {% if imageRecords %} {% for data in imageRecords %}

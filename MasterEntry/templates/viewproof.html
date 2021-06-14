@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>xadmin  view proof</title>
+
+      <!-- Bootstrap -->
+      <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+     <!-- font awsome -->
+     <link
+     rel="stylesheet"
+     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+   />
+    <style>
+      img{
+          width: 100%;
+          margin: 30px auto;
+      }
+      .back-butt {
+        color: white;
+        position: fixed;
+        top: 20px;
+        background-color: #0b7dd8;
+        text-decoration: none;
+        left: 30px;
+        box-shadow: 0 3px 6px rgb(0 0 0 / 16%), 0 3px 6px rgb(0 0 0 / 23%);
+        z-index: 20;
+        border-radius: 50px;
+        font-size: 12px;
+        transition: .3s ease-in-out;
+        /* border: 1px solid #d62b0c; */
+        padding: 10px 15px;
+      }
+    
+      .back-butt i {
+        font-size: 30px;
+        display: block;
+        text-align: center;
+        padding: 0 5px;
+      }
+    
+      .back-butt span {
+        display: block !important;
+        margin: 3px auto 0 auto;
+        text-align: center;
+      }
+    
+      .back-butt:hover {
+        color: #0b7dd8;
+        text-decoration: none !important;
+        background-color: white;
+      }
+    
+    </style>
+</head>
+<body>
+    <a class="back-butt" href="/xadmin"
+    ><i class="fa fa-home" aria-hidden="true"></i>
+    <span>Home</span>
+  </a>
+    {% if image %}
+    <div class="container">
+        <img src="{{image.proof.url}}" alt="{{image.name}}">
+    </div>
+     
+    {% endif %}
+    
+
+</body>
+</html>

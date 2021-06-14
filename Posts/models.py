@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.fields import IntegerField
 from User.models import UserModel
 from Tags.models import Tagmodel
 
@@ -10,14 +11,16 @@ class PostModel(models.Model):
     p_coverimage=models.ImageField(upload_to="coverimage",null=True)
     pvoted = models.ManyToManyField(UserModel , default=None , blank=True ,related_name='pvoted')
     nvoted = models.ManyToManyField(UserModel , default=None , blank=True ,related_name='nvoted')
-    p_score=models.IntegerField(default=0)
+    
+
+    p_com = models.IntegerField(null=True,default=0)
     p_dateTime =models.DateTimeField(auto_now=True)
     
     user_id=models.ForeignKey(UserModel,on_delete=models.SET_NULL,null=True,verbose_name="UserModel")
     tag_id=models.ForeignKey(Tagmodel,on_delete=models.SET_NULL,null=True,verbose_name="Tagmodel")
     
     def __str__(self):
-        return self.p_title
+        return  str(self.p_title)
     
     @property
     def p_num_votes(self):
@@ -58,7 +61,7 @@ class PostImageModel(models.Model):
     post=models.ForeignKey(PostModel,on_delete=models.SET_NULL,null=True)
 
     def __str__(self):
-            return self.img_title
+            return str(self.img_title)
 
 class PostComment(models.Model):
     com_data = models.TextField()

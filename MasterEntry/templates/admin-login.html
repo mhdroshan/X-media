@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin | Login</title>
+
+    <!-- font awsome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+
+    <!-- Poppins font -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      .login-holder {
+        font-family: "Poppins", sans-serif;
+        max-width: 400px;
+        max-height: 400px;
+        width: 100%;
+        position: absolute;
+        height: 100%;
+        box-shadow: 0 0 17px 0 #00000061;
+        top: 40%;
+        margin-top: -200px;
+        margin-left: -200px;
+        padding: 10px;
+        box-sizing: border-box;
+        left: 50%;
+      }
+      .input-holder {
+        margin: 10px;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      .input-holder p {
+        margin: 10px auto 0 24px;
+        font-size: 12px;
+        text-align: left;
+      }
+      .input-holder input {
+        font-size: 14px;
+        padding: 12px 15px;
+        font-weight: 500;
+        border: none;
+        background-color: #a9a9a95c;
+        border-radius: 5px;
+        width: 80%;
+      }
+      .input-holder input:focus {
+        outline-color: darkblue;
+      }
+      .login-holder .login-button {
+        font-family: "Poppins", sans-serif;
+        margin: 40px auto;
+        padding: 10px 20px;
+        border-radius: 7px;
+        background-color: #1e7e34;
+  border: 1px solid #1e7e34;
+        color: white;
+        display: block;
+        cursor: pointer;
+      }
+      .login-holder .login-button:hover {
+        color: #1e7e34;
+background-color: white;
+      }
+      .login-holder h1 {
+        text-align: center;
+        margin: 10px auto 40px auto;
+      }
+       .home-butt{
+        color: #0b7dd8;
+        position: fixed;
+        top: 20px;
+        background-color: white;
+        text-decoration: none;
+        right: 30px;
+        box-shadow: 0px 0px 10px 0px #5a5a5a82;
+        z-index: 20;
+        border-radius: 50px;
+        font-size: 12px;
+        transition: .3s ease-in-out;
+        /* border: 1px solid #d62b0c; */
+        padding: 10px 15px;
+      }
+      .home-butt i{
+        font-size: 30px;
+    display: block;
+    text-align: center;
+    padding: 0 5px;
+      }
+      .home-butt span{
+        display: block !important;
+        margin: 3px auto 0 auto;
+        text-align: center;
+      }
+      .home-butt:hover{
+        color: white;
+        text-decoration: none !important;
+        background-color: #0b7dd8;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- <a class="home-butt" href="{% url 'TagAuthor:index' %}"><i class="fa fa-home" aria-hidden="true"></i>
+      <span>Home</span>
+            </a> -->
+
+{%if flag %}
+    <script>
+        alert("Wrong username and password.")
+    </script>
+{%endif%}
+
+    <div class="login-holder">
+      <h1>Admin Login</h1>
+      
+      <form action="" method="post">
+        {% csrf_token %}
+        <div class="input-holder">
+          <p>Enter your user name:</p>
+          <input type="text" name="username" required placeholder="Username" />
+        </div>
+        <div class="input-holder">
+          <p>Enter your password:</p>
+          <input
+            type="password"
+            name="password"
+            required
+            placeholder="Password"
+          />
+        </div>
+        <input class="login-button" type="submit" value="Login" />
+      </form>
+    </div>
+  </body>
+</html>

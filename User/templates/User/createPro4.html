@@ -1,0 +1,179 @@
+{% extends 'base.html' %} {% block title %}Sign up | Add Place{% endblock %}
+{% block content %}
+
+<style>
+  body {
+    background: #212121;
+  }
+  nav {
+    display: none;
+  }
+</style>
+<a class="home-butt" href="{% url 'Posts:index' %}"
+  ><i class="fa fa-home" aria-hidden="true"></i>
+  <span>Home</span>
+</a>
+
+<div class="pre-lod">
+  <img
+    src="https://steamuserimages-a.akamaihd.net/ugc/928177176930777774/8D315B114D79BC94786DE0F545E40B841D977138/"
+    alt="Please wait"
+  />
+</div>
+<ul class="timeline">
+  <li style="min-width: 30px">
+    <span class="timeline-start-marker"></span>
+    <!-- timeline start -->
+  </li>
+  <li>
+    <span class="timeline-marker compl"></span>
+    <div class="timeline-data">
+      <h5>Name</h5>
+    </div>
+  </li>
+  <li>
+    <span class="timeline-marker compl"></span>
+    <div class="timeline-data">
+      <h5>Personel info</h5>
+    </div>
+  </li>
+  <li>
+    <span class="timeline-marker compl"></span>
+    <div class="timeline-data">
+      <h5>Location</h5>
+    </div>
+  </li>
+  <li>
+    <span class="timeline-mark"><span class="num-sppan">4</span></span>
+    <div class="timeline-d">
+      <h5>Place details</h5>
+    </div>
+  </li>
+ <li>
+    <span class="timeline-marker"></span>
+    <div class="timeline-data">
+      <h5>Profile details</h5>
+    </div>
+  </li>
+  <li style="min-width: 30px">
+    <span class="timeline-end-marker"></span>
+    <div class="timeline-data">
+      <!-- timeline end -->
+    </div>
+  </li>
+</ul>
+
+<div class="us-cret-box">
+  <form class="subformclass" action="{% url 'User:ver-pla' %}" method="post">
+   {% csrf_token %}
+   {% if name %}
+ <input type="hidden" value="{{name}}" name="username" />
+    {% endif %} {% if age %}
+    <input type="hidden" value="{{age}}" name="userage" />
+    {% endif %} {% if email %}
+    <input type="hidden" value="{{email}}" name="useremail" />
+    {% endif %} {% if phone %}
+    <input type="hidden" value="{{phone}}" name="userphone" />
+    {% endif %} {% if country %}
+    <input type="hidden" value="{{country}}" name="usercountry" />
+    {% endif %} {% if state %}
+    <input type="hidden" value="{{state}}" name="userstate" />
+    {% endif %} 
+    {% if place %}
+    <input type="hidden" value="{{place}}" name="userplace" />
+    {% endif %}
+  
+
+
+
+    <div class="cret-inp-form-holder">
+      {% if place %}
+      <p>Your nearest town:</p>
+      <input
+        type="text"
+        placeholder="your nearest town"
+        value="{{place}}"
+        name="userplace"
+        disabled
+        id=""
+      />
+     
+{% else %}
+<input
+
+        type="text"
+        placeholder="Your town name will be displayed here"
+        disabled
+        
+      />
+{% endif %}
+      {% if not place %}
+      <button type="submit"  class="getlocation-butt">
+      <i class="fa fa-map-marker" aria-hidden="true"></i>
+      <span>Get nearest town</span>
+    </button>
+    
+      {% endif %}
+      
+    </div>
+    <div class="cret-inp-form-holder">
+      {% if flag %}
+  <div class="aler-text">Your location coudnt found.!</div>
+{% endif %}
+      <input type="hidden" value="0" id="longid" name="long" />
+      <input type="hidden" value="0"  id="latiid" name="lati" />
+    </div>
+
+
+    
+    
+  </form>
+  <form action="{% url 'User:ver-pladd' %}" method="post">
+    {% csrf_token %} {% if name %}
+    <input type="hidden" value="{{name}}" name="username" />
+    {% endif %} {% if age %}
+    <input type="hidden" value="{{age}}" name="userage" />
+    {% endif %} {% if email %}
+    <input type="hidden" value="{{email}}" name="useremail" />
+    {% endif %} {% if phone %}
+    <input type="hidden" value="{{phone}}" name="userphone" />
+    {% endif %} {% if country %}
+    <input type="hidden" value="{{country}}" name="usercountry" />
+    {% endif %} {% if state %}
+    <input type="hidden" value="{{state}}" name="userstate" />
+    {% endif %} 
+
+    {% if place %}
+    <input type="hidden" value="{{place}}" name="userplace" />
+    {% endif %}
+    
+    {% if place %}
+    <button class="cre-button" type="submit">SUBMIT</button>
+    {% endif %}
+  </form>
+
+</div>
+<script>
+  $(document).ready(function () {
+    var long = document.getElementById("longid");
+    var lati = document.getElementById("latiid");
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+      alert("Geolocation is not supported by this browser.!");
+    }
+
+    function showPosition(position) {
+      lati.value = position.coords.latitude;
+      long.value = position.coords.longitude;
+      
+    }
+    $(".subformclass").submit(function () {
+     
+      $(".pre-lod").show();
+    });
+  });
+</script>
+
+<script></script>
+{% endblock content %}

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xadmin | Proof details</title>
+        <!-- font awsome -->
+        <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+      />
+  
+      <!-- Poppins font -->
+      <link rel="preconnect" href="https://fonts.gstatic.com" />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet"
+      />
+       <!-- Bootstrap -->
+    <link
+    rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+    crossorigin="anonymous"
+  />
+  <!-- jquery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
+</head>
+<style>
+body{
+    font-family: "Poppins", sans-serif;
+    box-sizing: border-box;
+}
+.switch-wrapper {
+    position: absolute;
+    margin: 20px;
+    text-align: center;
+    font-size: 0;
+    height: 100px;
+    width: 100px;
+    top: 62%;
+    margin-top: -50px;
+    z-index: 2;
+  }
+  .switch-wrapper p{
+    font-size: 13px;
+    font-weight: 500;
+    margin: 0;
+  }
+  .switch {
+    position: relative;
+    margin-top: 20px;
+    font-size: 0;
+  }
+  
+  .switch-radio-label {
+    box-sizing: border-box;
+    position: absolute;
+    display: inline-block;
+    font-size: 14px;
+    width: 100%;
+    padding: 7px 5px 5px 5px;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    top: 0;
+    transition: all, 0.4s, ease-out;
+  }
+  .switch-radio-label.active {
+    opacity: 0;
+    left: 8px;
+  }
+  .switch-radio-label.inactive {
+    z-index: 2;
+    right: 8px;
+  }
+  
+  .switch-radio-label.left {
+    text-align: left;
+  }
+  
+  .switch-radio-label.right {
+    text-align: right;
+  }
+  
+  .switch-radio {
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    border: 0;
+    position: absolute;
+    clip: rect(0 0 0 0);
+    overflow: hidden;
+  }
+  
+  .slider {
+    content: "";
+    position: absolute;
+    cursor: pointer;
+    width: 80px;
+    height: 34px;
+    top: calc(50% - 17.5px);
+    left: calc(50% - 36.5px);
+    border-radius: 17.5px;
+    background-color: #ccc;
+    transition: background-color 300ms ease-in-out;
+  }
+  
+  .slider:after {
+    content: "";
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background-color: white;
+    transition: transform 300ms ease-in-out;
+  }
+  
+  /* checked logic selector */
+  .switch-radio.right:checked + .slider {
+    background-color: #2FA4D7;
+  }
+  
+  /* checked logic selector */
+  .switch-radio.right:checked + .slider:after {
+    transform: translateX(45px);
+  }
+  
+  /* checked logic selector */
+  .switch-radio.left:checked + .switch-radio-label.right:after {
+    content: "";
+    position: absolute;
+    top: -10px;
+    right: 0;
+    bottom: -10px;
+    left: -36px;
+    z-index: 2;
+  }
+.prof-holder{
+    border: 1px solid black;
+    border-radius: 10px;
+    margin: 20px auto;
+    padding: 10px;
+}
+.proof img{
+    display: block;
+    margin: 10px auto;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 10px 20px rgb(0 0 0 / 19%), 0 6px 6px rgb(0 0 0 / 23%);
+
+}
+.prof-holder .user{
+    width: 96%;
+    margin: auto;
+    display: flex;
+    border: 1px solid #98959547;
+    justify-content: center;
+    padding: 5px;
+}
+.user .title{
+    font-weight: 600;
+    margin:0;
+    padding: 0 10px;
+}
+.myformclass{
+    position: sticky;
+    z-index: 100;
+
+    top: 50px;
+}
+input:checked + .slider .switch-radio-label.inactive {
+    opacity: 0;
+  }
+  input:checked + .slider .switch-radio-label.active {
+    opacity: 1;
+    z-index: 20;
+  }
+  .back-butt {
+    color: white;
+    position: fixed;
+    top: 20px;
+    background-color: #0b7dd8;
+    text-decoration: none;
+    left: 30px;
+    box-shadow: 0 3px 6px rgb(0 0 0 / 16%), 0 3px 6px rgb(0 0 0 / 23%);
+    z-index: 20;
+    border-radius: 50px;
+    font-size: 12px;
+    transition: .3s ease-in-out;
+    /* border: 1px solid #d62b0c; */
+    padding: 10px 15px;
+  }
+
+  .back-butt i {
+    font-size: 30px;
+    display: block;
+    text-align: center;
+    padding: 0 5px;
+  }
+
+  .back-butt span {
+    display: block !important;
+    margin: 3px auto 0 auto;
+    text-align: center;
+  }
+
+  .back-butt:hover {
+    color: #0b7dd8;
+    text-decoration: none !important;
+    background-color: white;
+  }
+
+</style>
+<body>
+  <a class="back-butt" href="/xadmin"
+  ><i class="fa fa-arrow-left" aria-hidden="true"></i>
+  <span>Back</span>
+</a>
+<div class="container prof-holder">
+    
+    
+    <div class="row">
+        
+            {% if user %}
+            <form class="myformclass" action="{% url 'adminpanel:verify' user.id %}"  method="post">
+                {% csrf_token %}
+                  <div class="switch-wrapper">
+                  <p>verify user?</p>
+                  <div class="switch">
+                    <input type="radio" class="switch-radio left" id="radio-left" name="anontype" value="1" />
+                    <input type="radio" class="switch-radio right" id="radio-right" name="anontype" value="0" />
+              
+                      <div class="slider">
+                        <label class="switch-radio-label left active" for="radio-left">Yes</label>
+                        <label class="switch-radio-label right inactive" for="radio-right">No</label>
+                      </div>
+                  </div>
+                </div>
+              
+            
+            </form>
+            <div class="user">
+<h5 class="title">Name :</h5>
+<h5>{{user.u_name}}</h5>
+            </div>
+            <div class="user">
+<h5 class="title">Username :</h5>
+<h5>{{user.u_username}}</h5>
+            </div>
+            <div class="user">
+<h5 class="title">Age :</h5>
+<h5>{{user.u_age}}</h5>
+            </div>
+            <div class="user">
+<h5 class="title">Email :</h5>
+<h5>{{user.u_email}}</h5>
+            </div>
+            <div class="user">
+<h5 class="title">Phone :</h5>
+<h5>{{user.u_phone}}</h5>
+            </div>
+            <div class="user">
+<h5 class="title">Country :</h5>
+<h5>{{user.u_country}}</h5>
+            </div>
+            <div class="user">
+<h5 class="title">State :</h5>
+<h5>{{user.u_state}}</h5>
+            </div>
+            <div class="user">
+<h5 class="title">Place :</h5>
+<h5>{{user.u_place}}</h5>
+            </div>
+            <div class="user">
+<h5 class="title">Privacy :</h5>
+{% if user.u_security == False %}
+<h5>Disabled</h5>
+{% else %}
+<h5>Enabled</h5>
+{% endif %}
+            </div>
+            
+            {% endif %}
+            
+        {% for proof in proofs  %}
+        <div class="col-4">
+           <div class="proof">
+             <a href="{% url 'adminpanel:viewproof' proof.id %}" >
+              <img src="{{proof.proof.url}}"  alt="proof"/>
+             </a>
+            
+           </div>
+        </div>
+            {% endfor %}
+        
+    </div>
+</div>
+ {% if user %}
+<script>
+    $( document ).ready(function() {
+      
+      $('input[type=radio]').on('change', function() {
+        
+        $(this).closest("form").submit();
+      });
+      {% if user.u_verified %}
+      $("#radio-right").prop("checked", true);
+      {% else %}
+      $("#radio-left").prop("checked", true);
+      {% endif %}
+    });
+  </script>
+    {% endif %}
+   
+</body>
+</html>

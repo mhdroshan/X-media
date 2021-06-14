@@ -1,9 +1,11 @@
 from django.http.response import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.http import HttpResponse
-from .models import UserModel
+from .models import UserModel,tempProof
 from Tags.models import TagRequest
-from Posts.models import PostModel,PostImageModel
+from Posts.models import PostModel,PostImageModel,PostComment
+import easyocr
+from geopy.geocoders import Nominatim
 
 # Create your views here.
 
@@ -12,6 +14,7 @@ def userprofile(request):
         userid = request.session['userid']
         users=UserModel.objects.get(id=userid)
         allMyPosts=PostModel.objects.filter(user_id=userid)
+        # com_count = PostComment.objects.filter(user = userid , post = allMyPosts).count()
         return render(request,"User/Profile.html",{'user':users , 'mypost':allMyPosts})
     else:
         return redirect("/user/login")
@@ -33,6 +36,14 @@ def changePrivacy(request,id):
 
 
 
+def deletePost(request,id):
+    if request.session.has_key('userid'):
+        post =  PostModel.objects.get(id=id)
+        post.delete()
+        return redirect("/user/profile")
+
+    else:
+        return redirect("/user/login")
 
 
 def moreimage(request,id):
@@ -76,6 +87,7 @@ def logout(request):
 
 
 def tagreq(request):
+    
     if request.session.has_key('userid'):
         
         if request.method=="POST":
@@ -98,4 +110,225 @@ def tagreq(request):
 
     else:
         return redirect("/user/login")
+
+# create profile
+
+def create(request):
+    return render(request,"User/createPro.html",{})
+
+
+
+
+def verName(request):
+    # return render(request,"User/createPro2.html",{})
+
+    
+    if request.method=="POST" and request.FILES:
+        t = tempProof()
+        name = request.POST.get("username")
+        namestr = str(name).lower()
+        uname = namestr.replace(" ", "")
+
+
+        t.proof = request.FILES.get("nameproof")
+        t.name = request.POST.get("username")
+        t.save()
+        reader = easyocr.Reader(['en'])
+        result = reader.readtext(t.proof.path,detail=0,paragraph=True)
+        strproof = str(result)
+        proofid="".join(c for c in strproof if c.isalpha()).lower()
+        if uname not in proofid:
+            return render(request,"User/createPro.html",{'fail':1})
+
+        else:
+            return render(request,"User/createPro2.html",{'name':name})
+
+
+def verOther(request):
+    if request.method=="POST":
+        name = request.POST.get("username")
+        age = request.POST.get("userage")
+        email = request.POST.get("useremail")
+        phone = request.POST.get("userphone")
+
+        context = {
+            'name':name,
+            'age':age,
+            'email':email,
+            'phone':phone
+        }
+        # return HttpResponse(context.name)
+
+        return render(request,"User/createPro3.html",context)
+
+
+
+def verLocation(request):
+    # return render(request,"User/createPro4.html",{})
+  
+    if request.method=="POST":
+        name = request.POST.get("username")
+        age = request.POST.get("userage")
+        email = request.POST.get("useremail")
+        phone = request.POST.get("userphone")
+        
+        
+        
+
+
+        t = tempProof()
+        country = request.POST.get("usercountry")
+        constr = str(country).lower()
+        cont = constr.replace(" ", "")
+
+        state = request.POST.get("userstate")
+        statestr = str(state).lower()
+        stat = statestr.replace(" ", "")
+
+        t.proof = request.FILES.get("locationproof")
+        t.name = request.POST.get("username")
+        t.save()
+
+        reader = easyocr.Reader(['en'])
+        result = reader.readtext(t.proof.path,detail=0,paragraph=True)
+        strproof = str(result)
+        proofid="".join(c for c in strproof if c.isalpha()).lower()
+
+        context = {
+            'name':name,
+            'age':age,
+            'email':email,
+            'phone':phone,
+            'country':country,
+            'state':state,
+            
+        }
+        
+
+
+
+        if cont not in proofid or stat not in proofid:
+            return render(request,"User/createPro3.html",{'fail':1})
+
+        else:
+            return render(request,"User/createPro4.html",context)
+
+
+
+def verPlaceget(request):
+    # return render(request,"User/createPro5.html",{})
+    if request.method=="POST":
+
+        name = request.POST.get("username")
+        age = request.POST.get("userage")
+        email = request.POST.get("useremail")
+        phone = request.POST.get("userphone")
+        country = request.POST.get("usercountry")
+        state = request.POST.get("userstate")
+        place = request.POST.get("userplace")
+       
+        long = request.POST.get("long")
+        lati = request.POST.get("lati")
+        
+
+        geolocator = Nominatim(user_agent="geoapiExercises")
+       
+        # Latitude = "11.288575999999999"
+        # Longitude = "76.251136"
+    
+        location = geolocator.reverse(lati+","+long ,timeout=None)
+        address = location.raw['address']
+        town = address.get('town')
+        city = address.get('city')
+        village = address.get('village')
+        if town:
+            return render(request,"User/createPro4.html",{
+                
+                'name':name,
+                'age':age,
+                'email':email,
+                'phone':phone,
+                'country':country,
+                'state':state,
+                'place':town,
+                })
+        elif city:
+            return render(request,"User/createPro4.html",{
+                
+                'name':name,
+                'age':age,
+                'email':email,
+                'phone':phone,
+                'country':country,
+                'state':state,
+                'place':city,
+                })
+        elif village:
+            return render(request,"User/createPro4.html",{
+                
+                'name':name,
+                'age':age,
+                'email':email,
+                'phone':phone,
+                'country':country,
+                'state':state,
+                'place':village,
+            
+            })
+        else:
+            return render(request,"User/createPro4.html",{
+                'flag':1,
+                'name':name,
+                'age':age,
+                'email':email,
+                'phone':phone,
+                'country':country,
+                'state':state,
+                'place':0,} )
+        
+        
+
+
+def verPladd(request):
+    if request.method=="POST":
+        name = request.POST.get("username")
+        age = request.POST.get("userage")
+        email = request.POST.get("useremail")
+        phone = request.POST.get("userphone")
+        country = request.POST.get("usercountry")
+        state = request.POST.get("userstate")
+        place = request.POST.get("userplace")
+        context = {
+            'name':name,
+            'age':age,
+            'email':email,
+            'phone':phone,
+            'country':country,
+            'state':state,
+            'place':place,
+            
+        }
+
+        return render(request,"User/createPro5.html",context)
+
+def verDP(request):
+    if request.method=="POST" and request.FILES:
+
+        t= UserModel()
+        t.u_name = request.POST.get("username")
+        t.u_age = request.POST.get("userage")
+        t.u_email = request.POST.get("useremail")
+        t.u_phone = request.POST.get("userphone")
+        t.u_country = request.POST.get("usercountry")
+        t.u_state = request.POST.get("userstate")
+        t.u_place = request.POST.get("userplace")
+        t.u_username = request.POST.get("nameuser")
+        t.u_pass = request.POST.get("namepass")
+        t.u_pic = request.FILES.get("userpic")
+
+        t.save()
+
+
+        return redirect("/user/login")
+        
 

@@ -1,14 +1,24 @@
-{% extends 'base.html' %} {% block title %}Votes{% endblock %} 
+{% extends 'base.html' %} {% block title %}X-media | Votes{% endblock %} 
 {% block content %}
 <a class="back-butt" href="/tags/allTags"
   ><i class="fa fa-arrow-left" aria-hidden="true"></i>
   <span>Back</span>
 </a>
-
+    <style>
+      .navbar-nav #tags{
+        color: white !important;
+       
+    
+      }
+    </style>
 <div class="post-holder">
   {% if posts %}
   {% for post in posts %}
+  
 
+
+
+<div class="pp-hold">
   <div class="post">
     <div class="post-fir-half">
       <a href="{% url 'Posts:related-post' post.tag_id.id %}">
@@ -45,16 +55,51 @@
       style="background-image: url('{{post.p_coverimage.url }}');"
       class="post-sec-half"
     >
-      <div class="post-user-det">
-        <img
-          class="post-dp"
-          src="{{post.user_id.u_pic.url}}"
-          alt="profile"
-          srcset=""
-        />
-        <p class="all-user-name">{{post.user_id.u_name}}</p>
-      </div>
-
+      {% if post.user_id.u_verified == 1 %}
+            <div class="post-user-det" style="background: #045007;border:1px solid white">
+              {%if post.user_id.u_security == 1%}
+            
+            <img class="post-dp" alt="anonymous" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHg9IjBweCIgeT0iMHB4Igp3aWR0aD0iNTAiIGhlaWdodD0iNTAiCnZpZXdCb3g9IjAgMCAxNzIgMTcyIgpzdHlsZT0iIGZpbGw6IzAwMDAwMDsiPjxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0ibm9uemVybyIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIHN0cm9rZS1saW5lY2FwPSJidXR0IiBzdHJva2UtbGluZWpvaW49Im1pdGVyIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHN0cm9rZS1kYXNoYXJyYXk9IiIgc3Ryb2tlLWRhc2hvZmZzZXQ9IjAiIGZvbnQtZmFtaWx5PSJub25lIiBmb250LXdlaWdodD0ibm9uZSIgZm9udC1zaXplPSJub25lIiB0ZXh0LWFuY2hvcj0ibm9uZSIgc3R5bGU9Im1peC1ibGVuZC1tb2RlOiBub3JtYWwiPjxwYXRoIGQ9Ik0wLDE3MnYtMTcyaDE3MnYxNzJ6IiBmaWxsPSJub25lIj48L3BhdGg+PGcgZmlsbD0iI2ZmZmZmZiI+PHBhdGggZD0iTTg2LDYuODhjLTM0LjE5ODQ0LDAgLTYxLjkyLDkuMjQ1IC02MS45MiwyMC42NGMwLDAgMCwyNy44MDIxOSAwLDU4LjQ4YzAsMTcuNDgyMTkgMTguNjM3ODEsNjUuNjQyMTkgNjEuOTIsNzUuNjhjNDMuMjgyMTksLTEwLjAzNzgxIDYxLjkyLC01OC4xOTc4MSA2MS45MiwtNzUuNjhjMCwtMzAuNjc3ODEgMCwtNTguNDggMCwtNTguNDhjMCwtMTEuMzk1IC0yNy43MjE1NiwtMjAuNjQgLTYxLjkyLC0yMC42NHpNNTguNDgsMzcuODRjMTEuODI1LDAgMTcuODcxODgsMTAuNTc1MzEgMTkuMTM1LDExLjgyNWMyLjAxNTYzLDIuMDE1NjMgMi4wMTU2Myw1LjI5NDM4IDAsNy4yOTY1NmMtMi4wMTU2MiwyLjAxNTYyIC01LjI5NDM3LDIuMDE1NjIgLTcuMjk2NTYsMGMtMS40MjQzNywtMS40MTA5NCAtNi4wMzM0NCwtMTIuMjQxNTYgLTE1LjI3ODQ0LC0xMi4yNDE1NmMtNC43NzAzMSwwIC0xMC40ODEyNSwyLjIwMzc1IC0xNy4yLDYuODhjNi4zODI4MSwtMTAuNzM2NTYgMTMuNzczNDQsLTEzLjc2IDIwLjY0LC0xMy43NnpNNjguOCw2My42NGMtMy4xNTc4MSwzLjExNzUgLTguMTE2MjUsNS4xNiAtMTMuNzYsNS4xNmMtNS42NDM3NSwwIC0xMC42MDIxOSwtMi4wNDI1IC0xMy43NiwtNS4xNmMzLjE1NzgxLC0zLjExNzUgOC4xMTYyNSwtNS4xNiAxMy43NiwtNS4xNmM1LjY0Mzc1LDAgMTAuNjAyMTksMi4wNDI1IDEzLjc2LDUuMTZ6TTkyLjg4LDE0Ny45MmwtNi44OCw2Ljg4bC02Ljg4LC02Ljg4di0xNy4yaDEzLjc2ek0xMTYuOTYsMTE2Ljk2aC0yNC4wOGwtNi44OCwtNi44OGwtNi44OCw2Ljg4aC0yNC4wOGwtMTcuMiwtMjcuNTJsMjAuNjQsMTcuMmgxMy43NmwxMC4zMiwtMTAuMzJoNi44OGwxMC4zMiwxMC4zMmgxMy43NmwyMC42NCwtMTcuMnpNMTAzLjIsNjMuNjRjMy4xNTc4MSwtMy4xMTc1IDguMTE2MjUsLTUuMTYgMTMuNzYsLTUuMTZjNS42NDM3NSwwIDEwLjYwMjE5LDIuMDQyNSAxMy43Niw1LjE2Yy0zLjE1NzgxLDMuMTE3NSAtOC4xMTYyNSw1LjE2IC0xMy43Niw1LjE2Yy01LjY0Mzc1LDAgLTEwLjYwMjE5LC0yLjA0MjUgLTEzLjc2LC01LjE2ek0xMTYuOTYsNDQuNzJjLTkuMjQ1LDAgLTEzLjg1NDA2LDEwLjgzMDYzIC0xNS4yNjUsMTIuMjU1Yy0yLjAxNTYyLDIuMDE1NjMgLTUuMjk0MzcsMi4wMTU2MyAtNy4yOTY1NiwwYy0yLjAxNTYyLC0yLjAxNTYyIC0yLjAxNTYyLC01LjI5NDM3IDAsLTcuMjk2NTZjMS4yNDk2OSwtMS4yNjMxMiA3LjI5NjU2LC0xMS44Mzg0NCAxOS4xMjE1NiwtMTEuODM4NDRjNi44NjY1NiwwIDE0LjI1NzE5LDMuMDIzNDQgMjAuNjQsMTMuNzZjLTYuNzE4NzUsLTQuNjc2MjUgLTEyLjQyOTY5LC02Ljg4IC0xNy4yLC02Ljg4eiI+PC9wYXRoPjwvZz48L2c+PC9zdmc+"/>
+              {% else %}
+              <img
+              class="post-dp"
+              src="{{post.user_id.u_pic.url}}"
+              alt="profile"
+              srcset=""
+            />
+              {%endif %}
+         
+      <p class="all-user-name">
+        {%if post.user_id.u_security == 1%}
+        Anonymous
+        {% else %}
+        {{post.user_id.u_name}}
+        {%endif %}
+      </p>
+    </div>
+            {% else %}
+            <div class="post-user-det">
+              {%if post.user_id.u_security == 1%}
+            
+            <img class="post-dp" alt="anonymous" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHg9IjBweCIgeT0iMHB4Igp3aWR0aD0iNTAiIGhlaWdodD0iNTAiCnZpZXdCb3g9IjAgMCAxNzIgMTcyIgpzdHlsZT0iIGZpbGw6IzAwMDAwMDsiPjxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0ibm9uemVybyIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIHN0cm9rZS1saW5lY2FwPSJidXR0IiBzdHJva2UtbGluZWpvaW49Im1pdGVyIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHN0cm9rZS1kYXNoYXJyYXk9IiIgc3Ryb2tlLWRhc2hvZmZzZXQ9IjAiIGZvbnQtZmFtaWx5PSJub25lIiBmb250LXdlaWdodD0ibm9uZSIgZm9udC1zaXplPSJub25lIiB0ZXh0LWFuY2hvcj0ibm9uZSIgc3R5bGU9Im1peC1ibGVuZC1tb2RlOiBub3JtYWwiPjxwYXRoIGQ9Ik0wLDE3MnYtMTcyaDE3MnYxNzJ6IiBmaWxsPSJub25lIj48L3BhdGg+PGcgZmlsbD0iI2ZmZmZmZiI+PHBhdGggZD0iTTg2LDYuODhjLTM0LjE5ODQ0LDAgLTYxLjkyLDkuMjQ1IC02MS45MiwyMC42NGMwLDAgMCwyNy44MDIxOSAwLDU4LjQ4YzAsMTcuNDgyMTkgMTguNjM3ODEsNjUuNjQyMTkgNjEuOTIsNzUuNjhjNDMuMjgyMTksLTEwLjAzNzgxIDYxLjkyLC01OC4xOTc4MSA2MS45MiwtNzUuNjhjMCwtMzAuNjc3ODEgMCwtNTguNDggMCwtNTguNDhjMCwtMTEuMzk1IC0yNy43MjE1NiwtMjAuNjQgLTYxLjkyLC0yMC42NHpNNTguNDgsMzcuODRjMTEuODI1LDAgMTcuODcxODgsMTAuNTc1MzEgMTkuMTM1LDExLjgyNWMyLjAxNTYzLDIuMDE1NjMgMi4wMTU2Myw1LjI5NDM4IDAsNy4yOTY1NmMtMi4wMTU2MiwyLjAxNTYyIC01LjI5NDM3LDIuMDE1NjIgLTcuMjk2NTYsMGMtMS40MjQzNywtMS40MTA5NCAtNi4wMzM0NCwtMTIuMjQxNTYgLTE1LjI3ODQ0LC0xMi4yNDE1NmMtNC43NzAzMSwwIC0xMC40ODEyNSwyLjIwMzc1IC0xNy4yLDYuODhjNi4zODI4MSwtMTAuNzM2NTYgMTMuNzczNDQsLTEzLjc2IDIwLjY0LC0xMy43NnpNNjguOCw2My42NGMtMy4xNTc4MSwzLjExNzUgLTguMTE2MjUsNS4xNiAtMTMuNzYsNS4xNmMtNS42NDM3NSwwIC0xMC42MDIxOSwtMi4wNDI1IC0xMy43NiwtNS4xNmMzLjE1NzgxLC0zLjExNzUgOC4xMTYyNSwtNS4xNiAxMy43NiwtNS4xNmM1LjY0Mzc1LDAgMTAuNjAyMTksMi4wNDI1IDEzLjc2LDUuMTZ6TTkyLjg4LDE0Ny45MmwtNi44OCw2Ljg4bC02Ljg4LC02Ljg4di0xNy4yaDEzLjc2ek0xMTYuOTYsMTE2Ljk2aC0yNC4wOGwtNi44OCwtNi44OGwtNi44OCw2Ljg4aC0yNC4wOGwtMTcuMiwtMjcuNTJsMjAuNjQsMTcuMmgxMy43NmwxMC4zMiwtMTAuMzJoNi44OGwxMC4zMiwxMC4zMmgxMy43NmwyMC42NCwtMTcuMnpNMTAzLjIsNjMuNjRjMy4xNTc4MSwtMy4xMTc1IDguMTE2MjUsLTUuMTYgMTMuNzYsLTUuMTZjNS42NDM3NSwwIDEwLjYwMjE5LDIuMDQyNSAxMy43Niw1LjE2Yy0zLjE1NzgxLDMuMTE3NSAtOC4xMTYyNSw1LjE2IC0xMy43Niw1LjE2Yy01LjY0Mzc1LDAgLTEwLjYwMjE5LC0yLjA0MjUgLTEzLjc2LC01LjE2ek0xMTYuOTYsNDQuNzJjLTkuMjQ1LDAgLTEzLjg1NDA2LDEwLjgzMDYzIC0xNS4yNjUsMTIuMjU1Yy0yLjAxNTYyLDIuMDE1NjMgLTUuMjk0MzcsMi4wMTU2MyAtNy4yOTY1NiwwYy0yLjAxNTYyLC0yLjAxNTYyIC0yLjAxNTYyLC01LjI5NDM3IDAsLTcuMjk2NTZjMS4yNDk2OSwtMS4yNjMxMiA3LjI5NjU2LC0xMS44Mzg0NCAxOS4xMjE1NiwtMTEuODM4NDRjNi44NjY1NiwwIDE0LjI1NzE5LDMuMDIzNDQgMjAuNjQsMTMuNzZjLTYuNzE4NzUsLTQuNjc2MjUgLTEyLjQyOTY5LC02Ljg4IC0xNy4yLC02Ljg4eiI+PC9wYXRoPjwvZz48L2c+PC9zdmc+"/>
+              {% else %}
+              <img
+              class="post-dp"
+              src="{{post.user_id.u_pic.url}}"
+              alt="profile"
+              srcset=""
+            />
+              {%endif %}
+         
+      <p class="all-user-name">
+        {%if post.user_id.u_security == 1%}
+        Anonymous
+        {% else %}
+        {{post.user_id.u_name}}
+        {%endif %}
+      </p>
+    </div>
+            {% endif %}
       <!-- <input type="hidden" name="tag_id" value="{{post.tag_id.id}}" /> -->
 
      
@@ -65,17 +110,17 @@
         <!-- negative -->
         <form action="{% url 'Posts:neg-vote' %}" method="post">
           {% csrf_token %}
-
+          <input type="hidden" value="{{post.tag_id.id}}" name="tagid">
           <input type="hidden" name="neg_id" value="{{post.id}}" />
           {% if user not in post.nvoted.all %}
           <button class="votebutt neg{{post.id}} vote-white"  type="submit">
-          <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+            <i class="fa fa-thumbs-down" aria-hidden="true"></i>
           <p>{{post.nvoted.all.count}} votes</p>
           </button>
 
           {% else %}
           <button class="votebutt neg{{post.id}} vote-blue" style="color: #0b7dd8;" type="submit">
-            <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+            <i class="fa fa-thumbs-down" aria-hidden="true"></i>
             <p>{{post.nvoted.all.count}} votes</p>
           </button>
 
@@ -85,16 +130,19 @@
         <!-- positive -->
         <form action="{% url 'Posts:pos-vote' %}" method="post">
           {% csrf_token %}
+          <input type="hidden" value="{{post.tag_id.id}}" name="tagid">
           <input type="hidden" name="pos_id" value="{{post.id}}" />
           {% if user not in post.pvoted.all %}
           <button class="votebutt pos{{post.id}}  vote-white"  type="submit">
-            <i class="fa fa-thumbs-down" aria-hidden="true"></i>
+            
+            <i class="fa fa-thumbs-up" aria-hidden="true"></i>
             <p>{{post.pvoted.all.count}} votes</p>
           </button>
 
           {% else %}
           <button class="votebutt pos{{post.id}} vote-blue"  type="submit">
-            <i class="fa fa-thumbs-down" aria-hidden="true"></i>
+            
+            <i class="fa fa-thumbs-up" aria-hidden="true"></i>
             <p>{{post.pvoted.all.count}} votes</p>
           </button>
           {% comment %}
@@ -111,7 +159,7 @@
       <p class="date-time">{{post.p_dateTime}}</p>
     </div>
   </div>
-
+</div>
   <hr />
   <script>
     $( document ).ready(function() {

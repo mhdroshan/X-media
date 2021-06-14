@@ -23,6 +23,7 @@ class TagRequest(models.Model):
     tr_c=models.CharField(max_length=40,default=0)
     tr_s=models.CharField(max_length=40,default=0)
     tr_p=models.CharField(max_length=40,default=0)
+    tr_date =models.DateTimeField(auto_now=True,null=False)
     user_id=models.ForeignKey(UserModel,on_delete=models.SET_NULL,null=True,verbose_name="user")
 
     def __str__(self):

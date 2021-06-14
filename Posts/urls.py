@@ -11,6 +11,7 @@ urlpatterns = [
     path('post-entry/<int:id>/',views.addpost,name="post-entry"),
     # path('post-images/<int:id>',views.postimages,name="post-images"),
     path('related-post/<int:id>',views.relatedpost,name="related-post"),
+    path('related-post2/<int:id>',views.relatedpostUser,name="related-post-user"),
     path('post-vote/<int:id>',views.postvote,name="post-vote"),
     path('addcomment/<int:id>',views.addcomment,name="addcomment"),
     path('pos-vote/',views.posvote,name="pos-vote"),
