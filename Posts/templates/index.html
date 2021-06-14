@@ -37,6 +37,7 @@
             </div>
             <div style="background-image: url('{{post.p_coverimage.url }}');" class="post-sec-half">
             {% if post.user_id.u_verified == 1 %}
+            <a href="{% url 'Posts:related-post-user' post.user_id.id %}">
             <div class="post-user-det" style="background: #045007;border:1px solid white">
               {%if post.user_id.u_security == 1%}
             
@@ -49,7 +50,7 @@
               srcset=""
             />
               {%endif %}
-         
+        
       <p class="all-user-name">
         {%if post.user_id.u_security == 1%}
         Anonymous
@@ -58,6 +59,7 @@
         {%endif %}
       </p>
     </div>
+
             {% else %}
             <div class="post-user-det">
               {%if post.user_id.u_security == 1%}
@@ -80,6 +82,7 @@
         {%endif %}
       </p>
     </div>
+  </a> 
             {% endif %}
               
            

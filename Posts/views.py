@@ -109,7 +109,7 @@ def relatedpost(request,id):
 def relatedpostUser(request,id):
     # return HttpResponse("asdasd")
     posts=PostModel.objects.filter(user_id = id)
-    return render (request,"relatedpost2.html",{'posts':posts})
+    return render (request,"relatedPost2.html",{'posts':posts})
     
 
 def addpost(request,id):
@@ -160,22 +160,4 @@ def addcomment(request,id):
     else:
         return redirect("/user/login")
     
-
-# def postimages(request,id):
-#     allPostImages=PostImageModel.objects.filter(post=id)
-#     if request.session.has_key('userid'):
-#         if request.method == 'POST' and request.FILES:
-#             postImagesObj=PostImageModel()
-#             postImagesObj.img_title= request.POST.get("txtCaption")
-#             postImagesObj.post_image= request.FILES.get("postImage")
-
-#             postObj=PostModel.objects.get(id=id)
-#             postImagesObj.post=postObj
-
-#             # return HttpResponse("Saved")
-#             postImagesObj.save()
-#             return redirect("/my-posts/")
-#         else:
-#             return render(request,"postimages.html",{"allPostImages":allPostImages})
-        
 

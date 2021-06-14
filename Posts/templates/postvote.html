@@ -54,7 +54,7 @@
     <div
       style="background-image: url('{{post.p_coverimage.url }}');"
       class="post-sec-half"
-    >
+    ><a href="{% url 'Posts:related-post-user' post.user_id.id %}">
       {% if post.user_id.u_verified == 1 %}
             <div class="post-user-det" style="background: #045007;border:1px solid white">
               {%if post.user_id.u_security == 1%}
@@ -99,6 +99,7 @@
         {%endif %}
       </p>
     </div>
+    </a>
             {% endif %}
       <!-- <input type="hidden" name="tag_id" value="{{post.tag_id.id}}" /> -->
 

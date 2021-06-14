@@ -49,6 +49,7 @@
         style="background-image: url('{{post.p_coverimage.url }}');"
         class="post-sec-half"
       >
+      <a href="{% url 'Posts:related-post-user' post.user_id.id %}">
         {% if post.user_id.u_verified == 1 %}
             <div class="post-user-det" style="background: #045007;border:1px solid white">
               {%if post.user_id.u_security == 1%}
@@ -93,16 +94,21 @@
         {%endif %}
       </p>
     </div>
+    </a>
             {% endif %}
               
         <div class="votes-holder">
           <button class="votebutt-home">
             <i class="fa fa-thumbs-down" aria-hidden="true"></i>
-            <p>{{post.nvoted.all.count}} votes</p>
+            <p>{{post.nvoted.all.count}}</p>
           </button>
           <button class="votebutt-home">
             <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-            <p>{{post.pvoted.all.count}} votes</p>
+            <p>{{post.pvoted.all.count}}</p>
+          </button>
+          <button class="votebutt-home">
+            <i class="fa fa-comment" aria-hidden="true"></i>
+                    <p>{{post.p_com}}</p>
           </button>
         </div>
 

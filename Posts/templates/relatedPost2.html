@@ -1,6 +1,6 @@
-{% extends 'base.html' %} {% block title %}X-media | Related posts{% endblock %} 
+{% extends 'base.html' %} {% block title %}X-media | Users posts{% endblock %} 
 {% block content %}
-<a class="back-butt" href="/tags/allTags"
+<a class="back-butt" href="{% url 'Posts:index' %}"
   ><i class="fa fa-arrow-left" aria-hidden="true"></i>
   <span>Back</span>
 </a>
@@ -10,6 +10,7 @@
   
   }
 </style>
+
 <div class="post-holder">
   {% for post in posts %}
   <div class="pp-hold">
@@ -45,10 +46,12 @@
           >
         </div>
       </div>
+      
       <div
         style="background-image: url('{{post.p_coverimage.url }}');"
         class="post-sec-half"
       >
+      <a href="{% url 'Posts:related-post-user' post.user_id.id %}">
         {% if post.user_id.u_verified == 1 %}
             <div class="post-user-det" style="background: #045007;border:1px solid white">
               {%if post.user_id.u_security == 1%}
@@ -71,6 +74,7 @@
         {%endif %}
       </p>
     </div>
+  
             {% else %}
             <div class="post-user-det">
               {%if post.user_id.u_security == 1%}
@@ -93,16 +97,21 @@
         {%endif %}
       </p>
     </div>
+  </a>
             {% endif %}
               
         <div class="votes-holder">
           <button class="votebutt-home">
             <i class="fa fa-thumbs-down" aria-hidden="true"></i>
-            <p>{{post.nvoted.all.count}} votes</p>
+            <p>{{post.nvoted.all.count}}</p>
           </button>
           <button class="votebutt-home">
             <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-            <p>{{post.pvoted.all.count}} votes</p>
+            <p>{{post.pvoted.all.count}}</p>
+          </button>
+          <button class="votebutt-home">
+            <i class="fa fa-comment" aria-hidden="true"></i>
+                    <p>{{post.p_com}}</p>
           </button>
         </div>
 
