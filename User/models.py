@@ -6,16 +6,10 @@ class UserModel(models.Model):
     u_name=models.CharField(max_length=20,null=True)
     u_pass=models.CharField(max_length=20,null=False)
     u_username=models.CharField(max_length=20,null=True,unique=True)
-
-
     u_email=models.CharField(max_length=20,null=True)
     u_phone=models.CharField(max_length=20,null=True)
     u_age=models.IntegerField()
-
-
     u_pic=models.ImageField(upload_to='user_dp')
-
-
     u_country= models.CharField(max_length=20,default=0)
     u_state=models.CharField(max_length=20,default=0)
     u_place=models.CharField(max_length=20,default=0)
