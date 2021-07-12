@@ -19,12 +19,14 @@
   <!-- jquery -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  
   <!-- CSS CUSTOM -->
   <style>
     body {
       scroll-behavior: smooth;
       box-sizing: border-box;
       background-color: #212121;
+      color: white;
       font-family: 'Poppins', sans-serif;
     }
 
@@ -519,7 +521,7 @@ select.PE-input option{
 
     .dtag-holder .dtag-title span {
       font-weight: 600;
-      color: #4caf50;
+      color: #2196F3;
     }
 
     .tag {
@@ -573,15 +575,15 @@ select.PE-input option{
       left: 20px;
       top: 40px;
       font-size: 17px;
-      font-weight: 600;
+      font-weight: 400;
       text-align: left;
     }
 
     .tag-desc {
       font-size: 13px;
       position: absolute;
-      top: 65px;
-      left: 20px;
+      top: 70px;
+      left: 30px;
     }
 
     .tag-desc span {
@@ -893,9 +895,10 @@ select.PE-input option{
     }
 
     .PE-input-holder P {
-      font-size: 13px;
+      letter-spacing: .5px;
+      font-size: 14px;
       color: white;
-      padding-bottom: 0px;
+      padding-bottom: 1px;
       padding-left: 10px;
     }
 
@@ -920,9 +923,9 @@ select.PE-input option{
 
     .tag-request {
       text-decoration: none;
-      color: #4caf50;
+      color: #1e7e34;
       font-weight: 400;
-      border: 1.5px solid #4caf50;
+      border: 1.5px solid #1e7e34;
       display: block;
       position: sticky;
       top: 20px;
@@ -934,7 +937,7 @@ select.PE-input option{
       font-size: 15px;
       border-radius: 5px;
       padding: 5px 10px;
-      background-color: #1e1e1e;
+      background-color: #121212;
       transition: .3s ease-in-out;
     }
 
@@ -944,8 +947,9 @@ select.PE-input option{
     }
 
     .PE-submit {
-      margin: 40px auto;
+      margin: 40px auto 0 auto;
       padding: 10px 20px;
+      letter-spacing: 1px;
       border-radius: 7px;
       background-color: #1e7e34;
       border: 1px solid #1e7e34;
@@ -1232,7 +1236,7 @@ padding-right: 18px !important;
       top: calc(50% - 17.5px);
       left: calc(50% - 36.5px);
       border-radius: 17.5px;
-      background-color: #ccc;
+      background-color: #d62b0c;
       transition: background-color 300ms ease-in-out;
     }
     
@@ -1301,6 +1305,9 @@ padding-right: 18px !important;
 .dis-flexxed button:hover{
   background: white;
   color: #4caf50;
+}
+.dis-flexxed button:focus{
+  outline: none;
 }
     
     input:checked + .slider .switch-radio-label.inactive {
@@ -1540,6 +1547,7 @@ span.timeline-mark::before{
 }
 span.compl::before{
   border-color: #4caf50 !important;
+  background: #4caf50 !important;
 }
 .us-cret-box{
   background-color: #2E2E2E;
@@ -1655,6 +1663,279 @@ padding: 0 5px;
   text-decoration: none !important;
   background-color: white;
 }
+.search-holder{
+ position: relative;
+  min-height: 100px;
+  z-index: 2;
+  padding: 20px 30px;
+  background: #212121;
+  border-bottom: 1px solid #6a66669e;
+  color: white;
+
+}
+.search-holder input{
+  border: none;
+  background-color: #2e2e2e;
+  width: 70%;
+  padding: 18px 40px;
+  display: block;
+  box-shadow: 0 3px 6px rgb(0 0 0 / 16%), 0 3px 6px rgb(0 0 0 / 23%);
+  margin: 30px auto 10px auto;
+  font-size: 18px;
+  letter-spacing: .5px;
+  color: white;
+  border-radius: 43px;
+}
+.search-cls{
+  overflow: auto;
+  list-style-type: none;
+  width: 70%;
+  display: none;
+  transition: .3s ease-in;
+  border-radius: 5px;
+  margin: auto;
+  padding: 0 !important;
+  color: white;
+  max-height: 460px;
+}
+.search-cls li{
+  border-radius: 5px;
+  cursor: pointer;
+  color: white;
+  background: #2e2e2eb3;
+  padding: 5px;
+  margin: 10px 0;
+  transition: .2s ease-out;
+  position: relative;
+  line-height: 55px;
+  border: 1px solid white;
+  height: 80px;
+}
+.search-cls li:hover{
+  background: #121212;
+}
+.search-cls li p{
+  color: white;
+  font-size: 22px;
+  letter-spacing: .5px;
+  width: 95%;;
+  font-weight: 300;
+  line-height:70px;
+  padding: 0 10px 0 75px;
+}
+.search-cls img{
+  margin: auto;
+  position: absolute;
+  top: 0;
+  margin-right: 10px;
+  bottom: 0;
+  right: 0;
+  height: 50px;
+  display: block;
+  width: 50px;
+  border-radius: 100px;
+}
+.search-cls .post-cc{
+  padding: 2px;
+  font-size: 33px;
+  text-align: right;
+  position: absolute;
+  top: 0;
+  font-weight: 500;
+  margin: auto;
+  line-height: 60px;
+  right: 28px;
+  bottom: 0;
+}
+.cc-custom{
+  line-height: 118px;
+  font-size: 13px !important;
+  right: 20px;
+  font-weight: 400 !important;
+  padding: 2px !important;
+  text-align: right;
+  line-height: 112px !important;
+  position: absolute;
+  top: 0;
+  margin: auto;
+  bottom: 0;
+}
+.serch-icon{
+  width: 60px;
+  height: 100%;
+  transition: .2s ease-out;
+  position: absolute;
+  top: 0px;
+  margin: auto;
+  border-radius: 5px 0 0 5px;
+  padding: 10px;
+  left: 1px;
+  background: #121212;
+  bottom: 0px;
+}
+.search-cls li:hover .serch-icon{
+  background: #121212 !important; 
+}
+.serch-icon i{
+  position: relative;
+  margin: 40% auto;
+  text-align: center;
+  display: block;
+  font-size: 25px;
+}
+.the-tag{
+  margin: 30px auto;
+  width: 900px;
+  padding: 0;
+  position: sticky;
+  box-shadow: 0 19px 38px rgb(0 0 0 / 30%), 0 15px 12px rgb(0 0 0 / 22%);
+  border-radius: 5px;
+  background-color: #121212;
+  color: white;
+  top: 30px;
+  z-index: 15;
+}
+.tag-cov-img{
+  min-width: 65%;
+  position: relative;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.tag-cov-img::before{
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  border-radius: 0 5px 5px 0;
+  /* background-color: #0c0c0c8f; */
+  backdrop-filter: blur(3px) brightness(0.4);
+}
+.the-tag-head{
+  position: relative;
+  margin-right: 200px;
+  width: 100%;
+ 
+}
+.the-tag-head h2{
+  margin:20px auto;
+  font-size: 60px;
+  text-align: left;
+  display: flex;
+  font-weight: 700;
+  padding-left: 10px;
+}
+.the-tag-head span{
+  font-size: 60px;
+  font-weight: 400;
+  padding-right: 5px;
+}
+.the-tag-cont{
+  margin: 0;
+  padding: 8px 8px 8px 15px;
+  max-width: 35%;
+}
+.the-tag-cont h5{
+  margin: 0;
+  font-size: 18px;
+  font-weight: 400;
+}
+.the-tag-cont p{
+  overflow: auto;
+  font-size: 12px;
+  padding: 10px 5px;
+  margin: 0;
+  color: white;
+  max-height: 100px;
+}
+.the-tag-cont p span{
+  padding-right: 5px;
+  color: cornflowerblue;
+}
+.post-count{
+  text-align: center;
+  position: absolute;
+  bottom: 8px;
+  right: 10px;
+  font-size: 40px;
+  line-height: 1;
+  font-weight: 600;
+}
+.post-count p {
+  font-size: 13px;
+  font-weight: 300;
+  color: #d8d7d7;
+  letter-spacing: .5px;
+  text-align: center;
+}
+.the-tag-head a{
+  text-align: center;
+  margin-top: -9px;
+  color: #d62b0c;
+  padding-left: 15px;
+  transition: .3s ease;
+}
+.the-tag-head i{
+  border-radius: 5px;
+  height: 57px;
+  backdrop-filter: blur(30px);"
+}
+.the-tag-head a:hover{
+  color: #0b7dd8;
+}
+.the-tag-head a:hover .save-click{
+color: white !important;
+}
+.tag-back{
+  width: 97%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #212121;
+  right: 0;
+  border-bottom: 2px solid #b9b1b161;
+  margin: auto;
+  height: 175px;
+  z-index: 5;
+}
+.save-click{
+  font-size: 13px !important;
+  color: #b5b5b5;
+  letter-spacing: 1px;
+  display: block;
+  text-align: center;
+  padding: 0 !important;
+  font-weight: 300 !important;
+}
+.u-follow-holder{
+  position: absolute;
+  bottom: 70px;
+  padding: 10px;
+  width: 85%;
+  left: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 400px;
+  margin: auto;
+  right: 0;
+}
+.u-follow-title{
+  width: 100%;
+  text-align: center;
+  border: none;
+  transition: .3s ease;
+  font-weight: 300;
+  letter-spacing: 1px;
+  opacity: 1;
+  font-size: 20px;
+  background: #121212;
+  padding: 8px;
+  margin: auto;
+  margin-top: 39px;
+  border-radius: 5px;
+}
   </style>
 </head>
 
@@ -1672,9 +1953,11 @@ padding: 0 5px;
       <a class="nav-item nav-link" id="home" href="{% url 'Posts:index' %}"><i class="fa fa-home" aria-hidden="true"></i></i>
         <p>Home</p>
       </a>
-      <a class="nav-item nav-link" id="tags" href="{% url 'Tags:all-Tags-List' %}"><i class="fa fa-list-ul"
-          aria-hidden="true"></i>
-        <p>Tags</p>
+      <a class="nav-item nav-link" id="tags" href="{% url 'Tags:all-Tags-List' %}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+        <p>Post</p>
+      </a>
+      <a class="nav-item nav-link" id="find" href="{% url 'Tags:find-Tags' %}"><i class="fa fa-newspaper-o" aria-hidden="true"></i>
+        <p>Read</p>
       </a>
       <a class="nav-item nav-link" id="profile" href="/user/profile"><i class="fa fa-user" aria-hidden="true"></i>
         <p>Profile</p>

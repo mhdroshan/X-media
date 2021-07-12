@@ -1,0 +1,232 @@
+{% extends 'base.html' %} {% block title %}X-media | Find{% endblock %}
+{% block content %}
+<style>
+  .navbar-nav #find {
+    color: white !important;
+  }
+   .tag-place-dat{
+    position: absolute;
+    top: 3px;
+    right: 10px;
+    font-size: 20px;
+  }
+  .tag-place-dat i{
+    padding-right: 5px;
+  }
+  .the-tag{
+    z-index: 1;
+        width: 87%;
+        border:2px solid #212121;
+    position: relative;
+    transition: .3s ease;
+    top: 0;
+  }
+  .tag-place-dat i{
+    padding-right: 7px;
+  }
+  .the-tag:hover{
+    border:2px solid white;
+  }
+  .the-tag-head h2,
+  .the-tag-head span{
+    font-size: 35px;
+  }
+  .post-count p{
+    font-size: 11px;
+  }
+  .post-count{
+    font-size: 25px;
+    bottom: 5px;
+  }
+  .tag-cov-img{
+    width: 100%;
+  }
+  .tag-place-dat{
+    font-size: 15px;
+    top: 5px;
+  }
+  .tag-error{
+    margin: 40px auto;
+  }
+</style>
+
+<div class="search-holder">
+  <input
+    type="text"
+    id="searchinput"
+    onkeyup="search()"
+    placeholder="Search for tags, countries or users"
+    id="search"
+  />
+
+  <ul id="searchlist" class="search-cls">
+      <!-- country -->
+      {% if country %} {% for post in country %}
+      {% if not post.tag_id__t_country == "0" %}
+      <li>
+          <div style="background: #d31a1a;" class="serch-icon">
+              <i class="fa fa-map-marker" aria-hidden="true"></i>
+          </div>
+        <p style="text-transform: capitalize;">{{ post.tag_id__t_country}}</p>
+        <p class="post-cc" >{{ post.dcount}}</p>
+        <p class="cc-custom" >Posts</p>
+        
+        <!-- <img
+         
+          src="{{user.u_pic.url}}"
+          alt="user-dp"
+          srcset=""
+        /> -->
+      </li>
+      {% endif %}
+      {% endfor %} {% endif %}
+
+
+      <!-- tags -->
+    {% if tags %} {% for tag in tags %}
+    <a href="{% url 'Posts:related-post' tag.id %}">
+    
+    <li>
+        <div  style="background: #3F51B5;" class="serch-icon">
+            <i class="fa fa-tag"  aria-hidden="true"></i>
+        </div>
+      <p style="text-transform: uppercase;">#{{ tag.tag_name }}</p>
+      <p style="font-size: 14px;
+      text-align: center;
+      position: absolute;
+      top: 30px;
+      line-height: 0;"><i class="fa fa-map-marker" aria-hidden="true"></i> 
+      
+{% if not tag.t_country == "0" %}
+{{ tag.t_country}}{% endif %}
+{% if not tag.t_state == "0" %}
+{{ tag.t_state}}{% endif %}
+{% if not tag.t_place == "0" %}
+{{ tag.t_place}}{% endif %}
+
+      </p>
+      <img
+       
+        src="{{tag.tag_image.url}}"
+        alt="tag-image"
+        srcset=""
+      />
+    </li>
+    </a>
+    {% endfor %} {% endif %}
+
+
+    <!-- user -->
+    {% if user %} {% for user in users %}
+    <li>
+        <div style="background: #009688;" class="serch-icon">
+            <i class="fa fa-user" aria-hidden="true"></i>
+        </div>
+      <p style="text-transform: capitalize;">{{ user.u_name }}</p>
+      <img
+       
+        src="{{user.u_pic.url}}"
+        alt="user-dp"
+        srcset=""
+      />
+    </li>
+    {% endfor %} {% endif %}
+  
+  </ul>
+
+</div>
+<!-- followings tags -->
+<h4 class="u-follow-title" id="folltitle">Tags You Follow</h4>
+<div class="u-follow-holder">
+<div class="row">
+  
+   {% if u_tags %}
+    {% for tag in u_tags  %}
+    <div class="col-sm-6">
+      <a href="{% url 'Posts:related-post' tag.tag.id %}">
+    <div class="the-tag d-flex">
+     <div style="background-image: url('{{tag.tag.tag_image.url }}');" class="tag-cov-img">
+      <div class="the-tag-head">
+        <h2><span>#</span>{{tag.tag.tag_name}} 
+        </h2>
+  
+      </div>
+  
+      <!-- tag location -->
+      {% if tag.tag.t_country != "0" %}
+  
+      <p class="tag-place-dat">
+        <i class="fa fa-map-marker" aria-hidden="true"></i
+        >{{tag.tag.t_country}}
+      </p>
+      {% endif %}
+  
+  
+  
+      {% if tag.tag.t_state != "0" %}
+  
+      <p class="tag-place-dat">
+        <i class="fa fa-map-marker" aria-hidden="true"></i
+        >{{tag.tag.t_state}}
+      </p>
+      {% endif %}
+  
+  
+  
+      {% if tag.tag.t_place != "0" %}
+      <p class="tag-place-dat">
+        <i class="fa fa-map-marker" aria-hidden="true"></i
+        >{{tag.tag.t_place}}
+      </p>
+      {% endif %}
+  
+    <div style="right: 10px;" class="post-count">
+      {{tag.follow_count}} <p>Followers</p>
+    </div>
+   
+     
+     </div>
+     
+  </div>
+  </a>
+    </div>
+    {% endfor %}
+    {% else %}
+    <h3 class="tag-error">No tags</h3>
+   {% endif %}
+</div>
+ 
+  
+</div>
+
+
+<script>
+  function search() {
+    var input, filter, ul, li, a, i;
+    input = document.getElementById("searchinput");
+    filter = input.value.toUpperCase();
+    ul = document.getElementById("searchlist");
+    title = document.getElementById("folltitle");
+    li = ul.getElementsByTagName("li");
+
+    if (input.value.length == 0) {
+      ul.style.display = "none";
+      title.style.opacity = "1";
+      return;
+    } else {
+      ul.style.display = "block";
+      title.style.opacity = "0";
+    }
+    // Loop through all list items, and hide those who don't match the search query
+    for (i = 0; i < li.length; i++) {
+      a = li[i].getElementsByTagName("p")[0];
+      if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        li[i].style.display = "block";
+      } else {
+        li[i].style.display = "none";
+      }
+    }
+  }
+</script>
+
+{% endblock content %}

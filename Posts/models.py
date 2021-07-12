@@ -63,6 +63,7 @@ class PostImageModel(models.Model):
     def __str__(self):
             return str(self.img_title)
 
+
 class PostComment(models.Model):
     com_data = models.TextField()
     com_time = models.DateTimeField(auto_now=True)

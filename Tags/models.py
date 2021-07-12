@@ -1,6 +1,7 @@
 from django.db import models
-
 from User.models import UserModel
+
+
 # Create your models here.
 class Tagmodel(models.Model):
     tag_title=models.CharField(max_length=40,default=0)
@@ -14,7 +15,7 @@ class Tagmodel(models.Model):
     
 
     def __str__(self):
-        return self.tag_title+" "+self.t_country+" "+self.t_state+" "+self.t_place
+        return self.tag_name+" "+self.t_country+" "+self.t_state+" "+self.t_place
 
 class TagRequest(models.Model):
     tr_title=models.CharField(max_length=40,default=0)
@@ -29,3 +30,13 @@ class TagRequest(models.Model):
     def __str__(self):
         return self.tr_title+" - "+self.tr_c+" - "+self.tr_s+" - "+self.tr_p
     
+
+
+class following(models.Model):
+    tag = models.ForeignKey(Tagmodel,on_delete=models.SET_NULL,null=True,verbose_name="Tagmodel")
+    user = models.ForeignKey(UserModel,on_delete=models.SET_NULL,null=True,verbose_name="UserModel")
+    is_follow = models.BooleanField(default=0)
+    follow_count = models.IntegerField(default=0)
+
+    def __str__(self):
+        return str(self.tag) 

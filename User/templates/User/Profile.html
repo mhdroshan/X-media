@@ -1,5 +1,5 @@
 {% extends 'base.html' %} 
-{% block title %}Profile{% endblock %}
+{% block title %}X-media | Profile{% endblock %}
  {% block content %}
 
 <style>
@@ -108,8 +108,8 @@
             <!-- <p class="post-title">{{post.p_title}}</p> -->
             <div class="score-holder">
               <div class="one-score" >{{post.pvoted.all.count}}<i style="color: #2196f3;" class="fa fa-thumbs-up" aria-hidden="true"></i></div>
-              <div class="one-score">{{post.nvoted.all.count}}<i  style="color: #f44336;" class="fa fa-thumbs-down" aria-hidden="true"></i></div>
-              <div class="one-score" >{{post.p_com}}<i style="color: #ffeb3b;" class="fa fa-comment" aria-hidden="true"></i></div>
+              <div class="one-score">{{post.nvoted.all.count}}<i  style="color: #2196f3;" class="fa fa-thumbs-down" aria-hidden="true"></i></div>
+              <div class="one-score" >{{post.p_com}}<i style="color: #2196f3;" class="fa fa-comment" aria-hidden="true"></i></div>
             </div>
             
             

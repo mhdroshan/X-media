@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login</title>
+    <title>X-media |  Login</title>
 
     <!-- font awsome -->
     <link
@@ -51,11 +51,11 @@
       }
       .input-holder input {
         font-size: 14px;
-        padding: 12px 15px;
+        padding: 15px;
         font-weight: 500;
         border: none;
-        background-color: transparent;
-        border: 1px solid white;
+        background-color: transparent !important;
+        border: 2px solid ;
         border-radius: 5px;
         color: white;
         width: 80%;
@@ -135,15 +135,16 @@ background-color: white;
 
 
 
-{%if add%}
-    <script>
-        alert("Now login to continue")
-    </script>
-{%endif%}
+
 {%if fail%}
     <script>
         alert("Wrong username and password.")
     </script>
+    <style>
+      .input-holder input{
+        border-color: #f44336;
+      }
+    </style>
 {%endif%}
 
     <div class="login-holder">

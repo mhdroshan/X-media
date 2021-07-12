@@ -1,6 +1,6 @@
 {% extends 'base.html' %} {% block title %}X-media | Related posts{% endblock %} 
 {% block content %}
-<a class="back-butt" href="/tags/allTags"
+<a class="back-butt" href="/"
   ><i class="fa fa-arrow-left" aria-hidden="true"></i>
   <span>Back</span>
 </a>
@@ -9,7 +9,102 @@
     color: white !important;
   
   }
+  .post{
+    box-shadow: none;
+    border: 1.5px solid #b9b1b161;
+  }
+  .post-tag-place{
+    display: none;
+  }
+  .tag-place-dat{
+    position: absolute;
+    top: 3px;
+    right: 10px;
+    font-size: 20px;
+  }
+  .tag-place-dat i{
+    padding-right: 5px;
+  }
 </style>
+
+
+
+{% if follow == 2 %}
+<style>
+  .the-tag-head a{
+    display: none;
+  }
+</style>
+{% endif %}
+
+
+<div class="tag-back"></div>
+
+<div class="the-tag d-flex">
+
+   <div style="background-image: url('{{tag.tag_image.url }}');" class="tag-cov-img">
+    <div class="the-tag-head">
+      <h2><span>#</span>{{tag.tag_name}} <a href="{% url 'Tags:follow-Tags' tag.id %}"><span class="save-click">{% if follow == 0 %}Follow {% else %}Unfollow{% endif %}</span>
+      <i  {% if follow == 0 %}
+        class="fa fa-bookmark-o"
+
+        {% elif follow == 1 %}
+        class="fa fa-bookmark"
+
+        {% else %}
+        style="display:none";
+
+        {% endif %}  
+        aria-hidden="true"></i></a></h2>
+
+    </div>
+
+    <!-- tag location -->
+    {% if tag.t_country != "0" %}
+
+    <p class="tag-place-dat">
+      <i class="fa fa-map-marker" aria-hidden="true"></i
+      >{{tag.t_country}}
+    </p>
+    {% endif %}
+
+
+
+    {% if tag.t_state != "0" %}
+
+    <p class="tag-place-dat">
+      <i class="fa fa-map-marker" aria-hidden="true"></i
+      >{{tag.t_state}}
+    </p>
+    {% endif %}
+
+
+
+    {% if tag.t_place != "0" %}
+    <p class="tag-place-dat">
+      <i class="fa fa-map-marker" aria-hidden="true"></i
+      >{{tag.t_place}}
+    </p>
+    {% endif %}
+
+  <div style="right: 60px;" class="post-count">
+    {{t_count}} <p>Followers</p>
+  </div>
+  <div class="post-count">
+    {{p_count}} <p>Posts</p>
+  </div>
+
+   
+   </div>
+   <div class="the-tag-cont">
+     <h5>{{tag.tag_title}}</h5>
+     <p><span>Description</span>: {{tag.tag_disc}}</p>
+   </div>
+   
+</div>
+
+
+
 <div class="post-holder">
   {% for post in posts %}
   <div class="pp-hold">
@@ -23,13 +118,15 @@
             <i class="fa fa-map-marker" aria-hidden="true"></i
             >{{post.tag_id.t_country}}
           </p>
-          {% endif %} {% if post.tag_id.t_state != "0" %}
+          {% endif %}
+          {% if post.tag_id.t_state != "0" %}
 
           <p class="post-tag-place">
             <i class="fa fa-map-marker" aria-hidden="true"></i
             >{{post.tag_id.t_state}}
           </p>
-          {% endif %} {% if post.tag_id.t_place != "0" %}
+          {% endif %}
+          {% if post.tag_id.t_place != "0" %}
 
           <p class="post-tag-place">
             <i class="fa fa-map-marker" aria-hidden="true"></i

@@ -1,8 +1,9 @@
+from Tags.views import followtag
 from django.db.models.query_utils import Q
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from .models import PostModel,PostImageModel,PositiveVote,NegativeVote,PostComment
-from Tags.models import Tagmodel
+from Tags.models import Tagmodel,following
 from User.models import UserModel
 
 
@@ -102,9 +103,25 @@ def negvote(request):
 
 
 def relatedpost(request,id):
-    # return HttpResponse("asdasd")
+    tag = Tagmodel.objects.get(id = id)
+    follow = 2
+    
+    
+    if request.session.has_key('userid'):
+        user = UserModel.objects.get(id = request.session['userid'])
+        if following.objects.filter(tag=id,user=user).count()>0:
+            follow = 1
+        else:
+            follow = 0
+        
     posts=PostModel.objects.filter(tag_id = id)
-    return render (request,"relatedpost.html",{'posts':posts})
+    post_count=PostModel.objects.filter(tag_id = id).count()
+    tag_count = following.objects.filter(tag = id).count()
+    return render (request,"relatedpost.html",{'posts':posts,
+                                                'tag':tag,
+                                                'p_count':post_count,
+                                                't_count':tag_count,
+                                                'follow':follow})
     
 def relatedpostUser(request,id):
     # return HttpResponse("asdasd")

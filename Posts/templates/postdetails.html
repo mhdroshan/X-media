@@ -51,7 +51,7 @@
 
     <h4 class="post-title-det">{{post.p_title}}</h4>
     <p class="post_desc-det">{{post.p_content}}</p>
-    <p class="date-time-det">Added on: &nbsp;{{post.p_dateTime}}</p>
+    <p class="date-time-det">{{post.p_dateTime}}</p>
     {% if post.user_id.u_verified == 1 %}
     <a href="{% url 'Posts:related-post-user' post.user_id.id %}">
             <div class="post-user-det" style="background: #045007;border:1px solid white">
