@@ -6,7 +6,7 @@ from Tags.models import Tagmodel
 # Create your models here.
 
 class PostModel(models.Model):
-    p_title=models.CharField(max_length=50,null=True)
+    p_title=models.CharField(max_length=200,null=True)
     p_content=models.TextField()
     p_coverimage=models.ImageField(upload_to="coverimage",null=True)
     pvoted = models.ManyToManyField(UserModel , default=None , blank=True ,related_name='pvoted')

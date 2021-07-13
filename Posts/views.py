@@ -126,7 +126,8 @@ def relatedpost(request,id):
 def relatedpostUser(request,id):
     # return HttpResponse("asdasd")
     posts=PostModel.objects.filter(user_id = id)
-    return render (request,"relatedPost2.html",{'posts':posts})
+    user = UserModel.objects.get(id=id)
+    return render (request,"relatedPost2.html",{'posts':posts,'user':user})
     
 
 def addpost(request,id):

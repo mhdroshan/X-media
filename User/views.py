@@ -2,7 +2,7 @@ from django.http.response import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.http import HttpResponse
 from .models import UserModel,tempProof
-from Tags.models import TagRequest
+from Tags.models import TagRequest,following
 from Posts.models import PostModel,PostImageModel,PostComment
 import easyocr
 from geopy.geocoders import Nominatim
@@ -14,8 +14,9 @@ def userprofile(request):
         userid = request.session['userid']
         users=UserModel.objects.get(id=userid)
         allMyPosts=PostModel.objects.filter(user_id=userid)
+        foll_tags = following.objects.filter(user_id = userid).count()
         # com_count = PostComment.objects.filter(user = userid , post = allMyPosts).count()
-        return render(request,"User/Profile.html",{'user':users , 'mypost':allMyPosts})
+        return render(request,"User/Profile.html",{'user':users , 'mypost':allMyPosts,'foll':foll_tags})
     else:
         return redirect("/user/login")
 

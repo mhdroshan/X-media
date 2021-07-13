@@ -28,6 +28,13 @@
 
 <div class="profile-holder">
   {% if user %}
+
+<div class="user-profile-foll">
+  <h1>{{foll}}</h1>
+  <p>Tags following</p>
+</div>
+
+  
   
   <form action="{% url 'User:change' user.id %}"  method="post">
     {% csrf_token %}

@@ -39,6 +39,10 @@
       text-decoration: none;
       color: black;
     }
+    hr{
+      border-top: 1px solid  #121212;
+      width: 90%;
+    }
 p{
   margin: 0;
 }
@@ -372,7 +376,7 @@ color: white;
   color: #1e7e34;
 }
     .mypost {
-      min-width: 250px;
+      width: 250px;
       height: auto;
       background-color: #2e2e2e;
       border-radius: 5px;
@@ -583,7 +587,10 @@ select.PE-input option{
       font-size: 13px;
       position: absolute;
       top: 70px;
+      overflow-y: auto;
       left: 30px;
+      bottom: 20px;
+      padding-right: 120px;
     }
 
     .tag-desc span {
@@ -615,7 +622,7 @@ select.PE-input option{
     }
 
     .post-title {
-      margin: 6px 10px 10px 16px;
+      margin: 6px 20px 10px 16px;
       font-size: 20px;
       font-weight: 300;
     }
@@ -628,7 +635,7 @@ select.PE-input option{
       height: 23px;
       overflow-y: hidden;
       word-break: break-word;
-      justify-content: end;
+      justify-content: space-between;
     }
     .getlocation-butt:focus{
       outline: none;
@@ -1785,7 +1792,7 @@ padding: 0 5px;
 }
 .the-tag{
   margin: 30px auto;
-  width: 900px;
+  width: 950px;
   padding: 0;
   position: sticky;
   box-shadow: 0 19px 38px rgb(0 0 0 / 30%), 0 15px 12px rgb(0 0 0 / 22%);
@@ -1936,6 +1943,46 @@ color: white !important;
   margin-top: 39px;
   border-radius: 5px;
 }
+.user-profile-foll{
+      position: absolute;
+    margin: 20px;
+    text-align: center;
+    height: 100px;
+    width: 150px;
+    top: 57%;
+    right:10px;
+    margin-top: -50px;
+    z-index: 2;
+}
+.user-profile-foll h1{
+  font-size: 60px;
+  line-height: 1;
+    font-weight: 500;
+    margin: 0;
+}
+.user-profile-foll p {
+  font-size: 12px;
+  font-weight: 300;
+  letter-spacing: .5px;
+}
+.post-user-title{
+  position: fixed;
+  text-transform: capitalize;
+  top: 40px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  border-bottom: 1px solid white; 
+   line-height: 0.1em;
+   width: 80%;
+
+   margin: 10px auto 20px;
+}
+.post-user-title span{
+  padding: 0 21px;
+  background: #212121;
+}
+
   </style>
 </head>
 

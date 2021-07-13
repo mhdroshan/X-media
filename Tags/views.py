@@ -26,7 +26,9 @@ def findTags(request):
         tags = Tagmodel.objects.all()
         users_tag = following.objects.filter(user = loggeduser)
         country = PostModel.objects.all().values('tag_id__t_country').annotate(dcount=Count('tag_id__t_country')).order_by()
+        # user-tags = PostModel.objects.all().values('user_id__t_country').annotate(gcount=Count('tag_id__t_country')).order_by()
         users = UserModel.objects.all()
+
         # return HttpResponse(mytag)
         return render(request, "find-tags.html",{
             'users':users,

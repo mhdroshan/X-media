@@ -118,6 +118,7 @@
 
     <!-- user -->
     {% if user %} {% for user in users %}
+    <a href="{% url 'Posts:related-post-user' user.id %}">
     <li>
         <div style="background: #009688;" class="serch-icon">
             <i class="fa fa-user" aria-hidden="true"></i>
@@ -130,6 +131,7 @@
         srcset=""
       />
     </li>
+  </a>
     {% endfor %} {% endif %}
   
   </ul>

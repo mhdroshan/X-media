@@ -9,9 +9,15 @@
     color: white !important;
   
   }
+  .post-holder{
+    margin-top: 85px;
+  }
 </style>
 
 <div class="post-holder">
+  <h4 class="post-user-title">
+   <span> Posts added by {{user.u_name}}</span>
+  </h4>
   {% for post in posts %}
   <div class="pp-hold">
     <div class="post">
