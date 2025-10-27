@@ -1,7 +1,7 @@
 
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
-from User.models import tempProof,UserModel
+from User.models import UserModel
 from django.db.models import Count
 from TagAuthor.models import AuthorModel
 # Create your views here.
@@ -9,23 +9,19 @@ from TagAuthor.models import AuthorModel
 
 def admiHome(request):
     if request.session.has_key('adminId'):
-        proofs = tempProof.objects.all().values('name').annotate(dcount=Count('name')).order_by()
-        return render (request,"admin.html",{'proofs':proofs})
+        return render (request,"admin.html")
 
     else:
-        return redirect("/xadmin/login")
+        return redirect("/admin/login")
 
 
 def ProofDetail(request,username):
     if request.session.has_key('adminId'):
-        # username = str(username)
-        proofs = tempProof.objects.filter(name__iexact=username)
-
         user = UserModel.objects.get(u_name__iexact =  username)
-        return render (request,"proof.html",{'user':user,'proofs':proofs})
+        return render (request,"proof.html",{'user':user})
 
     else:
-        return redirect("/xadmin/login")
+        return redirect("/admin/login")
 
 
 def userVerify(request,id):
@@ -39,13 +35,13 @@ def userVerify(request,id):
             
             user.u_verified ='1'
             user.save()
-            return redirect('/xadmin')
+            return redirect('/admin')
             
         elif radio =='1':
             
             user.u_verified = '0'
             user.save()
-            return redirect('/xadmin')
+            return redirect('/admin')
 
 
 def insert(request):
@@ -61,31 +57,18 @@ def insert(request):
             a.a_pass = request.POST.get("authorpass")
             a.save()
 
-            proofs = tempProof.objects.all().values('name').annotate(dcount=Count('name')).order_by()
-            return render (request,"admin.html",{'proofs':proofs,'flag':1})
+            return render (request,"admin.html",{'flag':1})
     else:
-        return redirect("/xadmin/login")
-
-
-def viewProof(request,id):
-    if request.session.has_key('adminId'):
-        image = tempProof.objects.get(id=id)
-        return render (request,"viewproof.html",{'image':image})
-    else:
-        return redirect("/xadmin/login")
+        return redirect("/admin/login")
 
 
 
-def deleteProof(request,username):
-    tempProof.objects.filter(name__iexact=username).delete()
-    proofs = tempProof.objects.all().values('name').annotate(dcount=Count('name')).order_by()
-    return render (request,"admin.html",{'deleted':1,'proofs':proofs})
 
 
 
 def adminLogin(request):
     if request.session.has_key('adminId'):
-        return redirect("/xadmin")
+        return redirect("/admin")
     else:
         if request.method == "POST":
             username = request.POST.get("username")
@@ -97,7 +80,7 @@ def adminLogin(request):
             if username == "xadmin" and password == "x1234":
                 request.session["adminId"] = username
 
-                return redirect("/xadmin")
+                return redirect("/admin")
             else:
                 return render (request,"admin-login.html",{'flag':1})
         return render(request,"admin-login.html",{})
@@ -105,7 +88,7 @@ def adminLogin(request):
 
 def logout(request):
     request.session.flush()
-    return redirect("/xadmin/login")
+    return redirect("/admin/login")
 
 
 

@@ -93,7 +93,7 @@
 
         <div class="places">
           <p>Place:</p>
-          <p>{{user.u_place}}</p>
+          <p>{% if user.u_selected_nearby_city %}{{user.u_selected_nearby_city}}{% elif user.u_detected_city %}{{user.u_detected_city}}{% endif %}</p>
         </div>
       </div>
     </div>

@@ -97,12 +97,7 @@
       top: 30px;
       line-height: 0;"><i class="fa fa-map-marker" aria-hidden="true"></i> 
       
-{% if not tag.t_country == "0" %}
-{{ tag.t_country}}{% endif %}
-{% if not tag.t_state == "0" %}
-{{ tag.t_state}}{% endif %}
-{% if not tag.t_place == "0" %}
-{{ tag.t_place}}{% endif %}
+{{ tag.t_country|default:'' }}{% if tag.t_country and tag.t_state %}, {% endif %}{{ tag.t_state|default:'' }}{% if tag.t_state and tag.t_place %}, {% endif %}{{ tag.t_place|default:'' }}
 
       </p>
       <img
@@ -137,12 +132,54 @@
   </ul>
 
 </div>
+
+<div id="tags-table-container" style="margin-top: 20px; padding: 15px; background-color: #2E2E2E; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+  <h4 style="color: white; margin-bottom: 15px;">All Created Tags</h4>
+  <table style="width: 100%; border-collapse: collapse; color: white; text-align: left;">
+    <thead>
+      <tr style="background-color: #3C3C3C;">
+        <th style="padding: 10px; border: 1px solid #4A4A4A;">Tag Name</th>
+        <th style="padding: 10px; border: 1px solid #4A4A4A;">Country</th>
+        <th style="padding: 10px; border: 1px solid #4A4A4A;">State</th>
+        <th style="padding: 10px; border: 1px solid #4A4A4A;">Place</th>
+        <th style="padding: 10px; border: 1px solid #4A4A4A;">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if tags %}
+        {% for tag in tags %}
+          <tr style="border-bottom: 1px solid #4A4A4A;">
+            <td style="padding: 10px; border: 1px solid #4A4A4A;">{{ tag.tag_name }}</td>
+            <td style="padding: 10px; border: 1px solid #4A4A4A;">{{ tag.t_country|default:'' }}</td>
+            <td style="padding: 10px; border: 1px solid #4A4A4A;">{{ tag.t_state|default:'' }}</td>
+            <td style="padding: 10px; border: 1px solid #4A4A4A;">{{ tag.t_place|default:'' }}</td>
+            <td style="padding: 10px; border: 1px solid #4A4A4A;">
+              <button class="follow-toggle-button" data-tag-id="{{ tag.id }}" style="background: none; border: none; cursor: pointer; color: #4CAF50; font-size: 1.2em;">
+                {% if tag.id in followed_tags_ids %}
+                  <i class="fa fa-times-circle" aria-hidden="true" style="color: #f44336;"></i>
+                {% else %}
+                  <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                {% endif %}
+              </button>
+            </td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td colspan="5" style="padding: 10px; text-align: center; color: #888;">No tags created yet.</td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+
+{% if u_tags %}
 <!-- followings tags -->
 <h4 class="u-follow-title" id="folltitle">Tags You Follow</h4>
 <div class="u-follow-holder">
 <div class="row">
   
-   {% if u_tags %}
+   
     {% for tag in u_tags  %}
     <div class="col-sm-6">
       <a href="{% url 'Posts:related-post' tag.tag.id %}">
@@ -158,8 +195,8 @@
       {% if tag.tag.t_country != "0" %}
   
       <p class="tag-place-dat">
-        <i class="fa fa-map-marker" aria-hidden="true"></i
-        >{{tag.tag.t_country}}
+        <i class="fa fa-map-marker" aria-hidden="true"></i>
+        {{tag.tag.t_country}}
       </p>
       {% endif %}
   
@@ -168,8 +205,8 @@
       {% if tag.tag.t_state != "0" %}
   
       <p class="tag-place-dat">
-        <i class="fa fa-map-marker" aria-hidden="true"></i
-        >{{tag.tag.t_state}}
+        <i class="fa fa-map-marker" aria-hidden="true"></i>
+        {{tag.tag.t_state}}
       </p>
       {% endif %}
   
@@ -177,8 +214,8 @@
   
       {% if tag.tag.t_place != "0" %}
       <p class="tag-place-dat">
-        <i class="fa fa-map-marker" aria-hidden="true"></i
-        >{{tag.tag.t_place}}
+        <i class="fa fa-map-marker" aria-hidden="true"></i>
+        {{tag.tag.t_place}}
       </p>
       {% endif %}
   
@@ -193,31 +230,34 @@
   </a>
     </div>
     {% endfor %}
-    {% else %}
-    <h3 class="tag-error">No tags</h3>
-   {% endif %}
+    
+   
 </div>
  
   
 </div>
+{% else %}
+    <h3 class="tag-error">No tags</h3>
+{% endif %}
 
 
 <script>
+  // Existing search function
   function search() {
     var input, filter, ul, li, a, i;
     input = document.getElementById("searchinput");
     filter = input.value.toUpperCase();
     ul = document.getElementById("searchlist");
-    title = document.getElementById("folltitle");
+    title = document.getElementById("folltitle"); // This might need adjustment if you remove the title conditionally
     li = ul.getElementsByTagName("li");
 
     if (input.value.length == 0) {
       ul.style.display = "none";
-      title.style.opacity = "1";
+      if (title) title.style.opacity = "1"; // Only try to set opacity if title exists
       return;
     } else {
       ul.style.display = "block";
-      title.style.opacity = "0";
+      if (title) title.style.opacity = "0"; // Only try to set opacity if title exists
     }
     // Loop through all list items, and hide those who don't match the search query
     for (i = 0; i < li.length; i++) {
@@ -229,6 +269,43 @@
       }
     }
   }
+
+  // New JavaScript for follow/unfollow button
+  $(document).ready(function() {
+    $('.follow-toggle-button').on('click', function(e) {
+      e.preventDefault(); // Prevent default link behavior if button is inside an <a>
+      const button = $(this);
+      const tagId = button.data('tag-id');
+      const csrfToken = $('input[name=csrfmiddlewaretoken]').val();
+
+      $.ajax({
+        url: '{% url "Tags:follow_toggle" %}', // This URL needs to be defined in Tags/urls.py
+        type: 'POST',
+        data: {
+          'tag_id': tagId,
+          'csrfmiddlewaretoken': csrfToken,
+        },
+        success: function(response) {
+          if (response.success) {
+            if (response.is_followed) {
+              button.html('<i class="fa fa-times-circle" aria-hidden="true" style="color: #f44336;"></i>');
+              // Optionally update follower count or refresh part of the page
+            } else {
+              button.html('<i class="fa fa-plus-circle" aria-hidden="true"></i>');
+              // Optionally update follower count or refresh part of the page
+            }
+            alert(response.message); // Show a success message
+          } else {
+            alert('Error: ' + response.message);
+          }
+        },
+        error: function(xhr, status, error) {
+          console.error('AJAX Error:', status, error);
+          alert('An error occurred. Please try again.');
+        }
+      });
+    });
+  });
 </script>
 
 {% endblock content %}

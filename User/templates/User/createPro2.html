@@ -34,15 +34,15 @@
     </div>
   </li>
   <li>
-    <span class="timeline-mark"><span class="num-sppan">2</span></span>
+    <span class="timeline-mark"><span class="num-sppan">1</span></span>
     <div class="timeline-d">
 
-      <h5>Personel info</h5>
+      <h5>Name & Personal Info</h5>
     </div>
   </li>
   <li>
-    <span class="timeline-marker"></span>
-    <div class="timeline-data">
+    <span class="timeline-mark"><span class="num-sppan">2</span></span>
+    <div class="timeline-d">
 
       <h5>Location</h5>
     </div>
@@ -50,13 +50,6 @@
   <li>
     <span class="timeline-marker"></span>
     <div class="timeline-data">
-      <h5>place details</h5>
-    </div>
-  </li>
-  <li>
-    <span class="timeline-marker"></span>
-    <div class="timeline-data">
-
       <h5>Profile details</h5>
     </div>
   </li>
@@ -69,11 +62,15 @@
   </li>
 </ul>
 <div class="us-cret-box">
-  <form class="subformclass" action="{% url 'User:ver-other' %}" method="post">
+  <form class="subformclass" action="{% url 'User:create_profile_step1_2' %}" method="post">
     {% csrf_token %}
-    {% if name %}
-    <input type="hidden" value="{{name}}" name="username">
-    {% endif %}
+      <div class="cret-inp-form-holder">
+        <p>Enter your name:</p>
+        <input type="text" name="username" placeholder="your name" required id="">
+      </div>
+        {% if name %}
+        <input type="hidden" value="{{name}}" name="username">
+        {% endif %}
     <div class="cret-inp-form-holder">
       <p>Enter your age:</p>
       <input type="number" name="userage" style="text-transform: lowercase;" placeholder="your age" required id="">
@@ -91,9 +88,8 @@
     </div>
 
     <button class="cre-button">SUBMIT</button>
-    {% if fail %}
-    <div class="aler-text">Name not found in the proof</div>
-    {% endif %}
+    
+    
 
 </div>
 </form>

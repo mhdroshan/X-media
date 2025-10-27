@@ -72,11 +72,21 @@
     <input type="hidden" value="{{phone}}" name="userphone" />
     {% endif %} {% if country %}
     <input type="hidden" value="{{country}}" name="usercountry" />
-    {% endif %} {% if state %}
-    <input type="hidden" value="{{state}}" name="userstate" />
-
-    {% endif %} {% if place %}
-    <input type="hidden" value="{{place}}" name="userplace" />
+    {% endif %} 
+    {% if state_display %}
+    <input type="hidden" value="{{state_display}}" name="userstate_display" />
+    {% endif %}
+    {% if detected_city %}
+    <input type="hidden" value="{{detected_city}}" name="userstate" />
+    {% endif %}
+    {% if longitude %}
+    <input type="hidden" value="{{longitude}}" name="long" />
+    {% endif %}
+    {% if latitude %}
+    <input type="hidden" value="{{latitude}}" name="lati" />
+    {% endif %}
+    {% if selected_nearby_city %}
+    <input type="hidden" value="{{selected_nearby_city}}" name="selected_nearby_city" />
     {% endif %}
 
     <div class="cret-inp-form-holder">

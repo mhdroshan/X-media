@@ -10,24 +10,17 @@ class UserModel(models.Model):
     u_email=models.CharField(max_length=20,null=True)
     u_phone=models.CharField(max_length=20,null=True)
     u_age=models.IntegerField()
-    u_pic=models.ImageField(upload_to='user_dp')
     u_country= models.CharField(max_length=20,default=0)
-    u_state=models.CharField(max_length=20,default=0)
-    u_place=models.CharField(max_length=20,default=0)
+    u_state=models.CharField(max_length=20,null=True, blank=True)
+    u_latitude=models.CharField(max_length=50, null=True, blank=True) # New: store latitude
+    u_longitude=models.CharField(max_length=50, null=True, blank=True) # New: store longitude
+    u_detected_city=models.CharField(max_length=50, null=True, blank=True) # New: store detected city
+    u_selected_nearby_city=models.CharField(max_length=255, null=True, blank=True) # New: store selected nearby city
     u_security=models.BooleanField(default=0)
     u_verified=models.BooleanField(default=0)
 
     def __str__(self):
-        return self.u_name+" "+self.u_country+" "+self.u_state+" "+self.u_place
-
-
-
-class tempProof(models.Model):
-    proof=models.ImageField()
-    name=models.CharField(max_length=30,default=0,null=True)
-
-    def __str__(self):
-        return str(self.name)
+        return f"{self.u_name or ''} {self.u_country or ''} {self.u_state or ''} {self.u_detected_city or ''}".strip()
     
 
 

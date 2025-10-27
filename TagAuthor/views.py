@@ -17,19 +17,19 @@ def home(request):
         return render(request,"home.html",{'author':author,'request':requests})
 
     else:
-        return redirect("/author/login")
+        return redirect("/tagauthor/login")
 
 
 def login(request):
     if request.session.has_key('authorid'):
-        return redirect("/author")
+        return redirect("/tagauthor")
     else:
         if request.method=="POST":
             userLoged=AuthorModel.objects.filter(a_username=request.POST.get("username"),a_pass=request.POST.get("password")).count()
             if userLoged>0:
                 user=get_object_or_404(AuthorModel, a_username=request.POST.get("username"),a_pass=request.POST.get("password"))
                 request.session["authorid"]=user.id
-                return redirect("/author")
+                return redirect("/tagauthor")
             else:
                 return render(request,"login.html",{'fail':1})
         return render(request,"login.html",{})
@@ -37,7 +37,7 @@ def login(request):
 
 def logout(request):
     request.session.flush()
-    return redirect("/author/login")
+    return redirect("/tagauthor/login")
 
 
 def delete(request,id):
@@ -75,4 +75,4 @@ def insert(request):
 
 
     else:
-        return redirect("/author/login")
+        return redirect("/tagauthor/login")

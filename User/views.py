@@ -1,13 +1,74 @@
 from django.http.response import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.http import HttpResponse
-from .models import UserModel,tempProof
+from .models import UserModel
 from Tags.models import TagRequest,following
 from Posts.models import PostModel,PostImageModel,PostComment
-import easyocr
+# import easyocr # Removed EasyOCR functionality
 from geopy.geocoders import Nominatim
+from django.http import JsonResponse
 
 # Create your views here.
+
+def get_geolocation_data(request):
+    if request.method == "POST":
+        latitude = request.POST.get('latitude')
+        longitude = request.POST.get('longitude')
+
+        if not latitude or not longitude:
+            return JsonResponse({'success': False, 'error': 'Latitude and Longitude are required.'})
+
+        try:
+            geolocator = Nominatim(user_agent="X-media-Geolocation-App", timeout=10) # Increased timeout
+            
+            # Reverse geocode for country and city (more detailed)
+            location = geolocator.reverse(f"{latitude}, {longitude}", exactly_one=True, addressdetails=True, namedetails=True)
+            country = location.raw['address'].get('country', "Unknown") if location and 'address' in location.raw else "Unknown"
+            detected_city = location.raw['address'].get('city') or location.raw['address'].get('town') or location.raw['address'].get('village') or "Unknown"
+            detected_state = location.raw['address'].get('state', "Unknown")
+
+            nearby_places = set() # Use a set for automatic uniqueness
+            if detected_city != "Unknown":
+                nearby_places.add(detected_city) # Always include the detected city
+            
+            # Extract other relevant nearby places from the raw address details
+            address_components = location.raw.get('address', {})
+            priority_types = ['city', 'town', 'village', 'county', 'suburb', 'neighbourhood'] # Exclude 'state' here
+            
+            for p_type in priority_types:
+                if address_components.get(p_type):
+                    place_name = address_components[p_type]
+                    # Ensure place_name is not the country, detected city, or detected state
+                    if place_name != country and place_name != detected_city and place_name != detected_state and place_name not in nearby_places:
+                        nearby_places.add(place_name)
+            
+            nearby_places = list(nearby_places)
+
+            # Ensure a minimum number of suggestions by adding more generic locations if needed
+            if len(nearby_places) < 5:
+                if location.raw['address'].get('county') and location.raw['address'].get('county') not in nearby_places:
+                    nearby_places.append(location.raw['address']['county'])
+                if location.raw['address'].get('state') and location.raw['address'].get('state') not in nearby_places:
+                    nearby_places.append(location.raw['address']['state'])
+                
+                while len(nearby_places) < 5:
+                    nearby_places.append(f"Generic Location {len(nearby_places) + 1}")
+
+            # Limit to a reasonable number, e.g., 15-20, if too many unique places are found
+            if len(nearby_places) > 20:
+                nearby_places = nearby_places[:20]
+
+            return JsonResponse({
+                'success': True,
+                'country': country,
+                'state': detected_state, # Also return the detected state
+                'city': detected_city, # Still return for potential display elsewhere if needed
+                'nearby_cities': nearby_places # Return as a list
+            })
+
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)})
+    return JsonResponse({'success': False, 'error': 'Invalid request method.'})
 
 def userprofile(request):
     if request.session.has_key('userid'):
@@ -75,7 +136,7 @@ def login(request):
             if userLoged>0:
                 user=get_object_or_404(UserModel, u_username=request.POST.get("username"),u_pass=request.POST.get("password"))
                 request.session["userid"]=user.id
-                return redirect("/")
+                return redirect("Posts:index")
             else:
                 return render(request,"user/login.html",{'fail':1})
         return render(request,"user/login.html",{})
@@ -112,208 +173,60 @@ def tagreq(request):
     else:
         return redirect("/user/login")
 
-# create profile
-
-def create(request):
-    return render(request,"User/createPro.html",{})
-
-
-
-
-def verName(request):
-    # return render(request,"User/createPro2.html",{})
-
-    
-    if request.method=="POST" and request.FILES:
-        t = tempProof()
-        name = request.POST.get("username")
-        namestr = str(name).lower()
-        uname = namestr.replace(" ", "")
-
-
-        t.proof = request.FILES.get("nameproof")
-        t.name = request.POST.get("username")
-        t.save()
-        reader = easyocr.Reader(['en'])
-        result = reader.readtext(t.proof.path,detail=0,paragraph=True)
-        strproof = str(result)
-        proofid="".join(c for c in strproof if c.isalpha()).lower()
-        if uname not in proofid:
-            return render(request,"User/createPro.html",{'fail':1})
-
-        else:
-            return render(request,"User/createPro2.html",{'name':name})
-
-
-def verOther(request):
+def create_profile_step1_2(request):
     if request.method=="POST":
         name = request.POST.get("username")
         age = request.POST.get("userage")
         email = request.POST.get("useremail")
         phone = request.POST.get("userphone")
 
-        context = {
-            'name':name,
-            'age':age,
-            'email':email,
-            'phone':phone
+        user_data = {
+            'name': name,
+            'age': age,
+            'email': email,
+            'phone': phone
         }
-        # return HttpResponse(context.name)
+        request.session['user_data'] = user_data
+        return redirect('User:ver-pladd')
+    return render(request,"User/createPro2.html",{})
 
-        return render(request,"User/createPro3.html",context)
-
-
-
-def verLocation(request):
-    # return render(request,"User/createPro4.html",{})
-  
-    if request.method=="POST":
-        name = request.POST.get("username")
-        age = request.POST.get("userage")
-        email = request.POST.get("useremail")
-        phone = request.POST.get("userphone")
-        
-        
-        
-
-
-        t = tempProof()
-        country = request.POST.get("usercountry")
-        constr = str(country).lower()
-        cont = constr.replace(" ", "")
-
-        state = request.POST.get("userstate")
-        statestr = str(state).lower()
-        stat = statestr.replace(" ", "")
-
-        t.proof = request.FILES.get("locationproof")
-        t.name = request.POST.get("username")
-        t.save()
-
-        reader = easyocr.Reader(['en'])
-        result = reader.readtext(t.proof.path,detail=0,paragraph=True)
-        strproof = str(result)
-        proofid="".join(c for c in strproof if c.isalpha()).lower()
-
-        context = {
-            'name':name,
-            'age':age,
-            'email':email,
-            'phone':phone,
-            'country':country,
-            'state':state,
-            
-        }
-        
-
-
-
-        if cont not in proofid or stat not in proofid:
-            return render(request,"User/createPro3.html",{'fail':1})
-
-        else:
-            return render(request,"User/createPro4.html",context)
-
-
-
-def verPlaceget(request):
-    # return render(request,"User/createPro5.html",{})
-    if request.method=="POST":
-
-        name = request.POST.get("username")
-        age = request.POST.get("userage")
-        email = request.POST.get("useremail")
-        phone = request.POST.get("userphone")
-        country = request.POST.get("usercountry")
-        state = request.POST.get("userstate")
-        place = request.POST.get("userplace")
-       
-        long = request.POST.get("long")
-        lati = request.POST.get("lati")
-        
-
-        geolocator = Nominatim(user_agent="geoapiExercises")
-       
-        # Latitude = "11.288575999999999"
-        # Longitude = "76.251136"
-    
-        location = geolocator.reverse(lati+","+long ,timeout=None)
-        address = location.raw['address']
-        town = address.get('town')
-        city = address.get('city')
-        village = address.get('village')
-        if town:
-            return render(request,"User/createPro4.html",{
-                
-                'name':name,
-                'age':age,
-                'email':email,
-                'phone':phone,
-                'country':country,
-                'state':state,
-                'place':town,
-                })
-        elif city:
-            return render(request,"User/createPro4.html",{
-                
-                'name':name,
-                'age':age,
-                'email':email,
-                'phone':phone,
-                'country':country,
-                'state':state,
-                'place':city,
-                })
-        elif village:
-            return render(request,"User/createPro4.html",{
-                
-                'name':name,
-                'age':age,
-                'email':email,
-                'phone':phone,
-                'country':country,
-                'state':state,
-                'place':village,
-            
-            })
-        else:
-            return render(request,"User/createPro4.html",{
-                'flag':1,
-                'name':name,
-                'age':age,
-                'email':email,
-                'phone':phone,
-                'country':country,
-                'state':state,
-                'place':0,} )
-        
-        
-
+# Removed verName function and EasyOCR functionality
 
 def verPladd(request):
     if request.method=="POST":
-        name = request.POST.get("username")
-        age = request.POST.get("userage")
-        email = request.POST.get("useremail")
-        phone = request.POST.get("userphone")
-        country = request.POST.get("usercountry")
-        state = request.POST.get("userstate")
-        place = request.POST.get("userplace")
+        user_data = request.session.get('user_data', {})
+
+        # Location data from createPro3.html POST
+        user_data['country'] = request.POST.get("usercountry")
+        user_data['state_display'] = request.POST.get("userstate_display") # The detected state
+        user_data['detected_city'] = request.POST.get("userstate") # The detected city (from hidden input)
+        user_data['longitude'] = request.POST.get("long")
+        user_data['latitude'] = request.POST.get("lati")
+        user_data['selected_nearby_city'] = request.POST.get("selected_nearby_city") # The user-selected nearby city
+
+        request.session['user_data'] = user_data
+        
+        # Prepare context for createPro5.html
         context = {
-            'name':name,
-            'age':age,
-            'email':email,
-            'phone':phone,
-            'country':country,
-            'state':state,
-            'place':place,
-            
+            'name': user_data.get("name"),
+            'age': user_data.get("age"),
+            'email': user_data.get("email"),
+            'phone': user_data.get("phone"),
+            'country': user_data.get("country"),
+            'state_display': user_data.get("state_display"),
+            'detected_city': user_data.get("detected_city"),
+            'longitude': user_data.get("longitude"),
+            'latitude': user_data.get("latitude"),
+            'selected_nearby_city': user_data.get("selected_nearby_city"),
         }
 
         return render(request,"User/createPro5.html",context)
+    else:
+        # Handle GET request by rendering the location input page
+        return render(request, "User/createPro3.html", {})
 
 def verDP(request):
-    if request.method=="POST" and request.FILES:
+    if request.method=="POST":
 
         t= UserModel()
         t.u_name = request.POST.get("username")
@@ -321,11 +234,13 @@ def verDP(request):
         t.u_email = request.POST.get("useremail")
         t.u_phone = request.POST.get("userphone")
         t.u_country = request.POST.get("usercountry")
-        t.u_state = request.POST.get("userstate")
-        t.u_place = request.POST.get("userplace")
+        t.u_state = request.POST.get("userstate_display") # Detected State
+        t.u_detected_city = request.POST.get("userstate") # Detected City (from hidden input)
+        t.u_latitude = request.POST.get("lati")
+        t.u_longitude = request.POST.get("long")
+        t.u_selected_nearby_city = request.POST.get("selected_nearby_city")
         t.u_username = request.POST.get("nameuser")
         t.u_pass = request.POST.get("namepass")
-        t.u_pic = request.FILES.get("userpic")
 
         t.save()
 
